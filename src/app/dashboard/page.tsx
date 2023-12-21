@@ -28,7 +28,7 @@ const Dashboard = async () => {
 
       <section className="mt-10">
         <div className="flex justify-between items-center">
-          <h3 className="text-3xl font-bold">Today's Board</h3>
+          <h3 className="text-3xl font-bold">Today&#44;s Board</h3>
           <Link href={"/dashboard/tasks/addtask"}>
             <p className="bg-[#19fa9a] font-semibold py-2 px-8 rounded-lg">
               Add Task
@@ -41,3 +41,4 @@ const Dashboard = async () => {
 };
 
 export default Dashboard;
+  
