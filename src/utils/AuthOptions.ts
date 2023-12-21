@@ -1,6 +1,15 @@
-import axios from "axios";
+import axios from "axios";import prisma from "@/app/db";
 import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+import { signJwtAccessToken } from "@/libs/Jwt";
+import bcrypt from "bcryptjs";
+
+interface UserProps {
+  id: string;
+  name: string;
+  email: string;
+  isVerified: boolean | null;
+}
 
 export const authOptions: NextAuthOptions = {
   session: {
@@ -21,26 +30,35 @@ export const authOptions: NextAuthOptions = {
         const data = { email, password };
 
         try {
-          // api request for login
-          const res = await fetch(`${process.env.HOST}/api/auth/login`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              email: email,
-              password: password,
-            }),
+          const userExists = await prisma.user.findUnique({
+            where: { email: email },
           });
-          // const headers = {
-          //   "Content-Type": "application/json",
-          // };
-
-          // const res = await axios.post("/api/auth/login", data, { headers });
-
-          // const user = await res.data.user;
-          const response = await res.json();
-          const user = await JSON.parse(response);
+      
+          if (!userExists) {
+            return null;
+          }
+      
+          const isPasswordCorrect = await bcrypt.compareSync(
+            password,
+            userExists.password
+          );
+      
+          if (!isPasswordCorrect) {
+            return new Response(JSON.stringify(null));
+          }
+      
+          const newUser: UserProps = {
+            id: userExists.id,
+            name: userExists.name,
+            email: userExists.email,
+            isVerified: userExists.isVerified,
+          };
+      
+          const accessToken = signJwtAccessToken(newUser);
+          const user = {
+            ...newUser,
+            accessToken,
+          };
 
           if (user) {
             console.log(user);
