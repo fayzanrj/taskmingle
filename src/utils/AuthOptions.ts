@@ -20,19 +20,18 @@ export const authOptions: NextAuthOptions = {
 
         const data = { email, password };
 
-        
         try {
-        // api request for login
-        const res = await fetch(`${process.env.HOST}/api/auth/login`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            email: email,
-            password: password,
-          }),
-        });
+          // api request for login
+          const res = await fetch(`${process.env.HOST}/api/auth/login`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              email: email,
+              password: password,
+            }),
+          });
           // const headers = {
           //   "Content-Type": "application/json",
           // };
@@ -40,9 +39,11 @@ export const authOptions: NextAuthOptions = {
           // const res = await axios.post("/api/auth/login", data, { headers });
 
           // const user = await res.data.user;
-          const user = await res.json()
+          const response = await res.json();
+          const user = await JSON.parse(response);
 
           if (user) {
+            console.log(user);
             return user;
           } else {
             return null;
