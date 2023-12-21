@@ -1,6 +1,6 @@
 import prisma from "@/app/db";
 import { ThrowIncompleteError, ThrowServerError } from "@/libs/ResponseErrors";
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 import { signJwtAccessToken } from "@/libs/Jwt";
 
@@ -50,7 +50,7 @@ export const POST = async (req: NextRequest) => {
       ...newUser,
       accessToken,
     };
-    return new Response(JSON.stringify(result));
+    return NextResponse.json(JSON.stringify(result));
   } catch (error) {
     console.error(error);
     return ThrowServerError();
