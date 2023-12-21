@@ -8,9 +8,8 @@ export const AppContext = createContext<any | undefined>(undefined);
 
 
 export function AppState({ children }: { children: React.ReactNode }) {
-  const [tasks, setTasks] = useState<TaskProps[]>(TasksData);
   return (
-    <AppContext.Provider value={{ tasks, setTasks }}>
+    <AppContext.Provider value={{}}>
       {children}
     </AppContext.Provider>
   );
