@@ -15,7 +15,15 @@ import axios from "axios";
 import { useSession } from "next-auth/react";
 import { getDate } from "date-fns";
 
-interface TaskFormProps extends TaskProps {
+interface TaskFormProps {
+  id?: string;
+  taskTitle?: string;
+  taskDesc?: string;
+  tags?: string[];
+  date?: string;
+  startTime?: string;
+  reminderAt?: string;
+  status?: string;
   variant: "EDIT" | "ADD";
 }
 
@@ -37,8 +45,11 @@ const TaskForm: React.FC<TaskFormProps> = ({
   const [title, setTitle] = useState<string>(taskTitle || "");
   const [desc, setDesc] = useState<string>(taskDesc || "");
   const [selectedDate, setSelectedDate] = useState<string>(
+    //@ts-ignore
     `${new Date(date).getFullYear()}-${
+      //@ts-ignore
       new Date(date).getMonth() + 1
+      //@ts-ignore
     }-${new Date(date).getDate()}` || ""
   );
   const [selectedTags, setSelectedTags] = useState<string>(
