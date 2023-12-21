@@ -1,0 +1,35 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  email       String    @unique
+  password    String
+  isVerified  Boolean?  @default(false)
+  profilePic  String?   @default("https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg")
+  createdAt   DateTime? @default(now())
+  updatedAt   DateTime  @updatedAt
+  tasks       Task[]    @relation("createdByUser")
+}
+
+model Task {
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  taskTitle   String
+  taskDesc    String
+  startTime   String
+  reminderAt  String
+  date        String
+  tags        String[]
+  status      String
+  createdBy   User      @relation("createdByUser", fields: [createdById], references: [id])
+  createdById String    @db.ObjectId
+  createdAt   DateTime? @default(now())
+  updatedAt   DateTime  @updatedAt
+}

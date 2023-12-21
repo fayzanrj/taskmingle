@@ -1,0 +1,126 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.BG_IMAGE {
+  background-image: url("../assets/landingPageBg.png");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.SCROLL_BAR::-webkit-scrollbar {
+  width: 6px;
+}
+
+.NO_SCROLLBAR {
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+}
+
+.NO_SCROLLBAR::-webkit-scrollbar {
+  width: 12px;
+}
+
+.NO_SCROLLBAR::-webkit-scrollbar-thumb {
+  background-color: transparent;
+}
+
+.HORIZONTAL_SCROLL_BAR::-webkit-scrollbar {
+  height: 6px;
+}
+
+.SCROLL_BAR::-webkit-scrollbar-track,
+.HORIZONTAL_SCROLL_BAR:-webkit-scrollbar-track {
+  background-color: rgb(255, 255, 255);
+  border-radius: 100px;
+}
+
+.SCROLL_BAR::-webkit-scrollbar-thumb,
+.HORIZONTAL_SCROLL_BAR::-webkit-scrollbar-thumb {
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: rgb(193, 190, 190);
+  border-radius: 100px;
+}
+
+html {
+  /* For Firefox */
+  scrollbar-color: rgb(193, 190, 190) rgb(255, 255, 255);
+  scrollbar-width: thin;
+}
+@keyframes orbit7456 {
+  0% {
+  }
+
+  80% {
+    transform: rotate(360deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.loader {
+  width: 1.5rem;
+  height: 1.25rem;
+  position: relative;
+  margin: auto;
+  transform: rotate(45deg);
+}
+
+.orbe {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  animation: orbit7456 ease-in-out 1.5s infinite;
+}
+
+.orbe::after {
+  position: absolute;
+  content: "";
+  top: 0;
+  left: 0;
+  width: 0.3rem; /* Set to the specified size */
+  height: 0.3rem; /* Set to the specified size */
+  background-color: #868686;
+  border-radius: 50%;
+}
+
+.orbe:nth-child(1) {
+  animation-delay: 0s;
+}
+
+.orbe:nth-child(2) {
+  animation-delay: 0.1s;
+}
+
+.orbe:nth-child(3) {
+  animation-delay: 0.2s;
+}
+
+.orbe:nth-child(4) {
+  animation-delay: 0.3s;
+}
+
+.orbe:nth-child(5) {
+  animation-delay: 0.4s;
+}
+
+.NO-SCROLLBAR::-webkit-scrollbar {
+  width: 0;
+}
+
+.NO-SCROLLBAR::-webkit-scrollbar-thumb {
+  background-color: #888;
+}
+
+/* Optional: Hover effect for WebKit browsers */
+.NO-SCROLLBAR::-webkit-scrollbar-thumb:hover {
+  background-color: #555;
+}
+
+.SHADOW_DIV {
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  
+}

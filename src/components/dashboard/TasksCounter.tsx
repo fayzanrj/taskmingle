@@ -1,0 +1,63 @@
+import { Inter, Roboto } from "next/font/google";
+import React from "react";
+
+const roboto = Roboto({ subsets: ["latin"], weight: "500" });
+
+interface TasksCounterProps {
+  header: string;
+  totalTasks: number;
+  completedTasks: number;
+}
+
+const TasksCounter: React.FC<TasksCounterProps> = ({
+  header,
+  totalTasks,
+  completedTasks,
+}) => {
+  // calculating percentage of completed tasks
+  const completedPercentage = (completedTasks / totalTasks) * 100;
+
+  // function to get color
+  const getColor = (): string => {
+    if (header === "Today's Tasks") {
+      return "#19fa9a";
+    } else if (header === "Monthly Tasks") {
+      return "#22C1C3";
+    } else {
+      return "#E23050";
+    }
+  };
+  return (
+    <div className=" w-72 h-28 bg-white shadow-xl drop-shadow-xl border-[0.2px] border-stone-200 py-3 px-4 rounded-lg relative">
+      {/* HEADER */}
+      <h3 className="text-xl font-semibold">{header}</h3>
+
+      <div
+        className={`${roboto.className} w-[90%] absolute bottom-2 left-1/2 transform -translate-x-1/2`}
+      >
+        {/* TASK NUMBERS */}
+        <div className="relative">
+          <p className="text-sm">
+            {completedTasks}/{totalTasks}
+          </p>
+          <p className="text-sm text-gray-600 absolute right-0 top-0">
+            {completedPercentage.toFixed(2)}%
+          </p>
+        </div>
+
+        {/* COMPLETION PERCENTAGE */}
+        <div className="w-full h-2 bg-slate-300 rounded-full mt-2 shadow-sm drop-shadow-sm">
+          <div
+            style={{
+              width: `${completedPercentage}%`,
+              backgroundColor: getColor(),
+            }}
+            className={`h-full rounded-full`}
+          ></div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default TasksCounter;
