@@ -1,4 +1,5 @@
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+
+import { authOptions } from "@/utils/AuthOptions";
 import TaskForm from "@/components/addtask/TaskForm";
 import { TasksData } from "@/constants/TasksData";
 import { Metadata } from "next";

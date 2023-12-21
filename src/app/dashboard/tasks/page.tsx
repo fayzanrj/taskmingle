@@ -1,4 +1,5 @@
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+
+import { authOptions } from "@/utils/AuthOptions";
 import AddTaskBtnRound from "@/components/tasks/AddTaskBtnRound";
 import TaskPanel from "@/components/tasks/TaskPanel";
 import { Metadata } from "next";

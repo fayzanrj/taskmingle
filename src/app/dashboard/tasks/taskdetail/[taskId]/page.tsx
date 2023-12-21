@@ -1,4 +1,5 @@
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+
+import { authOptions } from "@/utils/AuthOptions";
 import GoBack from "@/components/GoBack";
 import RenderTags from "@/components/tasks/RenderTags";
 import TaskActionBtns from "@/components/tasks/TaskActionBtns";
