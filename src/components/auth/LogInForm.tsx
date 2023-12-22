@@ -75,6 +75,8 @@ const LogInForm = () => {
       <Header variant="LOG IN" />
 
       <p>{JSON.stringify(err)}</p>
+      <p>{email}</p>
+      <p>{password}</p>
 
       {/* Email Input */}
       <InputField
