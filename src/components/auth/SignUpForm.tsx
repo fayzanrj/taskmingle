@@ -61,7 +61,7 @@ const SignUpForm = () => {
 
     const data = {
       name: CapitalizeName(name),
-      email,
+      email : email.toLowerCase(),
       password,
     };
 

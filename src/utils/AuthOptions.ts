@@ -31,7 +31,7 @@ export const authOptions: NextAuthOptions = {
 
         try {
           const userExists = await prisma.user.findUnique({
-            where: { email: email },
+            where: { email: email.toLowerCase() },
           });
       
           if (!userExists) {
