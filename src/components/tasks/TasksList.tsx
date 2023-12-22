@@ -22,7 +22,7 @@ const TasksList: React.FC<TaskListProps> = ({ tasks, isLoading }) => {
           style={{ wordSpacing: ".2rem" }}
           className="text-3xl font-extrabold uppercase tracking-widest"
         >
-          No tasks for today
+          NO TASKS FOUND
         </h3>
       </div>
     );

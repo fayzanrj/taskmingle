@@ -1,11 +1,9 @@
 "use client";
 import DatePicker from "@/components/DatePicker";
-import { AppContext } from "@/context/AppContext";
-import {getInitialDate} from "@/libs/GetInitialDate";
-import { useSession } from "next-auth/react";
-import { useContext, useEffect, useState } from "react";
-import TasksList from "./TasksList";
+import { getInitialDate } from "@/libs/GetInitialDate";
 import { TaskProps } from "@/props/TaskProps";
+import { useEffect, useState } from "react";
+import TasksList from "./TasksList";
 
 interface TaskPanelProps {
   currentDateTasks : TaskProps[]
@@ -15,11 +13,11 @@ const TaskPanel: React.FC<TaskPanelProps> = ({ currentDateTasks }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [tasks, setTasks] = useState<TaskProps[]>(currentDateTasks);
 
-  // useEffect(() => {
-  //   setIsLoading(true);
+  useEffect(() => {
+    setIsLoading(true);
 
-  //   setTimeout(() => setIsLoading(false), 1000);
-  // }, []);
+    setTimeout(() => setIsLoading(false), 1000);
+  }, []);
 
   const intialDate = getInitialDate();
   return (

@@ -1,29 +1,31 @@
 import { NumberOfDaysInMonth } from "@/constants/Months";
-import { isLeapYear } from "@/libs/GetInitialDate";
 import { DateTimeInputProps } from "@/props/DateTimeProps";
 import React from "react";
 
-const getMaxDate = () => {
-  let date = new Date();
-  let day = date.getDate();
-  let month = date.getMonth();
-  let year = date.getFullYear();
+const calculateMaxDate = () => {
+  const currentDate = new Date();
+  let day = currentDate.getDate();
+  let month = currentDate.getMonth();
+  let year = currentDate.getFullYear();
   let currentMonthDays = NumberOfDaysInMonth[month];
 
-  if (month === 1 && isLeapYear(year)) {
+  // Check if the current year is a leap year
+  if (new Date(year, 1, 29).getDate() === 29) {
     currentMonthDays = 29; // February in a leap year
   }
 
+  const DAYS_TO_ADD = 7;
+
   if (day >= 25) {
-    day = (day + 7) - currentMonthDays;
+    day = (day + DAYS_TO_ADD) - currentMonthDays;
     month = month === 11 ? 0 : month + 1;
-    year = month === 11 ? year : year + 1;
+    year = month === 11 ? year + 1 : year;
   } else {
-    day += 7;
+    day += DAYS_TO_ADD;
   }
 
-  const newDate = `${year}-${month+1}-${day}`;
-  return newDate
+  const newDate = `${year}-${month + 1}-${day}`;
+  return newDate;
 };
 
 const AddTaskDateInput: React.FC<DateTimeInputProps> = ({
@@ -32,22 +34,20 @@ const AddTaskDateInput: React.FC<DateTimeInputProps> = ({
   state,
   setState,
 }) => {
-  const date = new Date();
-  const minDate = `${date.getFullYear()}-${
-    date.getMonth() + 1
-  }-${date.getDate()}`;
+  const currentDate = new Date();
+  const minDate = `${currentDate.getFullYear()}-${
+    currentDate.getMonth() + 1
+  }-${currentDate.getDate()}`;
 
   return (
     <div className="my-5 text-center">
-      {/* Label for the date input */}
       <label htmlFor={id}>{label}</label>
       <br />
-      {/* Date input field */}
       <input
         id={id}
         type="date"
         min={minDate}
-        max={getMaxDate()}
+        max={calculateMaxDate()}
         value={state}
         onChange={(e): void => setState(e.currentTarget.value)}
         className="w-full px-3 py-2 border-2 border-gray-200 outline-none"

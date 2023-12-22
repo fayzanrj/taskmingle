@@ -1,8 +1,13 @@
-import { verifyJwt } from "@/libs/Jwt";
-import { ThrowIncompleteError, ThrowServerError } from "@/libs/ResponseErrors";
-import { TaskProps } from "@/props/TaskProps";
-import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/app/db";
+import {
+  ThrowNotFoundError,
+  ThrowServerError,
+  ThrowUnAuthorizedError
+} from "@/libs/ResponseErrors";
+import { verifyUser } from "@/libs/VerifyUser";
+import { NextRequest, NextResponse } from "next/server";
+
+
 
 export const DELETE = async (
   req: NextRequest,
@@ -10,12 +15,11 @@ export const DELETE = async (
 ) => {
   try {
     // Verify user by verifying access token
-    const accessToken = req.headers.get("accessToken");
-    const user = verifyJwt(accessToken!);
+    const user = verifyUser(req);
 
     // If access token is not verified
     if (!user) {
-      return NextResponse.json({ message: "Not authorized" }, { status: 401 });
+      return ThrowUnAuthorizedError();
     }
 
     // finding task
@@ -28,11 +32,14 @@ export const DELETE = async (
 
     // if task not found
     if (!task) {
-      return NextResponse.json({ message: "No Task found" }, { status: 401 });
+      return ThrowNotFoundError("No task found")
     }
 
     // returning task
-    return NextResponse.json({ message : "Task has been deleted" }, { status: 200 });
+    return NextResponse.json(
+      { message: "Task has been deleted" },
+      { status: 200 }
+    );
   } catch (error: any) {
     console.error(error);
     return ThrowServerError();

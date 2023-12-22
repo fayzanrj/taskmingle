@@ -13,6 +13,7 @@ import { IoIosArrowDropleft } from "react-icons/io";
 import Logo from "../Logo";
 import { signOut } from "next-auth/react";
 import { ROUTES } from "@/constants/NavRoutes";
+import useDeviceWidth from "@/hooks/useDeviceWidth";
 
 // TO DO : WORK ON HREFS
 
@@ -21,6 +22,10 @@ interface NavLink {
   href: string;
   size: number;
   Icon: IconType;
+}
+
+interface NavItem extends NavLink {
+  setState: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 // TOP NAV BAR LINKS, LABELS AND ICONS
@@ -78,13 +83,19 @@ const Sidebar: FC<SidebarProps> = () => {
         {/* TOP NAVIGATION LINKS */}
         <ul className="my-10 p-3">
           {TopNavLinks.map((item, index) => (
-            <NavItem key={index} {...item} />
+            <NavItem key={index} {...item} setState={setIsOpen} />
           ))}
         </ul>
 
         {/* BOTTOM NAVIGATION LINKS */}
         <ul className="w-full p-3 absolute bottom-0">
-          <NavItem text="Profile" href="/" size={1.4} Icon={CgProfile} />
+          <NavItem
+            text="Profile"
+            href="/"
+            size={1.4}
+            Icon={CgProfile}
+            setState={setIsOpen}
+          />
           <LogoutButton />
         </ul>
       </nav>
@@ -105,7 +116,7 @@ const LogoutButton: FC = () => (
 );
 
 // nav item
-const NavItem: FC<NavLink> = ({ text, href, Icon, size }) => {
+const NavItem: FC<NavItem> = ({ text, href, Icon, size, setState }) => {
   const pathname = usePathname();
   const path = pathname.split("/");
 
@@ -113,11 +124,19 @@ const NavItem: FC<NavLink> = ({ text, href, Icon, size }) => {
   const isActive =
     path[2] === href || (path.length === 2 && href === ROUTES.DASHBOARD);
 
+    // closing sidebar on click in mobile devices
+  const screenWidth = useDeviceWidth();
+  const handleClick = () => {
+    if (screenWidth <= 768) {
+      setState(false);
+    }
+  };
   return (
     <li
       className={`relative  p-3 my-1 rounded-xl ${
         isActive ? "bg-[#19fa9a]" : ""
       }`}
+      onClick={handleClick}
     >
       <Link href={href === "dashboard" ? "/dashboard" : `/dashboard/${href}`}>
         <span className="aboslute">

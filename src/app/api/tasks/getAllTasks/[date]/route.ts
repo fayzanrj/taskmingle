@@ -1,8 +1,9 @@
 import { verifyJwt } from "@/libs/Jwt";
-import { ThrowIncompleteError, ThrowServerError } from "@/libs/ResponseErrors";
+import { ThrowIncompleteError, ThrowServerError, ThrowUnAuthorizedError } from "@/libs/ResponseErrors";
 import { TaskProps } from "@/props/TaskProps";
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/app/db";
+import { verifyUser } from "@/libs/VerifyUser";
 
 export const GET = async (
   req: NextRequest,
@@ -10,13 +11,13 @@ export const GET = async (
 ) => {
   try {
     // Verify user by verifying access token
-    const accessToken = req.headers.get("accessToken");
-    const user = verifyJwt(accessToken!);
+    const user = verifyUser(req);
 
     // If access token is not verified
     if (!user) {
-      return NextResponse.json({ message: "Not authorized" }, { status: 401 });
+      return ThrowUnAuthorizedError();
     }
+
 
     const tasks = await prisma.task.findMany({
         where : {

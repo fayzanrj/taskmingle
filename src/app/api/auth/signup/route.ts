@@ -1,15 +1,13 @@
 import prisma from "@/app/db";
-import {
-  ThrowIncompleteError,
-  ThrowServerError,
-} from "@/libs/ResponseErrors";
+import { ThrowIncompleteError, ThrowServerError } from "@/libs/ResponseErrors";
 import bcrypt from "bcryptjs";
 import { NextRequest, NextResponse } from "next/server";
 
 export const POST = async (req: NextRequest) => {
   try {
     // getting data from req
-    const data = await req.json();
+    const data: { name: string; email: string; password: string } =
+      await req.json();
 
     // if any data is missing
     if (!data.email || !data.password || !data.name) {

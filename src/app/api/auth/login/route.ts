@@ -13,11 +13,11 @@ interface UserProps {
 
 export const POST = async (req: NextRequest) => {
   try {
-    const data = await req.json();
+    const data: { email: string; password: string } = await req.json();
 
     // if any data is missing
     if (!data.email || !data.password) {
-      return new Response(JSON.stringify(null));
+      return ThrowIncompleteError();
     }
 
     // finding user
@@ -26,16 +26,23 @@ export const POST = async (req: NextRequest) => {
     });
 
     if (!user) {
-      return new Response(JSON.stringify(null));
+      return NextResponse.json(
+        { message: "Login failed! Please check your credentials" },
+        { status: 401 }
+      );
     }
 
+    // comparing password
     const isPasswordCorrect = await bcrypt.compareSync(
       data.password,
       user.password
     );
 
     if (!isPasswordCorrect) {
-      return new Response(JSON.stringify(null));
+      return NextResponse.json(
+        { message: "Login failed! Please check your credentials" },
+        { status: 401 }
+      );
     }
 
     const newUser: UserProps = {
@@ -45,11 +52,14 @@ export const POST = async (req: NextRequest) => {
       isVerified: user.isVerified,
     };
 
+    // signing access token
     const accessToken = signJwtAccessToken(newUser);
     const result = {
       ...newUser,
       accessToken,
     };
+
+    // response
     return NextResponse.json(JSON.stringify(result));
   } catch (error) {
     console.error(error);

@@ -1,20 +1,18 @@
 "use client";
-import React, { useContext, useEffect, useState } from "react";
-import GoBack from "../GoBack";
 import { getTime } from "@/libs/GetTime";
-import { AppContext } from "@/context/AppContext";
-import toast from "react-hot-toast";
 import { TaskProps } from "@/props/TaskProps";
-import AddTaskTextInput from "./AddTaskTextInput";
-import AddTaskTextArea from "./AddTaskTextArea";
-import AddTaskTimeInput from "./AddTaskTimeInput";
-import AddTaskDateInput from "./AddTaskDateInput";
-import { isValidTime } from "@/libs/IsValidTime";
-import ActivityLoader from "../ActivityLoader";
 import axios from "axios";
 import { useSession } from "next-auth/react";
-import { getDate } from "date-fns";
+import React, { useState } from "react";
+import toast from "react-hot-toast";
+import ActivityLoader from "../ActivityLoader";
+import GoBack from "../GoBack";
+import AddTaskDateInput from "./AddTaskDateInput";
+import AddTaskTextArea from "./AddTaskTextArea";
+import AddTaskTextInput from "./AddTaskTextInput";
+import AddTaskTimeInput from "./AddTaskTimeInput";
 
+// interface
 interface TaskFormProps {
   id?: string;
   taskTitle?: string;
@@ -38,12 +36,15 @@ const TaskForm: React.FC<TaskFormProps> = ({
   date,
   variant,
 }) => {
-  // getting sesssion
   const { data: session } = useSession();
+  
+  // const [taskStatus , setTaskStatus] = useState<string>(status || "")
 
-  // Variable states
+  // states
   const [title, setTitle] = useState<string>(taskTitle || "");
   const [desc, setDesc] = useState<string>(taskDesc || "");
+
+  // date states
   const [selectedDate, setSelectedDate] = useState<string>(
     //@ts-ignore
     `${new Date(date).getFullYear()}-${
@@ -52,22 +53,28 @@ const TaskForm: React.FC<TaskFormProps> = ({
       //@ts-ignore
     }-${new Date(date).getDate()}` || ""
   );
+
+  //tags state
   const [selectedTags, setSelectedTags] = useState<string>(
     tags ? tags.join(", ") : ""
   );
+
+  // start time state
   const [startingTime, setStartingTime] = useState<string>(
-    // @ts-ignore
+    //@ts-ignore
     startTime ? getTime(date, startTime) : ""
   );
+
+  // remind time state
   const [remindAt, setRemindAt] = useState<string>(
-    // @ts-ignore
+    //@ts-ignore
     reminderAt ? getTime(date, reminderAt) : ""
   );
 
-  // Activity state
+  // activity state
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  // clear states
+  // function to make all states an empty string
   const clearStates = () => {
     setRemindAt("");
     setTitle("");
@@ -77,16 +84,11 @@ const TaskForm: React.FC<TaskFormProps> = ({
     setSelectedTags("");
   };
 
-  // Function to handle save action
+  
   const handleSave = async () => {
     setIsLoading(true);
-    // Check if input time values are valid
-    if (!isValidTime(startingTime) || !isValidTime(remindAt)) {
-      console.error("Invalid time format");
-      return;
-    }
 
-    // Create a new task object with ISO string format for date and time
+    // setting new task with user selected values
     const task: TaskProps = {
       taskTitle: title,
       taskDesc: desc,
@@ -96,6 +98,8 @@ const TaskForm: React.FC<TaskFormProps> = ({
       tags: selectedTags.split(","),
       status: "Pending",
     };
+
+    // headers
     const headers = {
       "Content-Type": "application/json",
       //@ts-ignore
@@ -103,22 +107,19 @@ const TaskForm: React.FC<TaskFormProps> = ({
     };
 
     try {
-      if (variant == "ADD") {
-        const res = await axios.post("/api/tasks/addtask", task, {
-          headers: headers,
-        });
-
+      if (variant === "ADD") {
+        // if form is to variant is to add a new task
+        await axios.post("/api/tasks/addtask", task, { headers });
         toast.success("Task has been added");
         clearStates();
       } else {
+        // if form is to variant is to update a task
         task.id = id;
-        const res = await axios.put("/api/tasks/updateTask", task, {
-          headers: headers,
-        });
+        const res = await axios.put("/api/tasks/updateTask", task, { headers });
         toast.success(res.data.message);
       }
     } catch (error) {
-      console.error("Error adding task:", error);
+      console.error("Error adding/updating task:", error);
       toast.error("Some error occurred");
     } finally {
       setIsLoading(false);

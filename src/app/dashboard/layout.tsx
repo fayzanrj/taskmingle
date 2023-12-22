@@ -1,11 +1,9 @@
 import Notifications from "@/components/dashboard/Notifications";
 import Sidebar from "@/components/dashboard/Sidebar";
 import "@/styles/globals.css";
+import { authOptions } from "@/utils/AuthOptions";
 import { Metadata } from "next";
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/utils/AuthOptions";
-import { IoMdAdd } from "react-icons/io";
-import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Dashboard - Task Mingle",
@@ -17,7 +15,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   const data = await getServerSession(authOptions);
-  // console.log(data)
+  
   let currentHour = new Date().getHours();
   let currentTime: string;
 

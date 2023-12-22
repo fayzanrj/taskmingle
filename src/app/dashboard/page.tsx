@@ -1,10 +1,7 @@
 import TasksCounter from "@/components/dashboard/TasksCounter";
-import { getServerSession } from "next-auth";
 import Link from "next/link";
-import { authOptions } from "@/utils/AuthOptions";
 
 const Dashboard = async () => {
-  const data = await getServerSession(authOptions);
 
   return (
     <div className="p-10">
