@@ -20,7 +20,7 @@ const LogInForm = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [disableBtn, setDisableBtn] = useState<boolean>(true);
   const [errors, setErrors] = useState<ErrorProps>({ emailError: true });
-  const [err, setErr] = useState<String>('')
+  const [err, setErr] = useState<any>('')
   const router = useRouter();
 
   // Handle login form submission
