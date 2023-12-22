@@ -20,6 +20,7 @@ const LogInForm = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [disableBtn, setDisableBtn] = useState<boolean>(true);
   const [errors, setErrors] = useState<ErrorProps>({ emailError: true });
+  const [err, setErr] = useState<String>('')
   const router = useRouter();
 
   // Handle login form submission
@@ -46,6 +47,7 @@ const LogInForm = () => {
       if (res && res.ok) {
         router.push("/dashboard");
       } else {
+      setErr(res)
         // Display more user-friendly error message
         toast.error("Login failed. Please check your credentials.");
       }
@@ -71,6 +73,8 @@ const LogInForm = () => {
     >
       {/* HEADING */}
       <Header variant="LOG IN" />
+
+      <p>{JSON.stringify(err)}</p>
 
       {/* Email Input */}
       <InputField
