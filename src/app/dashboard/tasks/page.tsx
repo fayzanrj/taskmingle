@@ -1,4 +1,3 @@
-
 import { authOptions } from "@/utils/AuthOptions";
 import AddTaskBtnRound from "@/components/tasks/AddTaskBtnRound";
 import TaskPanel from "@/components/tasks/TaskPanel";
@@ -13,25 +12,10 @@ export const metadata: Metadata = {
 const Tasks = async () => {
   const data = await getServerSession(authOptions);
 
-  const encodedDate = encodeURIComponent(new Date().toDateString());
-
-  // HEADERS FOR API REQUEST
-  const headers = {
-    "Content-Type": "application/json",
-    // @ts-ignore
-    accessToken: data?.user?.accessToken,
-  };
-
-  const response = await fetch(
-    `${process.env.HOST}/api/tasks/getAllTasks/${encodedDate}`,
-    { cache: "no-cache",  headers: headers }
-  );
-  const res = await response.json();
-  const tasks = res.tasks;
-
   return (
     <>
-      <TaskPanel currentDateTasks={tasks} />
+      {/* @ts-ignore */}
+      <TaskPanel accessToken={data?.user?.accessToken} />
       <AddTaskBtnRound />
     </>
   );

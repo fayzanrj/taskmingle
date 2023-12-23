@@ -5,6 +5,10 @@ import TaskActionBtns from "@/components/tasks/TaskActionBtns";
 import { getServerSession } from "next-auth";
 import { Roboto } from "next/font/google";
 import React from "react";
+import MarkAsBtn from "@/components/tasks/MarkAsBtn";
+import { TaskProps } from "@/props/TaskProps";
+import { FetchEventResult } from "next/dist/server/web/types";
+import ActivityLoader from "@/components/ActivityLoader";
 
 const roboto = Roboto({ subsets: ["latin"], weight: "500" });
 
@@ -27,7 +31,7 @@ const TaskDetails: React.FC<{ params: Params }> = async ({ params }) => {
     { cache: "no-cache", headers: headers }
   );
   const res = await response.json();
-  const task = res.task;
+  const task : TaskProps = res.task;
 
   return (
     <div className="w-full h-full relative py-10">
@@ -63,6 +67,8 @@ const TaskDetails: React.FC<{ params: Params }> = async ({ params }) => {
           variant="date"
           label="Date"
         />
+
+        <MarkAsBtn status={task?.status} taskId={params.taskId} date={task?.date}  />
 
         <TaskActionBtns
           href={`/dashboard/tasks/edittask/${params.taskId}`}

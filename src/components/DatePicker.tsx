@@ -7,12 +7,14 @@ import { Months } from "@/constants/Months";
 import { TaskProps } from "@/props/TaskProps";
 import axios from "axios";
 import { useSession } from "next-auth/react";
+import { fetchTasks } from "@/libs/FetchTasks";
 
 interface HorizontalDatePickerProps {
   initialDate: Date;
   numDatesToShow: number;
+  isLoading: boolean;
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
-  setTasks: React.Dispatch<React.SetStateAction<TaskProps[]>>;
+  setTasks: React.Dispatch<React.SetStateAction<TaskProps[] | undefined>>;
 }
 
 const DatePicker: React.FC<HorizontalDatePickerProps> = ({
@@ -20,8 +22,8 @@ const DatePicker: React.FC<HorizontalDatePickerProps> = ({
   numDatesToShow = 14,
   setTasks,
   setIsLoading,
+  isLoading,
 }) => {
-  
   const { data: session } = useSession();
   const [active, setActive] = useState<Date>(new Date());
   const scrollContainerRef = useRef<HTMLDivElement | null>(null);
@@ -45,29 +47,6 @@ const DatePicker: React.FC<HorizontalDatePickerProps> = ({
     }
   }, [numDatesToShow]);
 
-  const fetchTasks = async (date: any) => {
-    setIsLoading(true);
-    const encodedDate = encodeURIComponent(new Date(date).toDateString());
-
-    // HEADERS FOR API REQUEST
-    const headers = {
-      "Content-Type": "application/json",
-      // @ts-ignore
-      accessToken: session?.user?.accessToken,
-    };
-
-    try {
-      const res = await axios.get(`/api/tasks/getAllTasks/${encodedDate}`, {
-        headers,
-      });
-      setTasks(res.data.tasks);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
   const handleScroll = (direction: "prev" | "next") => {
     if (scrollContainerRef.current) {
       const scrollAmount =
@@ -83,9 +62,21 @@ const DatePicker: React.FC<HorizontalDatePickerProps> = ({
     addDays(initialDate, index)
   );
 
-  const handleClick = (date: Date): void => {
+  const handleClick = async (date: Date) => {
     setActive(date);
-    fetchTasks(date);
+    setIsLoading(true);
+    try {
+      const currentTasks: TaskProps[] | undefined = await fetchTasks(
+        date,
+        // @ts-ignore
+        session?.user?.accessToken
+      );
+      setTasks(currentTasks);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const getMonth = (date: Date): string => {
@@ -108,7 +99,7 @@ const DatePicker: React.FC<HorizontalDatePickerProps> = ({
           ref={scrollContainerRef}
         >
           {dateRangeArray.map((date) => (
-            <div
+            <button
               key={date.toString()}
               className={`w-12 px-2 lg:px-0 cursor-pointer mx-2 py-3 rounded-lg font-semibold ${
                 active.toLocaleDateString() === date.toLocaleDateString()
@@ -116,6 +107,7 @@ const DatePicker: React.FC<HorizontalDatePickerProps> = ({
                   : ""
               }`}
               onClick={() => handleClick(date)}
+              disabled={isLoading}
             >
               <p className="text-center">
                 {
@@ -129,7 +121,7 @@ const DatePicker: React.FC<HorizontalDatePickerProps> = ({
                   format(date, "d")
                 }
               </p>
-            </div>
+            </button>
           ))}
         </div>
         <button className="xl:opacity-30" onClick={() => handleScroll("next")}>

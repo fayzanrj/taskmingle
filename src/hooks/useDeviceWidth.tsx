@@ -1,22 +1,27 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
 const useDeviceWidth = (): number => {
-  const [deviceWidth, setDeviceWidth] = useState<number>(window.innerWidth);
+  const isClient = typeof window === "object"; // Check if window is defined
+
+  const [deviceWidth, setDeviceWidth] = useState<number>(
+    isClient ? window.innerWidth : 0
+  );
 
   useEffect(() => {
-    // Function to update device width when the window is resized
+    if (!isClient) {
+      return;
+    }
+
     const handleResize = (): void => {
       setDeviceWidth(window.innerWidth);
     };
 
-    // Add event listener for window resize
-    window.addEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
 
-    // Cleanup: remove event listener when the component unmounts
     return () => {
-      window.removeEventListener('resize', handleResize);
+      window.removeEventListener("resize", handleResize);
     };
-  }, []); // Empty dependency array ensures the effect runs only once
+  }, [isClient]);
 
   return deviceWidth;
 };

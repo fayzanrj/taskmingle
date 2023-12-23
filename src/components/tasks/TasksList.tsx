@@ -4,7 +4,7 @@ import TaskItemSkeleton from "./TaskItemSkeleton";
 import { TaskProps } from "@/props/TaskProps";
 
 interface TaskListProps {
-  tasks: TaskProps[];
+  tasks: TaskProps[] | undefined;
   isLoading: boolean;
 }
 
@@ -14,6 +14,11 @@ const TasksList: React.FC<TaskListProps> = ({ tasks, isLoading }) => {
     return <TaskItemSkeleton />;
   }
 
+  if(tasks === undefined){
+    return(
+      <div>Error fetch tasks</div>
+    )
+  }
   // if there are no tasks
   if (tasks.length === 0) {
     return (

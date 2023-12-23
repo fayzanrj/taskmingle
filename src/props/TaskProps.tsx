@@ -6,5 +6,5 @@ export interface TaskProps {
   date: string;
   startTime: string;
   reminderAt: string;
-  status: string;
+  status: "Pending" | "Completed" | "Overdue";
 }

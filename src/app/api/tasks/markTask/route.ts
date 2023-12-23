@@ -1,23 +1,22 @@
 import { verifyJwt } from "@/libs/Jwt";
-import { ThrowIncompleteError, ThrowServerError, ThrowUnAuthorizedError } from "@/libs/ResponseErrors";
+import {
+  ThrowIncompleteError,
+  ThrowServerError,
+  ThrowUnAuthorizedError,
+} from "@/libs/ResponseErrors";
 import { TaskProps } from "@/props/TaskProps";
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/app/db";
 import { verifyUser } from "@/libs/VerifyUser";
 
-// to do make unified function
-const checkData = (data: TaskProps): boolean => {
-  const { date, reminderAt, startTime, status, tags, taskDesc, taskTitle } =
-    data;
-  return !!(
-    date ||
-    reminderAt ||
-    startTime ||
-    status ||
-    tags ||
-    taskDesc ||
-    taskTitle
-  );
+interface UpdateStatusProps {
+  taskId: String;
+  updatedStatus: "Pending" | "Completed" | "Overdue";
+}
+const checkData = (data: UpdateStatusProps): boolean => {
+  const { taskId, updatedStatus } = data;
+  data;
+  return !!(taskId || updatedStatus);
 };
 
 export const PUT = async (req: NextRequest) => {
@@ -30,7 +29,6 @@ export const PUT = async (req: NextRequest) => {
       return ThrowUnAuthorizedError();
     }
 
-
     // Receive and check if all the data is present
     const data = await req.json();
     const isValid = checkData(data);
@@ -41,15 +39,9 @@ export const PUT = async (req: NextRequest) => {
 
     // Create task in the database
     const task = await prisma.task.update({
-      where: { id: data.id },
+      where: { id: data.taskId },
       data: {
-        taskTitle: data.taskTitle,
-        taskDesc: data.taskDesc,
-        status: data.status,
-        startTime: data.startTime,
-        reminderAt: data.reminderAt,
-        date: data.date,
-        tags: data.tags,
+        status: data.updatedStatus,
       },
     });
 
@@ -60,7 +52,7 @@ export const PUT = async (req: NextRequest) => {
 
     // Send response back
     return NextResponse.json(
-      { message: "Task has been updated", task },
+      { message: `Task has been marked as ${data.updatedStatus}` },
       { status: 200 }
     );
   } catch (error: any) {

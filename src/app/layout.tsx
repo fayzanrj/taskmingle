@@ -5,7 +5,7 @@ import type { Metadata } from "next";
 import { Raleway } from "next/font/google";
 import { Toaster } from "react-hot-toast";
 
-const raleway = Raleway({ subsets: ["latin"], weight: "600" });
+const raleway = Raleway({ subsets: ["latin"], weight: "700" });
 
 export const metadata: Metadata = {
   title: "Task Mingle",
