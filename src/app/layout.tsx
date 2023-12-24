@@ -5,7 +5,7 @@ import type { Metadata } from "next";
 import { Raleway } from "next/font/google";
 import { Toaster } from "react-hot-toast";
 
-const raleway = Raleway({ subsets: ["latin"], weight: "700" });
+const raleway = Raleway({ subsets: ["latin"]});
 
 export const metadata: Metadata = {
   title: "Task Mingle",
@@ -20,7 +20,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${raleway.className} SCROLL_BAR `}>
+      <body className={`${raleway.className} SCROLL_BAR`}>
         <Providers>
           <AppState>
             <Toaster position="top-right" />

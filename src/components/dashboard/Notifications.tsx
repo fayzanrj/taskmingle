@@ -37,10 +37,10 @@ const Notifications: React.FC = () => {
         >
           {/* heading */}
           <div className="px-3 mt-3 h-10 border-b-[.1px] border-gray-400 relative">
-            <h3 className="text-2xl font-extrabold">
-              Notifications
-            </h3>
-              <IoMdClose className="absolute top-[35%] transform -translate-y-1/2 right-3 cursor-pointer" size="1.5rem" />
+            <h3 className="text-2xl font-extrabold">Notifications</h3>
+            <button className="absolute top-[35%] transform -translate-y-1/2 right-3" onClick={handleClick}>
+              <IoMdClose className="" size="1.5rem" />
+            </button>
           </div>
           {/* notifications */}
           <div className="h-[20.5rem] px-2 overflow-x-auto SCROLL_BAR scroll-smooth">

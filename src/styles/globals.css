@@ -9,6 +9,11 @@
   background-repeat: no-repeat;
 }
 
+body{
+  -webkit-tap-highlight-color: transparent; /* For iOS */
+  user-select: none;
+}
+
 .SCROLL_BAR::-webkit-scrollbar {
   width: 6px;
 }
@@ -47,6 +52,8 @@ html {
   /* For Firefox */
   scrollbar-color: rgb(193, 190, 190) rgb(255, 255, 255);
   scrollbar-width: thin;
+  -webkit-tap-highlight-color: transparent; /* For iOS */
+  user-select: none;
 }
 @keyframes orbit7456 {
   0% {
@@ -122,5 +129,6 @@ html {
 
 .SHADOW_DIV {
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-  
 }
+
+

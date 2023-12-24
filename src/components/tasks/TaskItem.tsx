@@ -1,3 +1,4 @@
+import { getCurrentStatus } from "@/libs/GetCurrentStatus";
 import { TaskProps } from "@/props/TaskProps";
 import Link from "next/link";
 import React from "react";
@@ -11,6 +12,8 @@ const TaskItem: React.FC<TaskProps> = ({
   status,
   date,
 }) => {
+  // finding current status of the task
+  const currentStatus =  getCurrentStatus(date, status);
   return (
     <article>
       <Link href={`/dashboard/tasks/taskdetail/${id}`}>
@@ -23,7 +26,7 @@ const TaskItem: React.FC<TaskProps> = ({
           </p>
 
           <div className="w-[85%] flex justify-between items-center absolute bottom-2 left-1/2 transform -translate-x-1/2">
-            <p className="">{status}</p>
+            <p className="">{currentStatus}</p>
             <p className="text-right">
               {new Date(`${date} ${startTime}`).toLocaleTimeString([], {
                 hour: "2-digit",
@@ -33,11 +36,6 @@ const TaskItem: React.FC<TaskProps> = ({
           </div>
         </div>
       </Link>
-
-      {/* TAGS */}
-      {/* <div className="my-2"> */}
-      {/* <RenderTags tags={tags} /> */}
-      {/* </div> */}
     </article>
   );
 };

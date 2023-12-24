@@ -1,13 +1,11 @@
-import { verifyJwt } from "@/libs/Jwt";
+import prisma from "@/app/db";
 import {
   ThrowIncompleteError,
   ThrowServerError,
   ThrowUnAuthorizedError,
 } from "@/libs/ResponseErrors";
-import { TaskProps } from "@/props/TaskProps";
-import { NextRequest, NextResponse } from "next/server";
-import prisma from "@/app/db";
 import { verifyUser } from "@/libs/VerifyUser";
+import { NextRequest, NextResponse } from "next/server";
 
 interface UpdateStatusProps {
   taskId: String;

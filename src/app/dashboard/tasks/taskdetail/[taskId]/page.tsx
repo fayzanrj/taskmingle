@@ -1,20 +1,41 @@
-import { authOptions } from "@/utils/AuthOptions";
 import GoBack from "@/components/GoBack";
+import MarkAsBtn from "@/components/tasks/MarkAsBtn";
 import RenderTags from "@/components/tasks/RenderTags";
 import TaskActionBtns from "@/components/tasks/TaskActionBtns";
+import { TaskProps } from "@/props/TaskProps";
+import { authOptions } from "@/utils/AuthOptions";
 import { getServerSession } from "next-auth";
 import { Roboto } from "next/font/google";
 import React from "react";
-import MarkAsBtn from "@/components/tasks/MarkAsBtn";
-import { TaskProps } from "@/props/TaskProps";
-import { FetchEventResult } from "next/dist/server/web/types";
-import ActivityLoader from "@/components/ActivityLoader";
+
+import prisma from "@/app/db";
+import { getCurrentStatus } from "@/libs/GetCurrentStatus";
 
 const roboto = Roboto({ subsets: ["latin"], weight: "500" });
 
 interface Params {
   taskId: string;
 }
+
+// function to update current status if it is overdue and has a status of pending
+const updateCurrentStatus = async (
+  date: string,
+  taskStatus: string,
+  taskId: string | undefined
+) => {
+  const currentDate = new Date();
+  currentDate.setHours(0, 0, 0, 0);
+
+  if (currentDate >= new Date(date) && taskStatus === "Pending") {
+    const updatedStatus = "Overdue";
+    const task = await prisma.task.update({
+      where: { id: taskId },
+      data: {
+        status: updatedStatus,
+      },
+    });
+  }
+};
 
 const TaskDetails: React.FC<{ params: Params }> = async ({ params }) => {
   const data = await getServerSession(authOptions);
@@ -31,7 +52,11 @@ const TaskDetails: React.FC<{ params: Params }> = async ({ params }) => {
     { cache: "no-cache", headers: headers }
   );
   const res = await response.json();
-  const task : TaskProps = res.task;
+  const task: TaskProps = res.task;
+
+
+  // updating current status of the task if it is overdue
+  await updateCurrentStatus(task?.date, task?.status, task?.id);
 
   return (
     <div className="w-full h-full relative py-10">
@@ -68,7 +93,11 @@ const TaskDetails: React.FC<{ params: Params }> = async ({ params }) => {
           label="Date"
         />
 
-        <MarkAsBtn status={task?.status} taskId={params.taskId} date={task?.date}  />
+        <MarkAsBtn
+          status={getCurrentStatus(task?.date, task?.status)}
+          taskId={params.taskId}
+          date={task?.date}
+        />
 
         <TaskActionBtns
           href={`/dashboard/tasks/edittask/${params.taskId}`}

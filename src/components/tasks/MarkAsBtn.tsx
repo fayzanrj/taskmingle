@@ -6,19 +6,20 @@ import ActivityLoader from "../ActivityLoader";
 import { useSession } from "next-auth/react";
 import axios from "axios";
 import toast from "react-hot-toast";
+import CompletedTasks from "@/app/dashboard/completedtasks/page";
 
 // Define possible status values
 type TaskStatus = "Pending" | "Completed" | "Overdue";
 
 // Define properties for MarkButton component
 interface MarkButtonProps {
-  status: "Pending" | "Completed" | "Overdue";
+  status: TaskStatus;
   taskId: string;
   date: string;
 }
 
 // Function to determine status based on date and taskStatus
-const getStatus = (date: string, taskStatus: TaskStatus): TaskStatus => {
+const getUpdatedStatus = (date: string, taskStatus: TaskStatus): TaskStatus => {
   if (taskStatus !== "Completed") return "Completed";
   const currentDate = new Date();
   currentDate.setHours(0, 0, 0, 0);
@@ -31,20 +32,21 @@ const MarkAsBtn: React.FC<MarkButtonProps> = ({ status, taskId, date }) => {
   const { data: session } = useSession();
 
   // State variables for taskStatus and loading
-  const [taskStatus, setTaskStatus] = useState(status);
+  const [taskStatus, setTaskStatus] = useState<TaskStatus>(status);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   // Headers for API request
   const headers = {
     "Content-Type": "application/json",
-    //@ts-ignore
+    // @ts-ignore
     accessToken: session?.user?.accessToken,
   };
+
 
   // Handle click event for marking the task
   const handleClick = async () => {
     try {
-      const updatedStatus = getStatus(date, taskStatus);
+      const updatedStatus = getUpdatedStatus(date, taskStatus);
       setIsLoading(true);
       const data = { taskId, updatedStatus };
       const res = await axios.put("/api/tasks/markTask", data, { headers });
@@ -59,26 +61,36 @@ const MarkAsBtn: React.FC<MarkButtonProps> = ({ status, taskId, date }) => {
     }
   };
 
-  const getColor = (taskStatus: TaskStatus) => {
-    if (taskStatus === "Completed") {
-      return "#19fa9a";
-    } else if (taskStatus === "Pending") {
-      return "#FF8C00";
-    } else {
-      return "#f91515";
+  // Function to get color based on taskStatus
+  const getColor = (taskStatus: TaskStatus): string => {
+    switch (taskStatus) {
+      case "Completed":
+        return "#32CD32"; // Lime Green
+      case "Pending":
+        return "#FFA500"; // Orange
+      default:
+        return "#FF6347"; // Tomato Red
     }
   };
 
+  // Get color based on taskStatus
   const color = getColor(taskStatus);
+
   return (
     <>
       <div>
         {/* Display current task status */}
-        <p className={`text-[${color}] font-bold`}>{taskStatus}</p>
+        <p style={{ color, fontWeight: 800 }} className={`text-lg`}>
+          {taskStatus}
+        </p>
       </div>
       <div className="text-right my-2">
         {/* Button for marking the task */}
-        <button onClick={handleClick} className="relative w-56 h-10">
+        <button
+          onClick={handleClick}
+          className="relative w-56 h-10"
+          style={{ userSelect: "none" }}
+        >
           {isLoading ? (
             // Display loading indicator during request
             <ActivityLoader />

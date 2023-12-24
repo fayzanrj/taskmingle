@@ -30,22 +30,12 @@ const DatePicker: React.FC<HorizontalDatePickerProps> = ({
 
   useEffect(() => {
     if (scrollContainerRef.current) {
-      const buttonWidth =
-        scrollContainerRef.current.offsetWidth / numDatesToShow;
-      const selectedIndex = dateRangeArray.findIndex(
-        (date) => date.getTime() === active.getTime()
-      );
-
-      if (selectedIndex !== -1) {
-        const scrollLeft =
-          buttonWidth * selectedIndex -
-          scrollContainerRef.current.offsetWidth / 2 +
-          buttonWidth / 2;
-
-        scrollContainerRef.current.scrollLeft = scrollLeft;
-      }
+      const containerWidth = scrollContainerRef.current.scrollWidth;
+      const scrollPosition = containerWidth / 2 - window.innerWidth / 2;
+      scrollContainerRef.current.scrollTo(scrollPosition, 0);
     }
-  }, [numDatesToShow]);
+    
+  }, []); 
 
   const handleScroll = (direction: "prev" | "next") => {
     if (scrollContainerRef.current) {

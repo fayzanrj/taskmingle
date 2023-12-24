@@ -2,6 +2,8 @@ import React from "react";
 import TaskItem from "./TaskItem";
 import TaskItemSkeleton from "./TaskItemSkeleton";
 import { TaskProps } from "@/props/TaskProps";
+import TasksFetchError from "./TasksFetchError";
+import NoTasksFound from "./NoTasksFound";
 
 interface TaskListProps {
   tasks: TaskProps[] | undefined;
@@ -14,23 +16,12 @@ const TasksList: React.FC<TaskListProps> = ({ tasks, isLoading }) => {
     return <TaskItemSkeleton />;
   }
 
-  if(tasks === undefined){
-    return(
-      <div>Error fetch tasks</div>
-    )
+  if (tasks === undefined) {
+    return <TasksFetchError />;
   }
   // if there are no tasks
   if (tasks.length === 0) {
-    return (
-      <div className="w-fit mt-20 mx-auto px-3 text-center">
-        <h3
-          style={{ wordSpacing: ".2rem" }}
-          className="text-3xl font-extrabold uppercase tracking-widest"
-        >
-          NO TASKS FOUND
-        </h3>
-      </div>
-    );
+    return <NoTasksFound />;
   }
   return (
     <div
