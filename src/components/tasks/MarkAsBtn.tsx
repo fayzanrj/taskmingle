@@ -1,6 +1,6 @@
 // Import dependencies and components
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { MdClose, MdDone } from "react-icons/md";
 import ActivityLoader from "../ActivityLoader";
 import { useSession } from "next-auth/react";
@@ -9,13 +9,13 @@ import toast from "react-hot-toast";
 import CompletedTasks from "@/app/dashboard/completedtasks/page";
 
 // Define possible status values
-type TaskStatus = "Pending" | "Completed" | "Overdue";
+type TaskStatus = "Pending" | "Completed" | "Overdue" | null;
 
 // Define properties for MarkButton component
 interface MarkButtonProps {
-  status: TaskStatus;
   taskId: string;
   date: string;
+  accessToken: string;
 }
 
 // Function to determine status based on date and taskStatus
@@ -27,21 +27,32 @@ const getUpdatedStatus = (date: string, taskStatus: TaskStatus): TaskStatus => {
 };
 
 // MarkAsBtn component
-const MarkAsBtn: React.FC<MarkButtonProps> = ({ status, taskId, date }) => {
+const MarkAsBtn: React.FC<MarkButtonProps> = ({ taskId, date, accessToken }) => {
   // Get session data using useSession
   const { data: session } = useSession();
 
   // State variables for taskStatus and loading
-  const [taskStatus, setTaskStatus] = useState<TaskStatus>(status);
+  const [taskStatus, setTaskStatus] = useState<TaskStatus | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   // Headers for API request
   const headers = {
     "Content-Type": "application/json",
     // @ts-ignore
-    accessToken: session?.user?.accessToken,
+    accessToken: accessToken,
   };
 
+  useEffect(() => {
+    const fetchTaskStatus = async () => {
+      const res = await axios.get(`/api/tasks/getTaskStatus/${taskId}`, {
+        headers,
+      });
+      if (res && res.data) {
+        setTaskStatus(res.data.status);
+      }
+    };
+    fetchTaskStatus();
+  }, []);
 
   // Handle click event for marking the task
   const handleClick = async () => {

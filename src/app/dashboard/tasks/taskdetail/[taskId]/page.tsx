@@ -94,9 +94,10 @@ const TaskDetails: React.FC<{ params: Params }> = async ({ params }) => {
         />
 
         <MarkAsBtn
-          status={getCurrentStatus(task?.date, task?.status)}
           taskId={params.taskId}
           date={task?.date}
+          //@ts-ignore
+          accessToken={data?.user?.accessToken}
         />
 
         <TaskActionBtns
