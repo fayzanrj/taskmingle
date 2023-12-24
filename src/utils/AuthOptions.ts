@@ -1,4 +1,5 @@
-import axios from "axios";import prisma from "@/app/db";
+import axios from "axios";
+import prisma from "@/app/db";
 import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { signJwtAccessToken } from "@/libs/Jwt";
@@ -9,6 +10,7 @@ interface UserProps {
   name: string;
   email: string;
   isVerified: boolean | null;
+  profilePic: string | null;
 }
 
 export const authOptions: NextAuthOptions = {
@@ -33,27 +35,28 @@ export const authOptions: NextAuthOptions = {
           const userExists = await prisma.user.findUnique({
             where: { email: email.toLowerCase() },
           });
-      
+
           if (!userExists) {
             return null;
           }
-      
+
           const isPasswordCorrect = await bcrypt.compareSync(
             password,
             userExists.password
           );
-      
+
           if (!isPasswordCorrect) {
             return new Response(JSON.stringify(null));
           }
-      
+
           const newUser: UserProps = {
             id: userExists.id,
             name: userExists.name,
             email: userExists.email,
             isVerified: userExists.isVerified,
+            profilePic: userExists.profilePic,
           };
-      
+
           const accessToken = signJwtAccessToken(newUser);
           const user = {
             ...newUser,

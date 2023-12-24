@@ -1,12 +1,10 @@
 // Import dependencies and components
 "use client";
+import axios from "axios";
 import React, { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import { MdClose, MdDone } from "react-icons/md";
 import ActivityLoader from "../ActivityLoader";
-import { useSession } from "next-auth/react";
-import axios from "axios";
-import toast from "react-hot-toast";
-import CompletedTasks from "@/app/dashboard/completedtasks/page";
 
 // Define possible status values
 type TaskStatus = "Pending" | "Completed" | "Overdue" | null;
@@ -27,10 +25,11 @@ const getUpdatedStatus = (date: string, taskStatus: TaskStatus): TaskStatus => {
 };
 
 // MarkAsBtn component
-const MarkAsBtn: React.FC<MarkButtonProps> = ({ taskId, date, accessToken }) => {
-  // Get session data using useSession
-  const { data: session } = useSession();
-
+const MarkAsBtn: React.FC<MarkButtonProps> = ({
+  taskId,
+  date,
+  accessToken,
+}) => {
   // State variables for taskStatus and loading
   const [taskStatus, setTaskStatus] = useState<TaskStatus | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -38,21 +37,25 @@ const MarkAsBtn: React.FC<MarkButtonProps> = ({ taskId, date, accessToken }) => 
   // Headers for API request
   const headers = {
     "Content-Type": "application/json",
-    // @ts-ignore
-    accessToken: accessToken,
+    accessToken,
   };
 
+  // Fetch task status on component mount
   useEffect(() => {
     const fetchTaskStatus = async () => {
-      const res = await axios.get(`/api/tasks/getTaskStatus/${taskId}`, {
-        headers,
-      });
-      if (res && res.data) {
-        setTaskStatus(res.data.status);
+      try {
+        const res = await axios.get(`/api/tasks/getTaskStatus/${taskId}`, {
+          headers,
+        });
+        if (res && res.data) {
+          setTaskStatus(res.data.status);
+        }
+      } catch (error) {
+        console.error(error);
       }
     };
     fetchTaskStatus();
-  }, []);
+  }, [taskId, headers]);
 
   // Handle click event for marking the task
   const handleClick = async () => {
@@ -73,8 +76,8 @@ const MarkAsBtn: React.FC<MarkButtonProps> = ({ taskId, date, accessToken }) => 
   };
 
   // Function to get color based on taskStatus
-  const getColor = (taskStatus: TaskStatus): string => {
-    switch (taskStatus) {
+  const getColor = (status: TaskStatus): string => {
+    switch (status) {
       case "Completed":
         return "#32CD32"; // Lime Green
       case "Pending":
@@ -87,45 +90,49 @@ const MarkAsBtn: React.FC<MarkButtonProps> = ({ taskId, date, accessToken }) => 
   // Get color based on taskStatus
   const color = getColor(taskStatus);
 
+  if (taskStatus === null) {
+    return <Skeleton />;
+  }
+
   return (
-    <>
-      <div>
-        {/* Display current task status */}
-        <p style={{ color, fontWeight: 800 }} className={`text-lg`}>
-          {taskStatus}
-        </p>
-      </div>
-      <div className="text-right my-2">
-        {/* Button for marking the task */}
-        <button
-          onClick={handleClick}
-          className="relative w-56 h-10"
-          style={{ userSelect: "none" }}
-        >
-          {isLoading ? (
-            // Display loading indicator during request
-            <ActivityLoader />
-          ) : (
-            // Display mark as completed or not completed based on current status
-            <p className="font-semibold">
-              Mark it as{" "}
-              {taskStatus === "Completed" ? (
-                <span>
-                  Not Completed{" "}
-                  <MdClose className="inline-block" size="1.2rem" />
-                </span>
-              ) : (
-                <span>
-                  Completed <MdDone className="inline-block" size="1.2rem" />
-                </span>
-              )}
-            </p>
-          )}
-        </button>
-      </div>
-    </>
+    <div className="flex items-center justify-between">
+      {/* Display current task status */}
+      <p style={{ color, fontWeight: 700 }} className="text-lg">
+        {taskStatus}
+      </p>
+
+      {/* Button for marking the task */}
+      <button
+        onClick={handleClick}
+        className="relative w-56 h-10"
+        style={{ userSelect: "none" }}
+      >
+        {isLoading ? (
+          // Display loading indicator during request
+          <ActivityLoader />
+        ) : (
+          // Display mark as completed or not completed based on current status
+          <p className="font-semibold">
+            Mark it as{" "}
+            {taskStatus === "Completed" ? (
+              <span>
+                Not Completed <MdClose className="inline-block" size="1.2rem" />
+              </span>
+            ) : (
+              <span>
+                Completed <MdDone className="inline-block" size="1.2rem" />
+              </span>
+            )}
+          </p>
+        )}
+      </button>
+    </div>
   );
 };
 
 // Export MarkAsBtn component
 export default MarkAsBtn;
+
+const Skeleton = () => {
+  return <div className="h-10 bg-gray-200 rounded-lg animate-pulse"></div>;
+};

@@ -133,7 +133,7 @@ const TaskForm: React.FC<TaskFormProps> = ({
       <header className="text-center">
         <h1 className="text-3xl font-bold">Add a Task</h1>
       </header>
-      <div className="mt-4 flex justify-center items-center flex-wrap md:gap-5">
+      <div className="mt-5 flex justify-center items-center flex-wrap md:gap-5 ">
         <section className="w-4/5 sm:w-80 px-1">
           {/* Input components for task details */}
           <AddTaskTextInput
@@ -183,7 +183,7 @@ const TaskForm: React.FC<TaskFormProps> = ({
         </section>
       </div>
 
-      <section className="w-[90%] mx-auto my-10 relative">
+      <section className="w-[90%] h-10  mx-auto my-10  relative">
         {/* Buttons for cancel and save actions */}
         <button disabled={isLoading} className="h-10 w-24 absolute right-28">
           Cancel

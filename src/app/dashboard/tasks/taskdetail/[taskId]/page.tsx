@@ -26,7 +26,7 @@ const updateCurrentStatus = async (
   const currentDate = new Date();
   currentDate.setHours(0, 0, 0, 0);
 
-  if (currentDate >= new Date(date) && taskStatus === "Pending") {
+  if (currentDate > new Date(date) && taskStatus === "Pending") {
     const updatedStatus = "Overdue";
     const task = await prisma.task.update({
       where: { id: taskId },
@@ -69,7 +69,7 @@ const TaskDetails: React.FC<{ params: Params }> = async ({ params }) => {
           <RenderTags tags={task?.tags || []} />
         </div>
 
-        <h3 className="font-extrabold text-4xl">{task?.taskTitle}</h3>
+        <h3 className="font-bold text-4xl">{task?.taskTitle}</h3>
 
         <div className="min-h-[20vh]">
           <p className="my-10 font-semibold">{task?.taskDesc}</p>
