@@ -1,5 +1,7 @@
+import Logo from "@/components/Logo";
 import Notifications from "@/components/dashboard/Notifications";
 import Sidebar from "@/components/dashboard/Sidebar";
+import VerifyEmailMessage from "@/components/dashboard/VerifyEmailMessage";
 import "@/styles/globals.css";
 import { authOptions } from "@/utils/AuthOptions";
 import { Metadata } from "next";
@@ -15,7 +17,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   const data = await getServerSession(authOptions);
-  
+
   let currentHour = new Date().getHours();
   let currentTime: string;
 
@@ -28,29 +30,37 @@ export default async function RootLayout({
     currentTime = "Good Evening";
   }
 
+  const message =
+    currentTime + " " + (data && data.user ? data.user.name : "Guest");
   return (
     <main className="w-full h-[100svh] flex">
       <Sidebar />
-      <div className="w-full h-fit  duration-500">
-        <div className="w-full h-16 px-10 bg-[#19fa9a]  relative z-40">
-          {/* GREETING */}
-          <Greeting>
-            {currentTime + " " + (data && data.user ? data.user.name : "Guest")}
-          </Greeting>
-          <Notifications />
-        </div>
+      <div className="w-full h-fit">
+        {/* @ts-ignore */}
+        <TopBar message={message} isVerified={data?.user?.isVerified} />
         {children}
       </div>
     </main>
   );
 }
 
-const Greeting = ({ children }: { children: React.ReactNode }) => {
+interface TopBarProps {
+  message: string;
+  isVerified: boolean;
+}
+
+const TopBar: React.FC<TopBarProps> = ({ message, isVerified }) => {
   return (
-    <p className="max-w-[90%] text-lg md:text-2xl font-semibold  absolute top-1/2  transform -translate-y-1/2">
-      {children}
-    </p>
+    <div className="w-full h-16 px-10 bg-[#19fa9a]  relative z-40">
+      {/* GREETING */}
+      <p className="max-w-[90%] text-lg md:text-2xl font-semibold  absolute top-1/2  transform -translate-y-1/2">
+        {message}
+      </p>
+      {/* NOTIFICATIONS */}
+      <Notifications />
+
+      {/* VERIFY EMAIL MESSAGE */}
+      {!isVerified && <VerifyEmailMessage />}
+    </div>
   );
 };
-
-

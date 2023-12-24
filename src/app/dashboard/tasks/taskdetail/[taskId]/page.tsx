@@ -1,5 +1,5 @@
 import GoBack from "@/components/GoBack";
-import MarkAsBtn from "@/components/tasks/MarkAsBtn";
+import TaskStatus from "@/components/tasks/TaskStatus";
 import RenderTags from "@/components/tasks/RenderTags";
 import TaskActionBtns from "@/components/tasks/TaskActionBtns";
 import { TaskProps } from "@/props/TaskProps";
@@ -93,7 +93,7 @@ const TaskDetails: React.FC<{ params: Params }> = async ({ params }) => {
           label="Date"
         />
 
-        <MarkAsBtn
+        <TaskStatus
           taskId={params.taskId}
           date={task?.date}
           //@ts-ignore

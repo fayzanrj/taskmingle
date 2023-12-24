@@ -24,8 +24,8 @@ const getUpdatedStatus = (date: string, taskStatus: TaskStatus): TaskStatus => {
   return currentDate <= new Date(date) ? "Pending" : "Overdue";
 };
 
-// MarkAsBtn component
-const MarkAsBtn: React.FC<MarkButtonProps> = ({
+// TaskStatus component
+const TaskStatus: React.FC<MarkButtonProps> = ({
   taskId,
   date,
   accessToken,
@@ -95,7 +95,7 @@ const MarkAsBtn: React.FC<MarkButtonProps> = ({
   }
 
   return (
-    <div className="flex items-center justify-between">
+    <div className="flex flex-col sm:flex-row items-center justify-between">
       {/* Display current task status */}
       <p style={{ color, fontWeight: 700 }} className="text-lg">
         {taskStatus}
@@ -104,7 +104,7 @@ const MarkAsBtn: React.FC<MarkButtonProps> = ({
       {/* Button for marking the task */}
       <button
         onClick={handleClick}
-        className="relative w-56 h-10"
+        className="relative w-56 h-10 text-right"
         style={{ userSelect: "none" }}
       >
         {isLoading ? (
@@ -131,7 +131,7 @@ const MarkAsBtn: React.FC<MarkButtonProps> = ({
 };
 
 // Export MarkAsBtn component
-export default MarkAsBtn;
+export default TaskStatus;
 
 const Skeleton = () => {
   return <div className="h-10 bg-gray-200 rounded-lg animate-pulse"></div>;
