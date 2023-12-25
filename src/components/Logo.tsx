@@ -1,8 +1,8 @@
-import React from "react";
 import logo from "@/assets/logo/taskMingleLogo.png";
 import Image from "next/image";
-import Link from "next/link";
+import React from "react";
 
+// Logo interface
 interface LogoProps {
   width: number;
   height: number;

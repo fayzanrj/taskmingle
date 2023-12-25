@@ -17,6 +17,7 @@ import useDeviceWidth from "@/hooks/useDeviceWidth";
 
 // TO DO : WORK ON HREFS
 
+// Navigation Links interface
 interface NavLink {
   text: string;
   href: string;
@@ -24,11 +25,12 @@ interface NavLink {
   Icon: IconType;
 }
 
+// Navigaion Item interface that also contains Navigation Link interface
 interface NavItem extends NavLink {
   setState: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-// TOP NAV BAR LINKS, LABELS AND ICONS
+// Top navbar links data
 const TopNavLinks: NavLink[] = [
   { text: "Home", href: ROUTES.DASHBOARD, Icon: AiOutlineHome, size: 1.4 },
   { text: "My Tasks", href: ROUTES.TASKS, Icon: SlMenu, size: 1.2 },
@@ -46,13 +48,11 @@ const TopNavLinks: NavLink[] = [
   },
 ];
 
-// sidebar props
-interface SidebarProps {}
-
-const Sidebar: FC<SidebarProps> = () => {
+const Sidebar: React.FC = () => {
+  // Variable state
   const [isOpen, setIsOpen] = useState<boolean>(true);
 
-  // function to show and hide sidebar
+  // Function to show and hide sidebar
   const toggleSidebar = (): void => setIsOpen(!isOpen);
 
   return (
@@ -64,7 +64,7 @@ const Sidebar: FC<SidebarProps> = () => {
           isOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
-        {/* CLOSING BTN */}
+        {/* Opening and closing button for sidebar */}
         <button
           aria-label="Nav-toggle-button"
           className={`absolute top-4 ${
@@ -80,18 +80,18 @@ const Sidebar: FC<SidebarProps> = () => {
           <Logo width={100} height={100} />
         </div>
 
-        {/* TOP NAVIGATION LINKS */}
+        {/* Top navigation bar */}
         <ul className="my-10 p-3">
           {TopNavLinks.map((item, index) => (
             <NavItem key={index} {...item} setState={setIsOpen} />
           ))}
         </ul>
 
-        {/* BOTTOM NAVIGATION LINKS */}
+        {/* Bottom navigation bar */}
         <ul className="w-full p-3 absolute bottom-0">
           <NavItem
             text="Profile"
-            href="/"
+            href={ROUTES.PROFILE}
             size={1.4}
             Icon={CgProfile}
             setState={setIsOpen}
@@ -103,8 +103,8 @@ const Sidebar: FC<SidebarProps> = () => {
   );
 };
 
-// logo out button
-const LogoutButton: FC = () => (
+// Log out button
+const LogoutButton: React.FC = () => (
   <li className="relative p-3 my-1 rounded-xl">
     <button onClick={() => signOut()}>
       <span className="aboslute">
@@ -115,16 +115,16 @@ const LogoutButton: FC = () => (
   </li>
 );
 
-// nav item
+// Navigation item
 const NavItem: FC<NavItem> = ({ text, href, Icon, size, setState }) => {
   const pathname = usePathname();
   const path = pathname.split("/");
 
-  // checking the current path
+  // Checking the current path
   const isActive =
     path[2] === href || (path.length === 2 && href === ROUTES.DASHBOARD);
 
-    // closing sidebar on click in mobile devices
+  // Closing sidebar on click in mobile devices
   const screenWidth = useDeviceWidth();
   const handleClick = () => {
     if (screenWidth <= 768) {
@@ -139,9 +139,12 @@ const NavItem: FC<NavItem> = ({ text, href, Icon, size, setState }) => {
       onClick={handleClick}
     >
       <Link href={href === "dashboard" ? "/dashboard" : `/dashboard/${href}`}>
+        {/* Icon */}
         <span className="aboslute">
           <Icon className="inline-block" size={`${size}rem`} />
         </span>
+
+        {/* Text */}
         <p className="absolute inline-block ml-4 font-semibold">{text}</p>
       </Link>
     </li>

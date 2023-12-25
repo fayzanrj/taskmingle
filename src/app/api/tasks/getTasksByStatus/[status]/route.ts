@@ -23,8 +23,10 @@ export const GET = async (
       return ThrowUnAuthorizedError();
     }
 
+    // getting initial date 
     const initialDate = getInitialDate();
 
+    // finding a user's task with provided status and from the initial date
     const tasks = await prisma.task.findMany({
       where: {
         createdById: user.id,
@@ -38,6 +40,7 @@ export const GET = async (
       },
     });
 
+    // returing tasks
     return NextResponse.json({ tasks });
   } catch (error: any) {
     console.error(error);

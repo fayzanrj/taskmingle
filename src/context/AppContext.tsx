@@ -1,7 +1,5 @@
 "use client";
-import { TasksData } from "@/constants/TasksData";
-import { TaskProps } from "@/props/TaskProps";
-import React, { createContext, useEffect, useState } from "react";
+import React, { createContext } from "react";
 
 export const AppContext = createContext<any | undefined>(undefined);
 

@@ -1,7 +1,7 @@
-import { authOptions } from "@/utils/AuthOptions";
 import AddTaskBtnRound from "@/components/tasks/AddTaskBtnRound";
 import TaskPanel from "@/components/tasks/TaskPanel";
-import { Metadata } from "next";
+import { authOptions } from "@/utils/AuthOptions";
+import { Metadata, NextPage } from "next";
 import { getServerSession } from "next-auth";
 
 export const metadata: Metadata = {
@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   description: "",
 };
 
-const Tasks = async () => {
+const Tasks : NextPage = async () => {
   const data = await getServerSession(authOptions);
 
   return (

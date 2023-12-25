@@ -3,5 +3,5 @@ export const ROUTES = {
     TASKS: "tasks",
     COMPLETED_TASKS: "completedtasks",
     OVERDUE_TASKS: "overdue",
-    PROFILE: "/",
+    PROFILE: "profile",
   };

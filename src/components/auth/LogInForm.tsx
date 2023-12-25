@@ -1,5 +1,6 @@
 "use client";
 import { isValidEmail } from "@/libs/FormValidations";
+import { getErrorMessage } from "@/libs/GetErrorMessage";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -9,10 +10,11 @@ import AuthBtn from "./AuthBtn";
 import Header from "./Header";
 import InputField from "./InputField";
 
+// Error interface
 interface ErrorProps {
   [key: string]: boolean;
 }
-// LogInForm component
+
 const LogInForm = () => {
   // State variables for form fields
   const [email, setEmail] = useState<string>("");
@@ -20,9 +22,10 @@ const LogInForm = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [disableBtn, setDisableBtn] = useState<boolean>(true);
   const [errors, setErrors] = useState<ErrorProps>({ emailError: true });
+  // Router to navigate
   const router = useRouter();
 
-  // Handle login form submission
+  // Function to handle login form submission
   const handleLogIn = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -45,14 +48,14 @@ const LogInForm = () => {
 
       if (res && res.ok) {
         router.push("/dashboard");
+        toast.success("Logged in successfully. Redirecting to dashboard.");
       } else {
-        // Display more user-friendly error message
         toast.error("Login failed. Please check your credentials.");
       }
-      console.log(res);
-    } catch (error) {
-      console.error("Login error:", error);
-      toast.error("An unexpected error occurred. Please try again.");
+    } catch (error : any) {
+      console.error(error);
+      const errorMessage = getErrorMessage(error);
+      toast.error(errorMessage);
     } finally {
       setIsLoading(false);
     }
@@ -60,10 +63,9 @@ const LogInForm = () => {
 
   // use effect to check validations status and disable button
   useEffect(() => {
-    setDisableBtn(password.length === 0 && errors.emailError);
+    setDisableBtn(password.length <= 1 && errors.emailError);
   }, [errors, password]);
 
-  // JSX for LogInForm component
   return (
     <form
       className="w-11/12 md:w-96 h-96 bg-white shadow-lg rounded-md absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 px-7 py-8"
@@ -93,7 +95,7 @@ const LogInForm = () => {
         placeHolder="Enter your password"
         state={password}
         setState={setPassword}
-        variant="LOGINPASS"
+        variant="NO_VALIDATION"
       />
 
       {/* Login Button */}

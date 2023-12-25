@@ -1,5 +1,6 @@
 "use client";
-import { getTime } from "@/libs/GetTime";
+import { getErrorMessage } from "@/libs/GetErrorMessage";
+import { getTime } from "@/libs/GetFormattedData";
 import { TaskProps } from "@/props/TaskProps";
 import axios from "axios";
 import { useSession } from "next-auth/react";
@@ -12,7 +13,7 @@ import AddTaskTextArea from "./AddTaskTextArea";
 import AddTaskTextInput from "./AddTaskTextInput";
 import AddTaskTimeInput from "./AddTaskTimeInput";
 
-// interface
+// Task Form Interface
 interface TaskFormProps {
   id?: string;
   taskTitle?: string;
@@ -37,14 +38,11 @@ const TaskForm: React.FC<TaskFormProps> = ({
   variant,
 }) => {
   const { data: session } = useSession();
-  
-  // const [taskStatus , setTaskStatus] = useState<string>(status || "")
-
-  // states
+  // State variables
   const [title, setTitle] = useState<string>(taskTitle || "");
   const [desc, setDesc] = useState<string>(taskDesc || "");
 
-  // date states
+  // Date state
   const [selectedDate, setSelectedDate] = useState<string>(
     //@ts-ignore
     `${new Date(date).getFullYear()}-${
@@ -54,18 +52,18 @@ const TaskForm: React.FC<TaskFormProps> = ({
     }-${new Date(date).getDate()}` || ""
   );
 
-  //tags state
+  // Tags state
   const [selectedTags, setSelectedTags] = useState<string>(
     tags ? tags.join(", ") : ""
   );
 
-  // start time state
+  // Start time state
   const [startingTime, setStartingTime] = useState<string>(
     //@ts-ignore
     startTime ? getTime(date, startTime) : ""
   );
 
-  // remind time state
+  // Remind time state
   const [remindAt, setRemindAt] = useState<string>(
     //@ts-ignore
     reminderAt ? getTime(date, reminderAt) : ""
@@ -74,7 +72,7 @@ const TaskForm: React.FC<TaskFormProps> = ({
   // activity state
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  // function to make all states an empty string
+  // Function to make all states an empty string
   const clearStates = () => {
     setRemindAt("");
     setTitle("");
@@ -84,7 +82,7 @@ const TaskForm: React.FC<TaskFormProps> = ({
     setSelectedTags("");
   };
 
-  
+  // Handle save function
   const handleSave = async () => {
     setIsLoading(true);
 
@@ -99,7 +97,7 @@ const TaskForm: React.FC<TaskFormProps> = ({
       status: "Pending",
     };
 
-    // headers
+    // Headers
     const headers = {
       "Content-Type": "application/json",
       //@ts-ignore
@@ -108,19 +106,20 @@ const TaskForm: React.FC<TaskFormProps> = ({
 
     try {
       if (variant === "ADD") {
-        // if form is to variant is to add a new task
+        // If form is to variant is to add a new task
         await axios.post("/api/tasks/addtask", task, { headers });
         toast.success("Task has been added");
         clearStates();
       } else {
-        // if form is to variant is to update a task
+        // If form is to variant is to update a task
         task.id = id;
         const res = await axios.put("/api/tasks/updateTask", task, { headers });
         toast.success(res.data.message);
       }
     } catch (error) {
-      console.error("Error adding/updating task:", error);
-      toast.error("Some error occurred");
+      console.error(error);
+      const errorMessage = getErrorMessage(error);
+      toast.error(errorMessage);
     } finally {
       setIsLoading(false);
     }
@@ -129,10 +128,14 @@ const TaskForm: React.FC<TaskFormProps> = ({
   // JSX structure of the component
   return (
     <div className="w-full h-full relative px-4 py-10 md:pb-2">
+      {/* Go back button */}
       <GoBack />
+
+      {/* Header */}
       <header className="text-center">
         <h1 className="text-3xl font-bold">Add a Task</h1>
       </header>
+      
       <div className="mt-5 flex justify-center items-center flex-wrap md:gap-5 ">
         <section className="w-4/5 sm:w-80 px-1">
           {/* Input components for task details */}
@@ -188,6 +191,7 @@ const TaskForm: React.FC<TaskFormProps> = ({
         <button disabled={isLoading} className="h-10 w-24 absolute right-28">
           Cancel
         </button>
+
         <button
           disabled={
             isLoading ||

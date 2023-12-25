@@ -1,6 +1,6 @@
 import React from "react";
 
-// Define TextArea component
+// TextArea interface
 interface TextAreaProps {
   label: string;
   id: string;

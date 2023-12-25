@@ -27,7 +27,7 @@ export const PUT = async (req: NextRequest) => {
       return ThrowUnAuthorizedError();
     }
 
-    // Receive and check if all the data is present
+    // Receiving and checking if all the data is present
     const data = await req.json();
     const isValid = checkData(data);
 
@@ -35,7 +35,7 @@ export const PUT = async (req: NextRequest) => {
       return ThrowIncompleteError();
     }
 
-    // Create task in the database
+    // Updating task in the database
     const task = await prisma.task.update({
       where: { id: data.taskId },
       data: {
@@ -43,12 +43,12 @@ export const PUT = async (req: NextRequest) => {
       },
     });
 
-    // If task is not created
+    // If task is not updated
     if (!task) {
       return ThrowServerError();
     }
 
-    // Send response back
+    // Response
     return NextResponse.json(
       { message: `Task has been marked as ${data.updatedStatus}` },
       { status: 200 }

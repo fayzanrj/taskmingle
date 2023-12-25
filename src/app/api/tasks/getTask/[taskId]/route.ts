@@ -10,7 +10,7 @@ export const GET = async (
   { params }: { params: { taskId: string } }
 ) => {
   try {
-   // Verify user by verifying access token
+   // Verifying user by verifying access token
    const user = verifyUser(req);
 
    // If access token is not verified
@@ -31,7 +31,7 @@ export const GET = async (
       return ThrowNotFoundError("No task found")
     }
 
-    // returning task
+    // returning task as response
     return NextResponse.json({ task }, { status: 200 });
   } catch (error: any) {
     console.error(error);

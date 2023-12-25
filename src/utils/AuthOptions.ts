@@ -1,10 +1,10 @@
-import axios from "axios";
 import prisma from "@/app/db";
-import { NextAuthOptions } from "next-auth";
-import CredentialsProvider from "next-auth/providers/credentials";
 import { signJwtAccessToken } from "@/libs/Jwt";
 import bcrypt from "bcryptjs";
+import { NextAuthOptions } from "next-auth";
+import CredentialsProvider from "next-auth/providers/credentials";
 
+// User interface
 interface UserProps {
   id: string;
   name: string;
@@ -29,26 +29,29 @@ export const authOptions: NextAuthOptions = {
           password: string;
         };
 
-        const data = { email, password };
-
         try {
+          // Finding user
           const userExists = await prisma.user.findUnique({
             where: { email: email.toLowerCase() },
           });
 
+          // If user is not found
           if (!userExists) {
             return null;
           }
 
-          const isPasswordCorrect = await bcrypt.compareSync(
+          // Comparing password
+          const isPasswordCorrect = bcrypt.compareSync(
             password,
             userExists.password
           );
 
+          // If password does not matches
           if (!isPasswordCorrect) {
-            return new Response(JSON.stringify(null));
+            return null;
           }
 
+          // Setting user data
           const newUser: UserProps = {
             id: userExists.id,
             name: userExists.name,
@@ -57,14 +60,16 @@ export const authOptions: NextAuthOptions = {
             profilePic: userExists.profilePic,
           };
 
+          // Getting access token
           const accessToken = signJwtAccessToken(newUser);
+          // Setting user object to return
           const user = {
             ...newUser,
             accessToken,
           };
 
+          // Returing
           if (user) {
-            console.log(user);
             return user;
           } else {
             return null;

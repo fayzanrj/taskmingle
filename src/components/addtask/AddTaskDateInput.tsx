@@ -1,7 +1,15 @@
+// Importing constants and props
 import { NumberOfDaysInMonth } from "@/constants/Months";
 import { DateTimeInputProps } from "@/props/DateTimeProps";
 import React from "react";
 
+// Function to calculate the minimum date
+const calculateMinDate = () => {
+  const currentDate = new Date();
+  return `${currentDate.getFullYear()}-${currentDate.getMonth() + 1}-${currentDate.getDate()}`;
+};
+
+// Function to calculate the maximum date for input
 const calculateMaxDate = () => {
   const currentDate = new Date();
   let day = currentDate.getDate();
@@ -9,7 +17,6 @@ const calculateMaxDate = () => {
   let year = currentDate.getFullYear();
   let currentMonthDays = NumberOfDaysInMonth[month];
 
-  // Check if the current year is a leap year
   if (new Date(year, 1, 29).getDate() === 29) {
     currentMonthDays = 29; // February in a leap year
   }
@@ -28,17 +35,13 @@ const calculateMaxDate = () => {
   return newDate;
 };
 
+// Component for the date input field
 const AddTaskDateInput: React.FC<DateTimeInputProps> = ({
   label,
   id,
   state,
   setState,
 }) => {
-  const currentDate = new Date();
-  const minDate = `${currentDate.getFullYear()}-${
-    currentDate.getMonth() + 1
-  }-${currentDate.getDate()}`;
-
   return (
     <div className="my-5 text-center">
       <label htmlFor={id}>{label}</label>
@@ -46,7 +49,7 @@ const AddTaskDateInput: React.FC<DateTimeInputProps> = ({
       <input
         id={id}
         type="date"
-        min={minDate}
+        min={calculateMinDate()} // Set the minimum date using the function
         max={calculateMaxDate()}
         value={state}
         onChange={(e): void => setState(e.currentTarget.value)}

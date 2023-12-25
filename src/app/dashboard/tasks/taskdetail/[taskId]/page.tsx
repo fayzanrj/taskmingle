@@ -41,7 +41,7 @@ const TaskDetails: React.FC<{ params: Params }> = async ({ params }) => {
   const data = await getServerSession(authOptions);
 
   // HEADERS FOR API REQUEST
-  const headers = {
+  const headers: Record<string, string> = {
     "Content-Type": "application/json",
     // @ts-ignore
     accessToken: data?.user?.accessToken,
@@ -54,12 +54,11 @@ const TaskDetails: React.FC<{ params: Params }> = async ({ params }) => {
   const res = await response.json();
   const task: TaskProps = res.task;
 
-
   // updating current status of the task if it is overdue
   await updateCurrentStatus(task?.date, task?.status, task?.id);
 
   return (
-    <div className="w-full h-full relative py-10">
+    <div className="w-full h-fit relative py-10">
       {/* Button to go back */}
       <GoBack />
 

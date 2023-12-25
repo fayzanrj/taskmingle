@@ -1,7 +1,10 @@
 import TasksCounter from "@/components/dashboard/TasksCounter";
+import { NextPage } from "next";
 import Link from "next/link";
 
-const Dashboard = async () => {
+// TO DO : REFACTOR
+
+const Dashboard : NextPage = async () => {
 
   return (
     <div className="p-10">

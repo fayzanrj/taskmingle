@@ -1,33 +1,41 @@
-import React, { useState } from "react";
-import toast from "react-hot-toast";
-import { FaCheckCircle, FaTimesCircle } from "react-icons/fa";
-import ShowPassBtn from "./ShowPassBtn";
 import {
   isPasswordMatches,
   isValidEmail,
   isValidName,
   isValidPassword,
 } from "@/libs/FormValidations";
+import React, { useState } from "react";
 import RenderIcon from "./RenderIcon";
+import ShowPassBtn from "./ShowPassBtn";
 
+// Error interface
 interface ErrorProps {
   [key: string]: boolean;
 }
 
+// Input Field interface
 interface InputFieldPropTypes {
   type: "password" | "text";
-  id: "email" | "password" | "confirmPassword" | "fullName";
-  label: "Email" | "Password" | "Confirm Password" | "Full Name";
+  id: string;
+  label: string;
   placeHolder: string;
   disabled: boolean;
   state: string;
   setState: React.Dispatch<React.SetStateAction<string>>;
-  variant?: "LOGINPASS";
+  variant?: "NO_VALIDATION";
   password?: string;
   setFormError?: React.Dispatch<React.SetStateAction<ErrorProps>>;
 }
-// ... (imports and interfaces remain the same)
 
+// Validation functions for different fields
+const validationFunctions: { [key: string]: (value: string) => boolean } = {
+  fullName: isValidName,
+  email: isValidEmail,
+  password: isValidPassword,
+  newPassword: isValidPassword,
+};
+
+// Input Field component
 const InputField: React.FC<InputFieldPropTypes> = ({
   type,
   id,
@@ -40,23 +48,20 @@ const InputField: React.FC<InputFieldPropTypes> = ({
   password,
   setFormError,
 }) => {
+  // State variables
   const [showPass, setShowPass] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
 
-  // Validation functions for different fields
-  const validationFunctions: { [key: string]: (value: string) => boolean } = {
-    fullName: isValidName,
-    email: isValidEmail,
-    password: isValidPassword,
-  };
-
   // Function to validate all types of fields except CONFIRM PASSWORD
   const validateField = (value: string): void => {
+    // Finding function for input type
     const validate = validationFunctions[id];
 
+    // If function is found
     if (validate) {
       const isValid = validate(value);
       if (setFormError) {
+        // Updating form errors
         setFormError((prev): ErrorProps => {
           const newList = { ...prev };
           newList[id + "Error"] = !isValid;
@@ -64,6 +69,7 @@ const InputField: React.FC<InputFieldPropTypes> = ({
         });
       }
 
+      // Setting error
       setError(!isValid);
     }
   };
@@ -71,15 +77,19 @@ const InputField: React.FC<InputFieldPropTypes> = ({
   // Validating confirm password field
   const comparePassword = (value: string): void => {
     if (password) {
+      // Matching password and confirm password fields values
       const passwordMatches = isPasswordMatches(value, password);
-      setError(!passwordMatches);
       if (setFormError) {
+        // Updating form errors
         setFormError((prev): ErrorProps => {
           const newList = { ...prev };
           newList.confirmPasswordError = !passwordMatches;
           return newList;
         });
       }
+      
+      // Setting error
+      setError(!passwordMatches);
     }
   };
 
@@ -90,13 +100,18 @@ const InputField: React.FC<InputFieldPropTypes> = ({
 
   return (
     <div className="my-3">
+      {/* Field Label */}
       <label htmlFor={id} className="text-[1rem] ml-1 font-semibold">
         {label}
         <span>
-          {state.length > 0 && variant !== "LOGINPASS" && <RenderIcon error={error} label={label} />}
+          {state.length > 0 && variant !== "NO_VALIDATION" && (
+            <RenderIcon error={error} label={label} />
+          )}
         </span>
       </label>
       <br />
+
+      {/* Field */}
       <div className="relative">
         <input
           id={id}
@@ -112,10 +127,11 @@ const InputField: React.FC<InputFieldPropTypes> = ({
               : handleValidate(e.target.value);
           }}
           onBlur={() => validateField(state)}
-          className={`w-full rounded-lg p-2 my-1 border-gray-200 border-2 outline-none ${
+          className={`w-full rounded-lg p-2 my-1 border-gray-200 border-2 outline-none font-semibold ${
             type === "password" && state.length > 0 && "pr-7"
           }`}
         />
+        {/* Eye button to toggle password type */}
         {type === "password" && state.length > 0 && (
           <ShowPassBtn showPass={showPass} setShowPass={setShowPass} />
         )}

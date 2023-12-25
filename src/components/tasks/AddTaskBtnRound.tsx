@@ -2,7 +2,7 @@ import Link from "next/link";
 import React from "react";
 import { IoMdAdd } from "react-icons/io";
 
-const AddTaskBtnRound = () => {
+const AddTaskBtnRound: React.FC = () => {
   return (
     <Link href="/dashboard/tasks/addtask">
       <button className="w-14 h-14  fixed right-5 bottom-8 rounded-full bg-[#19fa9a]">

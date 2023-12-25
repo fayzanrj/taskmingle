@@ -1,11 +1,14 @@
 import TasksTable from "@/components/tasks/TasksTable";
 import { fetchTasksByStatus } from "@/libs/FetchTasksByStatus";
-import { TaskProps } from "@/props/TaskProps";
 import { authOptions } from "@/utils/AuthOptions";
+import { Metadata, NextPage } from "next";
 import { getServerSession } from "next-auth";
-import React from "react";
 
-const CompletedTasks = async () => {
+export const metadata: Metadata = {
+  title: "Completed Tasks - Task Mingle",
+};
+
+const CompletedTasks: NextPage = async () => {
   const data = await getServerSession(authOptions);
 
   // @ts-ignore

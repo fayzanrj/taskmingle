@@ -22,7 +22,7 @@ const checkData = (data: TaskProps): boolean => {
 
 export const PUT = async (req: NextRequest) => {
   try {
-    // Verify user by verifying access token
+    // Verifing user by verifying access token
     const user = verifyUser(req);
 
     // If access token is not verified
@@ -31,7 +31,7 @@ export const PUT = async (req: NextRequest) => {
     }
 
 
-    // Receive and check if all the data is present
+    // Receiving and checking if all the data is present
     const data = await req.json();
     const isValid = checkData(data);
 
@@ -39,7 +39,7 @@ export const PUT = async (req: NextRequest) => {
       return ThrowIncompleteError();
     }
 
-    // Create task in the database
+    // Updating task in the database
     const task = await prisma.task.update({
       where: { id: data.id },
       data: {
@@ -53,12 +53,12 @@ export const PUT = async (req: NextRequest) => {
       },
     });
 
-    // If task is not created
+    // If task is not updated
     if (!task) {
       return ThrowServerError();
     }
 
-    // Send response back
+    // Sending response back
     return NextResponse.json(
       { message: "Task has been updated", task },
       { status: 200 }

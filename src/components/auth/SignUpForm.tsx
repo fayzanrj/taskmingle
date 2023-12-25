@@ -5,10 +5,12 @@ import {
   isValidName,
   isValidPassword,
 } from "@/libs/FormValidations";
+import { getErrorMessage } from "@/libs/GetErrorMessage";
 import axios from "axios";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import VerifyEmailModal from "../VerifyEmailModal";
 import AuthBtn from "./AuthBtn";
 import Header from "./Header";
 import InputField from "./InputField";
@@ -17,15 +19,16 @@ interface ErrorProps {
   [key: string]: boolean;
 }
 
-// SignUpForm component
 const SignUpForm = () => {
-  // State variables for form fields
+  // State variables
   const [name, setName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [disableBtn, setDisableBtn] = useState<boolean>(true);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [userId, setUserId] = useState<string>("");
   const [error, setError] = useState<ErrorProps>({
     fullNameError: true,
     emailError: true,
@@ -33,7 +36,7 @@ const SignUpForm = () => {
     confirmPasswordError: true,
   });
 
-  // function to clear all the previous data
+  // Function to make states empty
   const clearStates = (): void => {
     setName("");
     setEmail("");
@@ -41,15 +44,16 @@ const SignUpForm = () => {
     setConfirmPassword("");
   };
 
-  // Handle sign-up form submission
+  // Function to sign in
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (password !== confirmPassword) {
-      toast.error("Passwords does not match");
+      toast.error("Passwords do not match");
       return;
     }
 
+    // Validating all values
     if (
       !isValidName(name) ||
       !isValidEmail(email) ||
@@ -61,20 +65,20 @@ const SignUpForm = () => {
 
     const data = {
       name: CapitalizeName(name),
-      email : email.toLowerCase(),
+      email: email.toLowerCase(),
       password,
     };
 
     try {
       setIsLoading(true);
-
-      //  api request
       const response = await axios.post("api/auth/signup", data);
-      clearStates();
+      setUserId(response.data.userId); // Set the userId
+      setIsModalOpen(true);
+      // clearStates();
       toast.success(response.data.message);
     } catch (error: any) {
-      const errorMessage =
-        error.response?.data.message || "An error occurred. Please try again.";
+      console.error(error);
+      const errorMessage = getErrorMessage(error);
       toast.error(errorMessage);
     } finally {
       setIsLoading(false);
@@ -90,81 +94,89 @@ const SignUpForm = () => {
     setDisableBtn(isButtonDisabled);
   }, [error]);
 
-  // JSX for SignUpForm component
   return (
-    <form
-      className="w-11/12 md:w-96 h-[33rem] bg-white shadow-lg rounded-md absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 px-7 py-5"
-      onSubmit={handleSignUp}
-    >
-      {/* HEADING */}
-      <Header variant="SIGN UP" />
+    <>
+      {isModalOpen && (
+        <VerifyEmailModal
+          email={email}
+          userId={userId}
+          setState={setIsModalOpen}
+          variant="SIGNUP"
+        />
+      )}
+      <form
+        className="w-11/12 md:w-96 h-[33rem] bg-white shadow-lg rounded-md absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 px-7 py-5"
+        onSubmit={handleSignUp}
+      >
+        <Header variant="SIGN UP" />
 
-      {/* Full Name Input */}
-      <InputField
-        label="Full Name"
-        type="text"
-        id="fullName"
-        disabled={isLoading}
-        placeHolder="e.g. John Doe"
-        state={name}
-        setState={setName}
-        setFormError={setError}
-      />
+        {/* Name Input Field */}
+        <InputField
+          label="Full Name"
+          type="text"
+          id="fullName"
+          disabled={isLoading}
+          placeHolder="e.g. John Doe"
+          state={name}
+          setState={setName}
+          setFormError={setError}
+        />
 
-      {/* Email Input */}
-      <InputField
-        label="Email"
-        type="text"
-        id="email"
-        disabled={isLoading}
-        placeHolder="e.g. johndoe@mail.com"
-        state={email}
-        setState={setEmail}
-        setFormError={setError}
-      />
+        {/* Email Input Field */}
+        <InputField
+          label="Email"
+          type="text"
+          id="email"
+          disabled={isLoading}
+          placeHolder="e.g. johndoe@mail.com"
+          state={email}
+          setState={setEmail}
+          setFormError={setError}
+        />
 
-      {/* Password Input */}
-      <InputField
-        label="Password"
-        type="password"
-        id="password"
-        disabled={isLoading}
-        placeHolder="e.g. ********"
-        state={password}
-        setState={setPassword}
-        setFormError={setError}
-      />
+        {/* Password Input Field */}
+        <InputField
+          label="Password"
+          type="password"
+          id="password"
+          disabled={isLoading}
+          placeHolder="e.g. ********"
+          state={password}
+          setState={setPassword}
+          setFormError={setError}
+        />
 
-      {/* Confirm Password Input */}
-      <InputField
-        label="Confirm Password"
-        type="password"
-        id="confirmPassword"
-        disabled={isLoading}
-        placeHolder="e.g. ********"
-        state={confirmPassword}
-        setState={setConfirmPassword}
-        password={password}
-        setFormError={setError}
-      />
+        {/* Confirm Password Input Field */}
+        <InputField
+          label="Confirm Password"
+          type="password"
+          id="confirmPassword"
+          disabled={isLoading}
+          placeHolder="e.g. ********"
+          state={confirmPassword}
+          setState={setConfirmPassword}
+          password={password}
+          setFormError={setError}
+        />
 
-      {/* SIGN UP Button */}
-      <AuthBtn
-        disableBtn={disableBtn}
-        isLoading={isLoading}
-        btnText="SIGN UP"
-      />
+        {/* Sign up button */}
+        <AuthBtn
+          disableBtn={disableBtn}
+          isLoading={isLoading}
+          btnText="SIGN UP"
+        />
 
-      {/* Login Link */}
-      <div className="text-center my-4">
-        <p className="text-sm font-semibold">
-          Already a user?{" "}
-          <span className="underline text-lg">
-            <Link href={"/login"}>Log in</Link>
-          </span>
-        </p>
-      </div>
-    </form>
+        {/* Log in link */}
+        <div className="text-center my-4">
+          <p className="text-sm font-semibold">
+            Already a user?{" "}
+            <span className="underline text-lg">
+              <Link href={"/login"}>Log in</Link>
+            </span>
+          </p>
+        </div>
+      </form>
+    </>
   );
 };
 

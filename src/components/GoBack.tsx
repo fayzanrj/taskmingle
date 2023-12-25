@@ -4,6 +4,7 @@ import React from "react";
 import { FaArrowLeftLong } from "react-icons/fa6";
 
 const GoBack = () => {
+  // Router for navigation
   const router = useRouter();
   return (
     <div

@@ -8,15 +8,16 @@ datasource db {
 }
 
 model User {
-  id          String    @id @default(auto()) @map("_id") @db.ObjectId
-  name        String
-  email       String    @unique
-  password    String
-  isVerified  Boolean?  @default(false)
-  profilePic  String?   @default("https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg")
-  createdAt   DateTime? @default(now())
-  updatedAt   DateTime  @updatedAt
-  tasks       Task[]    @relation("createdByUser")
+  id         String    @id @default(auto()) @map("_id") @db.ObjectId
+  name       String
+  email      String    @unique
+  password   String
+  isVerified Boolean?  @default(false)
+  profilePic String?   @default("https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg")
+  createdAt  DateTime? @default(now())
+  updatedAt  DateTime  @updatedAt
+  tasks      Task[]    @relation("createdByUser")
+  codes      Code[]    @relation("createdByUser")
 }
 
 model Task {
@@ -32,4 +33,14 @@ model Task {
   createdById String    @db.ObjectId
   createdAt   DateTime? @default(now())
   updatedAt   DateTime  @updatedAt
+}
+
+model Code {
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  code      String
+  user      User      @relation("createdByUser", fields: [userId], references: [id])
+  userId    String    @unique @db.ObjectId
+  userEmail String
+  createdAt DateTime? @default(now())
+  updatedAt DateTime  @updatedAt
 }

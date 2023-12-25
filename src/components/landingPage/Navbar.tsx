@@ -3,12 +3,14 @@ import React, { useState } from "react";
 import Link from "next/link";
 import Logo from "../Logo";
 
+// Landing page navbar links interface
 interface NavLink {
   text: string;
   href: string;
   className?: string;
 }
 
+// Navbar links
 const navLinks: NavLink[] = [
   { text: "Repository", href: "#" },
   { text: "Twitter", href: "#" },
@@ -22,8 +24,10 @@ const navLinks: NavLink[] = [
 ];
 
 const Navbar: React.FC = () => {
+  // Variable state
   const [isOpen, setIsOpen] = useState(false);
 
+  // Function to toggle navbar
   const toggleNavbar = () => {
     setIsOpen(!isOpen);
   };
@@ -57,7 +61,7 @@ const Navbar: React.FC = () => {
           </svg>
         </button>
 
-        {/* Navbar links */}
+        {/* Navbar */}
         <div
           className={`w-4/5 sm:w-2/5 md:w-fit h-[100svh] md:h-full py-16 md:py-0 block md:flex bg-white md:bg-transparent text-center fixed right-0 top-0 md:relative border-l-2 md:border-0 transition-transform transform ${
             isOpen ? "translate-x-0" : "translate-x-full"

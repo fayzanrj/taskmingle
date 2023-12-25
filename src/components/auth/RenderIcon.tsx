@@ -2,6 +2,7 @@ import React from "react";
 import toast from "react-hot-toast";
 import { FaCheckCircle, FaTimesCircle } from "react-icons/fa";
 
+// Render Icon interface
 interface RenderIconProps {
   error: boolean;
   label: string;
@@ -11,10 +12,13 @@ const RenderIcon: React.FC<RenderIconProps> = ({ error, label }) => (
   <span
     onClick={() =>
       error
-        ? toast.error(`Please enter a valid ${label.toLowerCase()}`)
+        ? label === "Confirm Password"
+          ? toast.error(`Passwords are not matching`)
+          : toast.error(`Please enter a valid ${label.toLowerCase()}`)
         : toast.success(`${label} is valid`)
     }
   >
+     {/* Check or Cross icon based on the error status */}
     {error ? (
       <FaTimesCircle
         size="1rem"

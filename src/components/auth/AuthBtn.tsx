@@ -1,6 +1,7 @@
 import React from "react";
 import ActivityLoader from "../ActivityLoader";
 
+// Auth Button interface
 interface AuthBtnProps {
   disableBtn: boolean;
   isLoading: boolean;

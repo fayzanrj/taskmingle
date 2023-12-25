@@ -1,10 +1,20 @@
-import { NextPage } from 'next'
-import React from 'react'
+import ProfileCard from "@/components/profile/ProfileCard";
+import { authOptions } from "@/utils/AuthOptions";
+import { Metadata, NextPage } from "next";
+import { getServerSession } from "next-auth";
 
-const Profile : NextPage = () => {
+export const metadata: Metadata = {
+  title: "My Profile - Task Mingle",
+};
+
+const Profile: NextPage = async () => {
+  const data = await getServerSession(authOptions);
   return (
-    <div>Profile</div>
-  )
-}
+    <div className="w-full mx-auto my-10 text-center">
+      {/* @ts-ignore */}
+      <ProfileCard accessToken={data?.user?.accessToken} />
+    </div>
+  );
+};
 
-export default Profile
+export default Profile;

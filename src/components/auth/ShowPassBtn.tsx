@@ -1,6 +1,7 @@
 import React from "react";
 import { IoEye, IoEyeOff } from "react-icons/io5";
 
+// Show pass interface
 interface ShowPassProp {
   showPass: boolean;
   setShowPass: React.Dispatch<React.SetStateAction<boolean>>;

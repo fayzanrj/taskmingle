@@ -1,5 +1,7 @@
 import prisma from "@/app/db";
+import { generateCode } from "@/libs/GenerateCode";
 import { ThrowIncompleteError, ThrowServerError } from "@/libs/ResponseErrors";
+import { SendCodeEmail } from "@/libs/SendCodeEmail";
 import bcrypt from "bcryptjs";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -19,6 +21,7 @@ export const POST = async (req: NextRequest) => {
       where: { email: data.email },
     });
 
+    // if user exist with given email
     if (existingUser) {
       return NextResponse.json(
         { message: "Email is already taken" },
@@ -39,8 +42,34 @@ export const POST = async (req: NextRequest) => {
       return ThrowServerError();
     }
 
+    // generating a new code
+    const newCode = generateCode();
+
+    // creating code in the database
+    const code = await prisma.code.create({
+      data: {
+        code: newCode,
+        userId: newUser.id,
+        userEmail: newUser.email,
+      },
+    });
+
+    // If code is not created
+    if (!code) {
+      return ThrowServerError();
+    }
+
+    // Sending email with verification code
+    const sendingMail = await SendCodeEmail(
+      code.userEmail,
+      newUser.name,
+      "Verification of account",
+      newCode
+    );
+
+    // Response
     return NextResponse.json(
-      { message: "Signed up succesfully", user: newUser },
+      { message: "Signed up succesfully", userId: newUser.id },
       { status: 200 }
     );
   } catch (error) {

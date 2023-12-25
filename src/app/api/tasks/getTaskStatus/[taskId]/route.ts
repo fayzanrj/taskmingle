@@ -35,7 +35,7 @@ export const GET = async (
       return ThrowNotFoundError("No task found");
     }
 
-    // returning task
+    // returning task's status as response
     return NextResponse.json({ status: task.status }, { status: 200 });
   } catch (error: any) {
     console.error(error);
