@@ -41,7 +41,7 @@ export const authOptions: NextAuthOptions = {
           }
 
           // Comparing password
-          const isPasswordCorrect = bcrypt.compareSync(
+          const isPasswordCorrect = await bcrypt.compareSync(
             password,
             userExists.password
           );
