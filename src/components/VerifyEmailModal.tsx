@@ -101,7 +101,7 @@ const VerifyEmailModal: React.FC<VerifyEmailModalProps> = ({
             disabled={isLoading}
             maxLength={6}
             placeholder="Enter code here"
-            className="w-[40%] text-2xl font-semibold border-b-[1px] border-gray-500 rounded-none text-center outline-none placeholder:text-sm"
+            className="w-[40%] text-2xl font-semibold border-b-[1px] border-gray-500 rounded-none text-center outline-none placeholder:text-sm disabled:bg-white"
             value={code}
             onChange={(e) => setCode(e.currentTarget.value)}
           />
