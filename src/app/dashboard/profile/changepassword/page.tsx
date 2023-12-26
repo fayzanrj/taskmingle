@@ -4,6 +4,7 @@ import { NextPage } from "next";
 import GoBack from "@/components/GoBack";
 import InputField from "@/components/auth/InputField";
 import ActivityLoader from "@/components/ActivityLoader";
+import toast from "react-hot-toast";
 
 // Error types for form validation
 interface ErrorProps {
@@ -29,6 +30,7 @@ const ChangePassword: NextPage = () => {
     try {
       setIsLoading(true);
       console.log({ oldPassword, newPassword, confirmNewPassword });
+      toast.error("Not functional yet.")
     } catch (error: any) {
       console.error(error.message);
     } finally {
@@ -42,19 +44,18 @@ const ChangePassword: NextPage = () => {
       oldPassword.length <= 1 ||
       error.newPasswordError ||
       error.confirmPasswordError;
-    console.log(oldPassword.length);
     setDisableBtn(isButtonDisabled);
   }, [error]);
 
   return (
-    <div className="flex flex-col items-center py-10 relative">
+    <div className=" flex flex-col items-center py-10 relative">
       {/* GoBack button  */}
       <GoBack />
 
       {/* Heading */}
-      <h3 className="my-4 text-2xl font-bold">Change Password</h3>
+      <h3 className=" my-4 text-2xl font-bold">Change Password</h3>
 
-      <form className="w-96" onSubmit={handleSubmit}>
+      <form className="w-11/12 sm:w-96" onSubmit={handleSubmit}>
         {/* Input field for the old password */}
         <InputField
           variant="NO_VALIDATION"
