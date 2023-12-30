@@ -44,12 +44,16 @@ const TaskForm: React.FC<TaskFormProps> = ({
 
   // Date state
   const [selectedDate, setSelectedDate] = useState<string>(
-    //@ts-ignore
-    `${new Date(date).getFullYear()}-${
-      //@ts-ignore
-      new Date(date).getMonth() + 1
-      //@ts-ignore
-    }-${new Date(date).getDate()}` || ""
+    date
+      ? //@ts-ignore
+        `${new Date(date).getFullYear()}-${
+          //@ts-ignore
+          new Date(date).getMonth() + 1
+          //@ts-ignore
+        }-${new Date(date).getDate()}`
+      : `${new Date().getFullYear()}-${
+          new Date().getMonth() + 1
+        }-${new Date().getDate()}`
   );
 
   // Tags state
@@ -116,7 +120,7 @@ const TaskForm: React.FC<TaskFormProps> = ({
         const res = await axios.put("/api/tasks/updateTask", task, { headers });
         toast.success(res.data.message);
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error(error);
       const errorMessage = getErrorMessage(error);
       toast.error(errorMessage);
@@ -135,7 +139,7 @@ const TaskForm: React.FC<TaskFormProps> = ({
       <header className="text-center">
         <h1 className="text-3xl font-bold">Add a Task</h1>
       </header>
-      
+
       <div className="mt-5 flex justify-center items-center flex-wrap md:gap-5 ">
         <section className="w-4/5 sm:w-80 px-1">
           {/* Input components for task details */}
@@ -176,12 +180,14 @@ const TaskForm: React.FC<TaskFormProps> = ({
             id="startingTime"
             state={startingTime}
             setState={setStartingTime}
+            selectedDate={selectedDate}
           />
           <AddTaskTimeInput
             label="Remind me at"
             id="remindTime"
             state={remindAt}
             setState={setRemindAt}
+            selectedDate={selectedDate}
           />
         </section>
       </div>
@@ -202,7 +208,7 @@ const TaskForm: React.FC<TaskFormProps> = ({
             !selectedDate ||
             !remindAt
           }
-          className="w-24 h-10 bg-[#19fa9a] rounded-lg disabled:bg-[#19fa985f] disabled:text-gray-400 absolute right-0"
+          className="w-24 h-10 bg-[#19fa9a] rounded-lg disabled:bg-[#19fa985f] disabled:text-gray-400 absolute right-0 text-[#1F1F1F] font-bold"
           onClick={handleSave}
         >
           {isLoading ? <ActivityLoader /> : variant === "ADD" ? "Add" : "Save"}

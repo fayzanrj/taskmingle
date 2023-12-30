@@ -29,9 +29,9 @@ const TasksCounter: React.FC<TasksCounterProps> = ({
   const completedPercentage = (completedTasks / totalTasks) * 100;
 
   return (
-    <div className=" w-72 h-28 bg-white shadow-xl drop-shadow-xl border-[0.2px] border-stone-200 py-3 px-4 rounded-lg relative">
+    <div className=" w-72 h-28 bg-[#1F1F1F] text-white shadow-xl drop-shadow-xl  py-3 px-4 rounded-lg relative">
       {/* Header */}
-      <h3 className="text-xl font-semibold">{header}</h3>
+      <h3 className="text-xl font-semibold ">{header}</h3>
 
       <div
         className={`${roboto.className} w-[90%] absolute bottom-2 left-1/2 transform -translate-x-1/2`}
@@ -41,13 +41,13 @@ const TasksCounter: React.FC<TasksCounterProps> = ({
           <p className="text-sm">
             {completedTasks}/{totalTasks}
           </p>
-          <p className="text-sm text-gray-600 absolute right-0 top-0">
+          <p className="text-sm text-gray-400 absolute right-0 top-0">
             {completedPercentage.toFixed(2)}%
           </p>
         </div>
 
         {/* Task completion percentage */}
-        <div className="w-full h-2 bg-slate-300 rounded-full mt-2 shadow-sm drop-shadow-sm">
+        <div className="w-full h-1.5 bg-[#323232] rounded-full mt-2 shadow-sm drop-shadow-sm">
           <div
             style={{
               width: `${completedPercentage}%`,

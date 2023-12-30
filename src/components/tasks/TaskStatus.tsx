@@ -138,5 +138,5 @@ export default TaskStatus;
 
 // Skeleton
 const Skeleton = () => {
-  return <div className="h-20 sm:h-10 bg-gray-200 rounded-lg animate-pulse"></div>;
+  return <div className="h-20 sm:h-10 bg-[#404040]  rounded-lg animate-pulse"></div>;
 };

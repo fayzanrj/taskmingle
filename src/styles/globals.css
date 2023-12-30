@@ -176,3 +176,21 @@ html {
 .toggle-input:checked + .toggle-label:before {
   transform: translateX(1.2rem);
 }
+
+.TAGS:nth-child(3n + 1) {
+  border-color: #8C2A3C;
+  background-color: #30121F;
+  color: #BB2A46;
+}
+
+.TAGS:nth-child(3n + 2) {
+  border-color: #127C4C;
+  background-color: #123221;
+  color: #15C076;
+}
+
+.TAGS:nth-child(3n + 3) {
+  border-color: #5C4CA5;
+  background-color: #231F32;
+  color: #765DDC;
+}

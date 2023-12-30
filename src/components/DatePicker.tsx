@@ -88,11 +88,11 @@ const DatePicker: React.FC<DatePickerProps> = ({
   return (
     <>
       {/* Month name */}
-      <div className="mx-auto text-center mt-5 mb-2">
+      <div className="mx-auto text-center mt-5 mb-2 text-white">
         <p className="text-xl font-semibold">{getMonth(active)}</p>
       </div>
 
-      <div className="w-full sm:w-[31rem] lg:w-[45rem] xl:w-full mx-auto flex justify-center gap-1 overflow-hidden duration-500">
+      <div className="w-full sm:w-[31rem] lg:w-[45rem] xl:w-full mx-auto flex justify-center gap-1 overflow-hidden duration-500 text-white">
         {/* Scroll left button */}
         <button className="xl:opacity-30" onClick={() => handleScroll("prev")}>
           <MdArrowBackIos />
@@ -109,7 +109,7 @@ const DatePicker: React.FC<DatePickerProps> = ({
               key={date.toString()}
               className={`w-12 px-2 lg:px-0 cursor-pointer mx-2 py-3 rounded-lg font-semibold ${
                 active.toLocaleDateString() === date.toLocaleDateString()
-                  ? "bg-green-300"
+                  ? "bg-green-300 text-[#323232]"
                   : ""
               }`}
               onClick={() => handleClick(date)}

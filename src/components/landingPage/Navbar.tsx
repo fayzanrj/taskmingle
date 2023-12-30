@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import Logo from "../Logo";
+import Image from "next/image";
 
 // Landing page navbar links interface
 interface NavLink {
@@ -33,11 +34,17 @@ const Navbar: React.FC = () => {
   };
 
   return (
-    <nav className="p-4 w-screen bg-white md:bg-transparent fixed top-0 z-50">
+    <nav className="p-4 w-screen bg-black md:bg-transparent fixed top-0 z-50">
       <div className=" flex items-center justify-between">
         {/* Logo */}
         <Link href="/">
-          <Logo width={100} height={100} />
+          <Image
+            width={120}
+            height={100}
+            quality={100}
+            src={require("@/assets/logo/landingPageLogo.png")}
+            alt="logo"
+          />
         </Link>
 
         {/* Hamburger menu button for small screens */}
@@ -48,7 +55,7 @@ const Navbar: React.FC = () => {
           <svg
             className="w-6 h-6"
             fill="none"
-            stroke="black"
+            stroke="white"
             viewBox="0 0 24 24"
             xmlns="http://www.w3.org/2000/svg"
           >
@@ -63,7 +70,7 @@ const Navbar: React.FC = () => {
 
         {/* Navbar */}
         <div
-          className={`w-4/5 sm:w-2/5 md:w-fit h-[100svh] md:h-full py-16 md:py-0 block md:flex bg-white md:bg-transparent text-center fixed right-0 top-0 md:relative border-l-2 md:border-0 transition-transform transform ${
+          className={`w-4/5 sm:w-2/5 md:w-fit h-[100svh] md:h-full py-16 md:py-0 block md:flex bg-black md:bg-transparent text-center fixed right-0 top-0 md:relative border-l-2 border-gray-500 md:border-0 transition-transform transform ${
             isOpen ? "translate-x-0" : "translate-x-full"
           } md:translate-x-0 `}
         >

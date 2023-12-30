@@ -18,7 +18,7 @@ const TaskItem: React.FC<TaskProps> = ({
   return (
     <article>
       <Link href={`/dashboard/tasks/taskdetail/${id}`}>
-        <div className="w-64 h-64 sm:w-52 sm:h-52 p-3 rounded-3xl shadow-lg border-2 border-gray-100 relative cursor-pointer select-none">
+        <div className="w-64 h-64 sm:w-52 sm:h-52 p-3 rounded-3xl shadow-lg text-white  relative cursor-pointer select-none bg-[#1D1F21]">
           {/* Task title */}
           <h2 className="text-2xl font-semibold whitespace-nowrap">
             {taskTitle.slice(0, 12) + (taskTitle.length > 12 ? "...." : "")}

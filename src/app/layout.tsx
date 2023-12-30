@@ -20,7 +20,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${raleway.className} SCROLL_BAR`}>
+      <body className={`${raleway.className} SCROLL_BAR bg-[#151515] text-white`}>
         <Providers>
           <AppState>
             <Toaster position="top-right" containerStyle={{fontWeight : 500}} />

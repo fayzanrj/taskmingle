@@ -20,35 +20,35 @@ const TasksTable: React.FC<TaskTableProps> = ({ tasks }) => {
   }
 
   return (
-    <table className="min-w-full bg-white border border-gray-300 text-center">
+    <table className="min-w-full  border border-[#323232] text-center">
       {/* Headers for table */}
       <thead>
         <tr>
           {/* Date */}
-          <th className="w-1/4 py-2 px-4 border-b text-xl font-bold">Date</th>
+          <th className="w-1/4 py-2 px-4 border-b border-[#323232] text-xl font-bold">Date</th>
           {/* Tilte */}
-          <th className="w-2/4 py-2 px-4 border-b text-xl font-bold">
+          <th className="w-2/4 py-2 px-4 border-b border-[#323232] text-xl font-bold">
             Task Title
           </th>
           {/* Status */}
-          <th className="w-1/4 py-2 px-4 border-b text-xl font-bold">Status</th>
+          <th className="w-1/4 py-2 px-4 border-b border-[#323232] text-xl font-bold">Status</th>
         </tr>
       </thead>
 
       {/* Table data  */}
       <tbody>
         {tasks.map((task: TaskProps, index: number) => (
-          <tr className="hover:bg-gray-50" key={index}>
+          <tr  key={index}>
             {/* Task date */}
-            <td className="w-1/4 py-2 px-4 border-b font-semibold">
+            <td className="w-1/4 py-2 px-4 border-b border-[#323232] font-semibold">
               {task.date}
             </td>
             {/* Task Title */}
-            <td className="w-2/4 py-2 px-4 border-b font-semibold">
+            <td className="w-2/4 py-2 px-4 border-b border-[#323232] font-semibold">
               {task.taskTitle}
             </td>
             {/* Task Status */}
-            <td className="w-1/4 py-2 px-4 border-b font-semibold">
+            <td className="w-1/4 py-2 px-4 border-b border-[#323232] font-semibold">
               {task.status}
             </td>
           </tr>

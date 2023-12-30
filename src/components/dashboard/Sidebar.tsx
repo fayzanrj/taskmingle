@@ -32,19 +32,19 @@ interface NavItem extends NavLink {
 
 // Top navbar links data
 const TopNavLinks: NavLink[] = [
-  { text: "Home", href: ROUTES.DASHBOARD, Icon: AiOutlineHome, size: 1.4 },
-  { text: "My Tasks", href: ROUTES.TASKS, Icon: SlMenu, size: 1.2 },
+  { text: "Home", href: ROUTES.DASHBOARD, Icon: AiOutlineHome, size: 1.2 },
+  { text: "My Tasks", href: ROUTES.TASKS, Icon: SlMenu, size: 1 },
   {
     text: "Completed Tasks",
     href: ROUTES.COMPLETED_TASKS,
     Icon: GrTask,
-    size: 1.3,
+    size: 1.1,
   },
   {
     text: "Overdue Tasks",
     href: ROUTES.OVERDUE_TASKS,
     Icon: BsListTask,
-    size: 1.5,
+    size: 1.3,
   },
 ];
 
@@ -60,24 +60,24 @@ const Sidebar: React.FC = () => {
       {/* EMPTY DIV TO COVER THE SPACE BEHIND THE SIDE NAV BECAUSE OF USING POSTION FIXED */}
       {isOpen && <div className="hidden md:block md:min-w-[16rem] "></div>}
       <nav
-        className={`min-w-[60%] md:min-w-[16rem] h-full py-2 bg-white border-r-2 border-r-gray-300 duration-500 z-50 fixed ${
+        className={`min-w-[60%] md:min-w-[16rem] h-full py-2 bg-[#1f1f1f] border-r-2 border-[#262626] duration-500 z-50 fixed ${
           isOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
         {/* Opening and closing button for sidebar */}
         <button
           aria-label="Nav-toggle-button"
-          className={`absolute top-4 ${
+          className={`absolute top-4 text-[#8D8D8D] ${
             isOpen ? "-right-4" : "-right-9 rotate-180 fixed"
-          } duration-500 bg-white rounded-full`}
+          } duration-500 bg-[#1f1f1f] rounded-full`}
           onClick={toggleSidebar}
         >
           <IoIosArrowDropleft size="2rem" />
         </button>
 
         {/* LOGO */}
-        <div className="ml-4 my-1">
-          <Logo width={100} height={100} />
+        <div className="my-3">
+          <Logo width={150} height={100} />
         </div>
 
         {/* Top navigation bar */}
@@ -105,10 +105,10 @@ const Sidebar: React.FC = () => {
 
 // Log out button
 const LogoutButton: React.FC = () => (
-  <li className="relative p-3 my-1 rounded-xl">
+  <li className="relative p-3 my-1 rounded-xl text-[#8D8D8D] text-sm">
     <button onClick={() => signOut()}>
       <span className="aboslute">
-        <CiLogout className="inline-block" size="1.3rem" />
+        <CiLogout className="inline-block font-semibold" size="1.3rem" />
       </span>
       <p className="absolute inline-block ml-4 font-semibold">LOG OUT</p>
     </button>
@@ -133,8 +133,8 @@ const NavItem: FC<NavItem> = ({ text, href, Icon, size, setState }) => {
   };
   return (
     <li
-      className={`relative  p-3 my-1 rounded-xl ${
-        isActive ? "bg-[#19fa9a]" : ""
+      className={`relative p-3 my-1 rounded-xl text-sm ${
+        isActive ? "bg-[#19fa9a] text-black" : "text-[#8D8D8D]"
       }`}
       onClick={handleClick}
     >
@@ -145,7 +145,7 @@ const NavItem: FC<NavItem> = ({ text, href, Icon, size, setState }) => {
         </span>
 
         {/* Text */}
-        <p className="absolute inline-block ml-4 font-semibold">{text}</p>
+        <p className="absolute inline-block ml-4 font-bold">{text}</p>
       </Link>
     </li>
   );

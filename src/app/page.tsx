@@ -21,7 +21,7 @@ export default function Home() {
             daily
           </h1>
 
-          <p className="my-5 text-sm text-stone-700">
+          <p className="my-5 text-sm text-gray-200">
             Start enjoying a more organized work in life to increase your
             productivity
           </p>

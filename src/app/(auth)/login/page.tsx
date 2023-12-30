@@ -3,7 +3,7 @@ import { Metadata, NextPage } from "next";
 import React from "react";
 
 export const metadata: Metadata = {
-  title: "Log In - Task Mingle",
+  title: "Log In  - Task Mingle",
 };
 
 const LogIn : NextPage = () => {

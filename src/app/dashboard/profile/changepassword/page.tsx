@@ -5,6 +5,9 @@ import GoBack from "@/components/GoBack";
 import InputField from "@/components/auth/InputField";
 import ActivityLoader from "@/components/ActivityLoader";
 import toast from "react-hot-toast";
+import axios from "axios";
+import { useSession } from "next-auth/react";
+import { getErrorMessage } from "@/libs/GetErrorMessage";
 
 // Error types for form validation
 interface ErrorProps {
@@ -12,6 +15,7 @@ interface ErrorProps {
 }
 
 const ChangePassword: NextPage = () => {
+  const { data: session } = useSession();
   // State variables for managing component state
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [oldPassword, setOldPassword] = useState<string>("");
@@ -24,17 +28,36 @@ const ChangePassword: NextPage = () => {
     confirmPasswordError: true,
   });
 
+  // Headers
+  const headers = {
+    "Content-Type": "application/json",
+    //@ts-ignore
+    accessToken: session?.user?.accessToken,
+  };
+
   // Handle form submission
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
       setIsLoading(true);
-      console.log({ oldPassword, newPassword, confirmNewPassword });
-      toast.error("Not functional yet.")
+
+      if (newPassword !== confirmNewPassword) {
+        toast.error("Passwords does not matches");
+        return;
+      }
+
+      // Api request
+      const data = { oldPassword, newPassword };
+      const res = await axios.put("/api/user/changePass", data, { headers });
+      // Success message
+      toast.success(res.data.message);
     } catch (error: any) {
       console.error(error.message);
+      // Error message
+      const errorMessage = getErrorMessage(error);
+      toast.error(errorMessage);
     } finally {
-      setTimeout(() => setIsLoading(false), 3000);
+      setIsLoading(false);
     }
   };
 
