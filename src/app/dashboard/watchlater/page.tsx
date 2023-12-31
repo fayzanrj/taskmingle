@@ -1,4 +1,4 @@
-import WatchLaterList from "@/components/watchlater/WatchLaterList";
+import WatchLaterList from "@/components/watchlater/atchLaterList";
 import { WatchLaterProps } from "@/props/WatchLaterProps";
 import { authOptions } from "@/utils/AuthOptions";
 import { Metadata, NextPage } from "next";
