@@ -1,9 +1,9 @@
 import { TaskProps } from "@/props/TaskProps";
 import React from "react";
-import NoTasksFound from "./NoTasksFound";
+import FetchError from "../FetchError";
+import NoItemFound from "../NoItemFound";
 import TaskItem from "./TaskItem";
 import TaskItemSkeleton from "./TaskItemSkeleton";
-import TasksFetchError from "./TasksFetchError";
 
 // Task List interface
 interface TaskListProps {
@@ -19,12 +19,12 @@ const TasksList: React.FC<TaskListProps> = ({ tasks, isLoading }) => {
 
   // If there is error fetching tasks
   if (tasks === undefined) {
-    return <TasksFetchError />;
+    return <FetchError />;
   }
 
   // If there are no tasks
   if (tasks.length === 0) {
-    return <NoTasksFound />;
+    return <NoItemFound variant="Tasks" />;
   }
 
   return (

@@ -5,7 +5,7 @@ import { Metadata, NextPage } from "next";
 import { getServerSession } from "next-auth";
 
 export const metadata: Metadata = {
-  title: "Tasks - Task Notify",
+  title: "Tasks",
   description: "",
 };
 

@@ -3,6 +3,7 @@ import { Months } from "@/constants/Months";
 import { fetchTasks } from "@/libs/FetchTasks";
 import { getErrorMessage } from "@/libs/GetErrorMessage";
 import { TaskProps } from "@/props/TaskProps";
+import axios from "axios";
 import { addDays, format } from "date-fns";
 import { useSession } from "next-auth/react";
 import React, { useEffect, useRef, useState } from "react";
@@ -39,6 +40,10 @@ const DatePicker: React.FC<DatePickerProps> = ({
       const scrollPosition = containerWidth / 2 - window.innerWidth / 2;
       scrollContainerRef.current.scrollTo(scrollPosition, 0);
     }
+
+    // Cleanup function when the component is unmounted
+    return () => {
+    };
   }, []);
 
   // Handling scroll with buttons
@@ -66,11 +71,10 @@ const DatePicker: React.FC<DatePickerProps> = ({
       const currentTasks: TaskProps[] | undefined = await fetchTasks(
         date,
         // @ts-ignore
-        session?.user?.accessToken
+        session?.user?.accessToken,
       );
       setTasks(currentTasks);
     } catch (error) {
-      console.error(error);
       const errorMessage = getErrorMessage(error);
       toast.error(errorMessage);
     } finally {

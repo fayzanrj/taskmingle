@@ -2,7 +2,7 @@ import TaskForm from "@/components/addtask/TaskForm";
 import { Metadata, NextPage } from "next";
 
 export const metadata: Metadata = {
-  title: "Add task - Task Notify",
+  title: "Add task",
 };
 
 const AddTask: NextPage = () => {

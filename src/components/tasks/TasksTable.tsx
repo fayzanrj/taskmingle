@@ -1,7 +1,7 @@
 import { TaskProps } from "@/props/TaskProps";
 import React from "react";
-import NoTasksFound from "./NoTasksFound";
-import TasksFetchError from "./TasksFetchError";
+import NoItemFound from "../NoItemFound";
+import FetchError from "../FetchError";
 
 // Task Table interface
 interface TaskTableProps {
@@ -11,34 +11,37 @@ interface TaskTableProps {
 const TasksTable: React.FC<TaskTableProps> = ({ tasks }) => {
   // If there is an error fetching tasks
   if (tasks === undefined || tasks === null) {
-    return <TasksFetchError />;
+    return <FetchError />;
   }
 
   // If there are no tasks
   if (tasks.length === 0) {
-    return <NoTasksFound />;
+    return <NoItemFound variant="Tasks" />;
   }
-
   return (
     <table className="min-w-full  border border-[#323232] text-center">
       {/* Headers for table */}
       <thead>
         <tr>
           {/* Date */}
-          <th className="w-1/4 py-2 px-4 border-b border-[#323232] text-xl font-bold">Date</th>
+          <th className="w-1/4 py-2 px-4 border-b border-[#323232] text-xl font-bold">
+            Date
+          </th>
           {/* Tilte */}
           <th className="w-2/4 py-2 px-4 border-b border-[#323232] text-xl font-bold">
             Task Title
           </th>
           {/* Status */}
-          <th className="w-1/4 py-2 px-4 border-b border-[#323232] text-xl font-bold">Status</th>
+          <th className="w-1/4 py-2 px-4 border-b border-[#323232] text-xl font-bold">
+            Status
+          </th>
         </tr>
       </thead>
 
       {/* Table data  */}
       <tbody>
         {tasks.map((task: TaskProps, index: number) => (
-          <tr  key={index}>
+          <tr key={index}>
             {/* Task date */}
             <td className="w-1/4 py-2 px-4 border-b border-[#323232] font-semibold">
               {task.date}

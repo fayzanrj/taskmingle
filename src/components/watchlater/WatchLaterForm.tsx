@@ -11,11 +11,16 @@ const WatchLaterForm = () => {
   const { data: session } = useSession();
   // Variable states
   const [url, setUrl] = useState<string>("");
+  const [title, setTitle] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   // Handle change function
   const handleUrlChange = (e: React.FormEvent<HTMLInputElement>) => {
     setUrl(e.currentTarget.value);
+  };
+
+  const handleTitleChange = (e: React.FormEvent<HTMLInputElement>) => {
+    setTitle(e.currentTarget.value);
   };
 
   // Headers
@@ -34,7 +39,7 @@ const WatchLaterForm = () => {
       // API REQUEST
       const res = await axios.post(
         "/api/watchlater/addwatchlater",
-        { url },
+        { url, title },
         { headers }
       );
 
@@ -65,12 +70,29 @@ const WatchLaterForm = () => {
         {/* Preview */}
         <PreviewSection url={url} />
 
-        {/* Input */}
-        <InputSection
-          url={url}
-          onChange={handleUrlChange}
-          isLoading={isLoading}
-        />
+        <section className="my-6">
+          {/* Input */}
+          <WatchLaterInputField
+            type="text"
+            label="Enter Title"
+            placeHolder="e.g. John Doe's video"
+            id="title"
+            state={title}
+            onChange={handleTitleChange}
+            isLoading={isLoading}
+          />
+
+          {/* Input */}
+          <WatchLaterInputField
+            type="url"
+            label="Enter URL"
+            placeHolder="https://example.com"
+            id="url"
+            state={url}
+            onChange={handleUrlChange}
+            isLoading={isLoading}
+          />
+        </section>
 
         {/* Submit button */}
         <SubmitButton isLoading={isLoading} />
@@ -99,26 +121,35 @@ const PreviewSection = ({ url }: { url: string }) => (
   </section>
 );
 
-// Input Section component
-const InputSection = ({
-  url,
-  onChange,
-  isLoading,
-}: {
-  url: string;
+interface WatchLaterInputFieldProps {
+  label: string;
+  type: string;
+  placeHolder: string;
+  id: string;
+  state: string;
   isLoading: boolean;
   onChange: (e: React.FormEvent<HTMLInputElement>) => void;
+}
+// Input Section component
+const WatchLaterInputField: React.FC<WatchLaterInputFieldProps> = ({
+  state,
+  onChange,
+  isLoading,
+  placeHolder,
+  id,
+  type,
+  label,
 }) => (
-  <div className="w-4/5 sm:w-96 mt-10">
-    <label htmlFor="urlInput" className="text-[1rem] ml-1 font-semibold">
-      Enter URL:
+  <div className="w-4/5 sm:w-96 mt-5">
+    <label htmlFor={id} className="text-[1rem] ml-1 font-semibold">
+      {label}
     </label>
     <br />
     <input
-      type="url"
-      id="urlInput"
-      placeholder="https://example.com"
-      value={url}
+      type={type}
+      id={id}
+      placeholder={placeHolder}
+      value={state}
       onChange={onChange}
       disabled={isLoading}
       className="w-full rounded-lg p-2 my-1 bg-[#1F1F1F] outline-none font-semibold"

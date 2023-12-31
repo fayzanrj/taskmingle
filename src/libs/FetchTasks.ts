@@ -5,7 +5,7 @@ import { getErrorMessage } from "./GetErrorMessage";
 
 export const fetchTasks = async (
   date: Date,
-  accessToken: string
+  accessToken: string,
 ): Promise<TaskProps[] | undefined> => {
   // Encooding given date
   const encodedDate = encodeURIComponent(new Date(date).toDateString());
@@ -22,7 +22,6 @@ export const fetchTasks = async (
     );
     return res.data.tasks;
   } catch (error: any) {
-    console.log(error);
     const errorMessage = getErrorMessage(error);
     toast.error(errorMessage);
   }

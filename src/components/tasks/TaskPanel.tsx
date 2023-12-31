@@ -12,6 +12,7 @@ const TaskPanel: React.FC<{ accessToken: string }> = ({ accessToken }) => {
   // Variable states
   const [tasks, setTasks] = useState<TaskProps[] | undefined>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  
 
   // Fetching current date tasks
   useEffect(() => {
@@ -20,9 +21,9 @@ const TaskPanel: React.FC<{ accessToken: string }> = ({ accessToken }) => {
       try {
         const currentTasks: TaskProps[] | undefined = await fetchTasks(
           new Date(),
-          accessToken
+          accessToken,
         );
-        setTasks(currentTasks);
+          setTasks(currentTasks);
       } catch (error) {
         console.error(error);
         const errorMessage = getErrorMessage(error);
@@ -34,7 +35,10 @@ const TaskPanel: React.FC<{ accessToken: string }> = ({ accessToken }) => {
 
     // Fetching
     fetchData();
-  }, []);
+
+    return () => {
+    };
+  }, [accessToken]);
 
   // Getting inital date for the date picker calender
   const intialDate = getInitialDate();

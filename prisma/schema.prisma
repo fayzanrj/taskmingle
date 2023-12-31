@@ -50,6 +50,7 @@ model Code {
 model WatchLater {
   id          String    @id @default(auto()) @map("_id") @db.ObjectId
   url         String
+  title       String
   createdBy   User      @relation("createdByUser", fields: [createdById], references: [id])
   createdById String    @db.ObjectId
   createdAt   DateTime? @default(now())

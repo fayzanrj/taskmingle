@@ -6,7 +6,10 @@ import { Metadata } from "next";
 import { getServerSession } from "next-auth";
 
 export const metadata: Metadata = {
-  title: "Dashboard - Task Notify",
+  title: {
+    default : "Dashboard",
+    template : `%s - Task Notify`
+  },
 };
 
 async function getGreetingMessage() {

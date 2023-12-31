@@ -1,7 +1,7 @@
 import React from "react";
 import { Lia500Px } from "react-icons/lia";
 
-const TasksFetchError = () => {
+const FetchError = () => {
   return (
     <div className="w-fit mt-20 mx-auto px-3 text-center">
       <span>
@@ -14,4 +14,4 @@ const TasksFetchError = () => {
   );
 };
 
-export default TasksFetchError;
+export default FetchError;

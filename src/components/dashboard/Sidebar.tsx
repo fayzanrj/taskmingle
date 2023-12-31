@@ -6,15 +6,15 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React, { FC, useState } from "react";
 import { IconType } from "react-icons";
-import { AiOutlineHome } from "react-icons/ai";
 import { BsListTask } from "react-icons/bs";
 import { CgProfile } from "react-icons/cg";
 import { CiLogout } from "react-icons/ci";
+import { FaBookmark } from "react-icons/fa";
 import { GrTask } from "react-icons/gr";
 import { IoIosArrowDropleft } from "react-icons/io";
+import { MdSpaceDashboard } from "react-icons/md";
 import { SlMenu } from "react-icons/sl";
 import Logo from "../Logo";
-import { FaBookmark } from "react-icons/fa";
 
 // TO DO : WORK ON HREFS
 
@@ -33,7 +33,12 @@ interface NavItem extends NavLink {
 
 // Top navbar links data
 const TopNavLinks: NavLink[] = [
-  { text: "Home", href: ROUTES.DASHBOARD, Icon: AiOutlineHome, size: 1.2 },
+  {
+    text: "Dashboard",
+    href: ROUTES.DASHBOARD,
+    Icon: MdSpaceDashboard,
+    size: 1.2,
+  },
   { text: "My Tasks", href: ROUTES.TASKS, Icon: SlMenu, size: 1 },
   {
     text: "Completed Tasks",
@@ -46,7 +51,8 @@ const TopNavLinks: NavLink[] = [
     href: ROUTES.OVERDUE_TASKS,
     Icon: BsListTask,
     size: 1.3,
-  },{
+  },
+  {
     text: "Watch later",
     href: ROUTES.WATCH_LATER,
     Icon: FaBookmark,
@@ -139,19 +145,22 @@ const NavItem: FC<NavItem> = ({ text, href, Icon, size, setState }) => {
   };
   return (
     <li
-      className={`relative p-3 my-1 rounded-xl text-sm ${
+      className={`  p-3 my-1 rounded-xl text-sm ${
         isActive ? "bg-[#19fa9a] text-black" : "text-[#8D8D8D]"
       }`}
       onClick={handleClick}
     >
-      <Link href={href === "dashboard" ? "/dashboard" : `/dashboard/${href}`}>
+      <Link
+        href={href === "dashboard" ? "/dashboard" : `/dashboard/${href}`}
+        className="flex gap-5 items-center"
+      >
         {/* Icon */}
-        <span className="aboslute">
-          <Icon className="inline-block" size={`${size}rem`} />
+        <span>
+          <Icon className="" size={`${size}rem`} />
         </span>
 
         {/* Text */}
-        <p className="absolute inline-block ml-4 font-bold">{text}</p>
+        <p className="font-bold">{text}</p>
       </Link>
     </li>
   );

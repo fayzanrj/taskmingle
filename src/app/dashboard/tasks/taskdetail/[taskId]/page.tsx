@@ -13,7 +13,7 @@ import { Metadata } from "next";
 const roboto = Roboto({ subsets: ["latin"], weight: "500" });
 
 export const metadata: Metadata = {
-  title: "Task Details - Task Notify",
+  title: "Task Details",
 };
 interface Params {
   taskId: string;
@@ -60,7 +60,7 @@ const TaskDetails: React.FC<{ params: Params }> = async ({ params }) => {
   await updateCurrentStatus(task?.date, task?.status, task?.id);
 
   return (
-    <div className="w-full h-fit relative py-10">
+    <div className="w-full h-fit relative py-10 select-text">
       {/* Button to go back */}
       <GoBack />
 

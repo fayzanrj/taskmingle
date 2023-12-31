@@ -3,7 +3,7 @@ import { Metadata, NextPage } from "next";
 import React, { useState } from "react";
 
 export const metadata : Metadata = {
-  title : "Add Watch Later - Task Notify"
+  title : "Add Watch Later"
 }
 
 const WatchLater: NextPage = () => {

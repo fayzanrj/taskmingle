@@ -10,7 +10,7 @@ interface Params {
 }
 
 export const metadata: Metadata = {
-  title: "Edit task - Task Notify",
+  title: "Edit task",
 };
 
 const EditTask: React.FC<{ params: Params }> = async ({ params }) => {
