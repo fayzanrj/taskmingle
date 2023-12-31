@@ -1,18 +1,20 @@
 import GoBack from "@/components/GoBack";
-import TaskStatus from "@/components/tasks/TaskStatus";
 import RenderTags from "@/components/tasks/RenderTags";
 import TaskActionBtns from "@/components/tasks/TaskActionBtns";
+import TaskStatus from "@/components/tasks/TaskStatus";
 import { TaskProps } from "@/props/TaskProps";
 import { authOptions } from "@/utils/AuthOptions";
 import { getServerSession } from "next-auth";
 import { Roboto } from "next/font/google";
 import React from "react";
-
 import prisma from "@/app/db";
-import { getCurrentStatus } from "@/libs/GetCurrentStatus";
+import { Metadata } from "next";
 
 const roboto = Roboto({ subsets: ["latin"], weight: "500" });
 
+export const metadata: Metadata = {
+  title: "Task Details - Task Notify",
+};
 interface Params {
   taskId: string;
 }
@@ -72,6 +74,15 @@ const TaskDetails: React.FC<{ params: Params }> = async ({ params }) => {
 
         <div className="min-h-[20vh]">
           <p className="my-10 font-semibold">{task?.taskDesc}</p>
+        </div>
+
+        <div>
+          <p className="w-full font-bold">
+            Attached link :{" "}
+            <span className="w-full">
+              <a href={task?.link} className="w-full font-normal underline underline-offset-2">{task?.link}</a>
+            </span>
+          </p>
         </div>
 
         <FormattedDateTime

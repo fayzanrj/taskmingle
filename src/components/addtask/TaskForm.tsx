@@ -23,6 +23,7 @@ interface TaskFormProps {
   startTime?: string;
   reminderAt?: string;
   status?: string;
+  link?: string;
   variant: "EDIT" | "ADD";
 }
 
@@ -36,11 +37,13 @@ const TaskForm: React.FC<TaskFormProps> = ({
   startTime,
   date,
   variant,
+  link,
 }) => {
   const { data: session } = useSession();
   // State variables
   const [title, setTitle] = useState<string>(taskTitle || "");
   const [desc, setDesc] = useState<string>(taskDesc || "");
+  const [urlLink, setUrlLink] = useState<string>(link || "");
 
   // Date state
   const [selectedDate, setSelectedDate] = useState<string>(
@@ -84,6 +87,7 @@ const TaskForm: React.FC<TaskFormProps> = ({
     setStartingTime("");
     setSelectedDate("");
     setSelectedTags("");
+    setUrlLink("")
   };
 
   // Handle save function
@@ -98,6 +102,7 @@ const TaskForm: React.FC<TaskFormProps> = ({
       reminderAt: remindAt,
       date: new Date(selectedDate).toDateString(),
       tags: selectedTags.split(","),
+      link: urlLink,
       status: "Pending",
     };
 
@@ -140,54 +145,68 @@ const TaskForm: React.FC<TaskFormProps> = ({
         <h1 className="text-3xl font-bold">Add a Task</h1>
       </header>
 
-      <div className="mt-5 flex justify-center items-center flex-wrap md:gap-5 ">
-        <section className="w-4/5 sm:w-80 px-1">
-          {/* Input components for task details */}
-          <AddTaskTextInput
-            label="Task title"
-            id="taskTitle"
-            placeholder="Write a title for your task"
-            state={title}
-            setState={setTitle}
-          />
-          <AddTaskTextArea
-            label="Description"
-            id="taskDesc"
-            placeholder="Write a description for your task"
-            rows={4}
-            state={desc}
-            setState={setDesc}
-          />
-          <AddTaskTextInput
-            label="Tags"
-            id="taskTags"
-            state={selectedTags}
-            setState={setSelectedTags}
-            placeholder="Separate tags by adding a comma"
-          />
-        </section>
+      <div className="w-4/5 sm:w-[39rem] mx-auto ">
+        <div className="flex justify-between items-center flex-wrap md:gap-5 ">
+          <section className="w-4/5 sm:w-80 px-1">
+            {/* Input components for task details */}
+            <AddTaskTextInput
+              label="Task title"
+              id="taskTitle"
+              placeholder="Write a title for your task"
+              state={title}
+              setState={setTitle}
+            />
+            <AddTaskTextArea
+              label="Description"
+              id="taskDesc"
+              placeholder="Write a description for your task"
+              rows={4}
+              state={desc}
+              setState={setDesc}
+            />
+            <AddTaskTextInput
+              label="Tags"
+              id="taskTags"
+              state={selectedTags}
+              setState={setSelectedTags}
+              placeholder="Separate tags by adding a comma"
+            />
+          </section>
 
-        <section className=" w-4/5 sm:w-48 px-1">
-          {/* Input components for date and time */}
-          <AddTaskDateInput
-            label="Select a Date"
-            id="date"
-            state={selectedDate}
-            setState={setSelectedDate}
-          />
-          <AddTaskTimeInput
-            label="Select starting time"
-            id="startingTime"
-            state={startingTime}
-            setState={setStartingTime}
-            selectedDate={selectedDate}
-          />
-          <AddTaskTimeInput
-            label="Remind me at"
-            id="remindTime"
-            state={remindAt}
-            setState={setRemindAt}
-            selectedDate={selectedDate}
+          <section className=" w-4/5 sm:w-48 px-1">
+            {/* Input components for date and time */}
+            <AddTaskDateInput
+              label="Select a Date"
+              id="date"
+              state={selectedDate}
+              setState={setSelectedDate}
+            />
+            <AddTaskTimeInput
+              label="Select starting time"
+              id="startingTime"
+              state={startingTime}
+              setState={setStartingTime}
+              selectedDate={selectedDate}
+            />
+            <AddTaskTimeInput
+              label="Remind me at"
+              id="remindTime"
+              state={remindAt}
+              setState={setRemindAt}
+              selectedDate={selectedDate}
+            />
+          </section>
+        </div>
+
+        <section>
+          <label htmlFor="url">Add a link</label>
+          <input
+            type="url"
+            id="url"
+            value={urlLink}
+            onChange={(e) => setUrlLink(e.currentTarget.value)}
+            className="w-full px-3 py-2 bg-[#1F1F1F] rounded-lg outline-none"
+            placeholder="Paste a link"
           />
         </section>
       </div>

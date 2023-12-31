@@ -6,7 +6,7 @@ import { Metadata } from "next";
 import { getServerSession } from "next-auth";
 
 export const metadata: Metadata = {
-  title: "Dashboard - Task Mingle",
+  title: "Dashboard - Task Notify",
 };
 
 async function getGreetingMessage() {
@@ -36,7 +36,7 @@ export default async function RootLayout({
     <main className="w-full h-[100svh] flex">
       {/* Side component */}
       <Sidebar />
-      <div className="w-full h-fi relative">
+      <div className="w-full relative">
         {/* Top Bar component */}
         <TopBar message={message} />
         {/* Rest of the pages */}

@@ -1,5 +1,5 @@
 // function to add zero in the time string
-const addZero = (item: number): string => {
+export const addZero = (item: number): string => {
   return item.toString().length === 1 ? `0${item}` : `${item}`;
 };
 

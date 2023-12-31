@@ -5,7 +5,7 @@ import { Metadata } from "next";
 import { getServerSession } from "next-auth";
 
 export const metadata: Metadata = {
-  title: "Overdue Tasks - Task Mingle",
+  title: "Overdue Tasks - Task Notify",
 };
 
 const OverdueTasks = async () => {

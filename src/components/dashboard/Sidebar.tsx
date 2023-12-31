@@ -1,4 +1,7 @@
 "use client";
+import { ROUTES } from "@/constants/NavRoutes";
+import useDeviceWidth from "@/hooks/useDeviceWidth";
+import { signOut } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React, { FC, useState } from "react";
@@ -8,12 +11,10 @@ import { BsListTask } from "react-icons/bs";
 import { CgProfile } from "react-icons/cg";
 import { CiLogout } from "react-icons/ci";
 import { GrTask } from "react-icons/gr";
-import { SlMenu } from "react-icons/sl";
 import { IoIosArrowDropleft } from "react-icons/io";
+import { SlMenu } from "react-icons/sl";
 import Logo from "../Logo";
-import { signOut } from "next-auth/react";
-import { ROUTES } from "@/constants/NavRoutes";
-import useDeviceWidth from "@/hooks/useDeviceWidth";
+import { FaBookmark } from "react-icons/fa";
 
 // TO DO : WORK ON HREFS
 
@@ -44,6 +45,11 @@ const TopNavLinks: NavLink[] = [
     text: "Overdue Tasks",
     href: ROUTES.OVERDUE_TASKS,
     Icon: BsListTask,
+    size: 1.3,
+  },{
+    text: "Watch later",
+    href: ROUTES.WATCH_LATER,
+    Icon: FaBookmark,
     size: 1.3,
   },
 ];

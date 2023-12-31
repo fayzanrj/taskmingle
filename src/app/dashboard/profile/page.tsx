@@ -4,7 +4,7 @@ import { Metadata, NextPage } from "next";
 import { getServerSession } from "next-auth";
 
 export const metadata: Metadata = {
-  title: "My Profile - Task Mingle",
+  title: "My Profile - Task Notify",
 };
 
 const Profile: NextPage = async () => {

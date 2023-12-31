@@ -1,3 +1,4 @@
+import { addZero } from "@/libs/GetFormattedData";
 import { DateTimeInputProps } from "@/props/DateTimeProps";
 import { stat } from "fs";
 import React, { useEffect } from "react";
@@ -21,7 +22,7 @@ const AddTaskTimeInput: React.FC<DateTimeInputProps> = ({
     if (
       isCurrentDate &&
       e.currentTarget.value <
-        `${new Date().getHours()}:${new Date().getMinutes()}`
+        `${addZero(new Date().getHours())}:${addZero(new Date().getMinutes())}`
     ) {
       setState(`${new Date().getHours()}:${new Date().getMinutes()}`);
     } else {
@@ -29,8 +30,6 @@ const AddTaskTimeInput: React.FC<DateTimeInputProps> = ({
     }
   };
 
-  
-  
   return (
     <div className="my-5 text-center">
       {/* Label for the time input */}

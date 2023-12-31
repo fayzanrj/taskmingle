@@ -29,6 +29,7 @@ model Task {
   date        String
   tags        String[]
   status      String
+  link        String?
   createdBy   User      @relation("createdByUser", fields: [createdById], references: [id])
   createdById String    @db.ObjectId
   createdAt   DateTime? @default(now())
