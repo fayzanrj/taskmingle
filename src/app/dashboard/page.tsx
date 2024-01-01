@@ -12,11 +12,11 @@ import prisma from "../db";
 const Dashboard: NextPage = async () => {
   const data = await getServerSession(authOptions);
 
-  // const headers = {
-  //   "Content-Type": "application/json",
-  //   //@ts-ignore
-  //   accessToken: data?.user?.accessToken,
-  // };
+  const headers = {
+    "Content-Type": "application/json",
+    //@ts-ignore
+    accessToken: data?.user?.accessToken,
+  };
 
   // const encodedDate = encodeURIComponent(new Date().toDateString());
   // const response = await fetch(
@@ -68,7 +68,8 @@ const Dashboard: NextPage = async () => {
 
       <section className="w-full overflow-hidden mt-16 mb-10 ">
         {/*   TASKS */}
-        <DashboardTasksList tasks={tasks} />
+        {/* @ts-ignore */}
+        <DashboardTasksList tasks={tasks || undefined} />
 
         {/* WATCH LATERS */}
         <DashboardWatchList watchLater={watchLaters} />

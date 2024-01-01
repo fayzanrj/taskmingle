@@ -64,7 +64,7 @@ const DashboardTasksList: React.FC<DashboardTasksListProps> = ({ tasks }) => {
       <div
         className={`w-full h-full ${
           isOpen ? "md:w-[calc(100vw_-20rem)]" : "md:w-full"
-        }  relative text-center flex justify-between gap-[0.575rem]`}
+        }  relative text-center flex justify-between gap-[0.585rem]`}
       >
         {/* LEFT BUTTON */}
         <button
