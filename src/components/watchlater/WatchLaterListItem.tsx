@@ -1,23 +1,25 @@
 import { WatchLaterProps } from "@/props/WatchLaterProps";
 
-const WatchLaterListItem: React.FC<WatchLaterProps> = ({ url, title }) => {
+const WatchLaterListItem: React.FC<WatchLaterProps> = ({
+  url,
+  title,
+  image,
+}) => {
   return (
-    <div className="w-[95%] h-72 text-sm sm:w-80 sm:h-56 overflow-hidden rounded-lg bg-[#1D1F21] my-5">
+    <div className="w-[95%] h-80 text-sm sm:w-[17rem] sm:h-60 overflow-hidden rounded-lg bg-[#1D1F21] my-5 ">
       {/* Preview */}
-      <iframe
-        src="url"
-        width={"100%"}
-        height={"60%"}
-        className="rounded-lg rounded-b-none"
-        loading={"eager"}
-      />
+      {image && (
+        <a href={url}>
+          <img src={image} className="w-full h-3/5" />
+        </a>
+      )}
 
-      {/* Link */}
-      <div className="p-2 select-text">
-        <p className="font-bold text-lg whitespace-nowrap">
-          {title.slice(0, 30) + (title.length > 30 ? "...." : "")}
+      {/* Link  and title*/}
+      <div className="p-2 select-text overflow-hidden">
+        <p className="font-bold text-[1rem] whitespace-nowrap">
+          {title.slice(0, 28) + (title.length > 28 ? "...." : "")}
         </p>
-        <p>
+        <p className="text-xs mt-2">
           Link :{" "}
           <span>
             <a href={url} className="underline underline-offset-4">
@@ -30,4 +32,4 @@ const WatchLaterListItem: React.FC<WatchLaterProps> = ({ url, title }) => {
   );
 };
 
-export default WatchLaterListItem
+export default WatchLaterListItem;

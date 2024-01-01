@@ -22,7 +22,7 @@ export const POST = async (req: NextRequest) => {
     // Receive and check if data is present
     const data = await req.json();
 
-    if (!data.url || !data.title) {
+    if (!data.url || !data.title || !data.image) {
       return ThrowIncompleteError();
     }
 

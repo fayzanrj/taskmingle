@@ -12,7 +12,7 @@ import WatchLaterListItem from "./WatchLaterListItem";
 
 interface WatchLaterListProps {
   watchLaters: WatchLaterProps[];
-  accessToken: string;
+  accessToken?: string;
 }
 
 const WatchLaterList: React.FC<WatchLaterListProps> = ({
@@ -58,24 +58,25 @@ const WatchLaterList: React.FC<WatchLaterListProps> = ({
   };
   return (
     <>
-      <section className=" h-10 my-10 w-full flex justify-end items-center gap-5">
-        {/* Add watch later page link */}
-        <Link href={"/dashboard/watchlater/addwatchlater"}>
-          <button className="py-1.5 px-3 bg-[#19fa9a] rounded-lg text-[#1F1F1F] font-semibold">
-            Add watch later
+      {accessToken && (
+        <section className=" h-10 my-10 w-full flex justify-end items-center gap-5">
+          {/* Add watch later page link */}
+          <Link href={"/dashboard/watchlater/addwatchlater"}>
+            <button className="py-1.5 px-3 bg-[#19fa9a] rounded-lg text-[#1F1F1F] font-semibold">
+              Add watch later
+            </button>
+          </Link>
+
+          <button
+            disabled={isLoading}
+            onClick={handleRefresh}
+            className="w-16 h-10 rounded-lg"
+          >
+            {isLoading ? <ActivityLoader /> : "Refresh"}
           </button>
-        </Link>
-
-        <button
-          disabled={isLoading}
-          onClick={handleRefresh}
-          className="w-16 h-10 rounded-lg"
-        >
-          {isLoading ? <ActivityLoader /> : "Refresh"}
-        </button>
-      </section>
-
-      <div className="w-full flex justify-center flex-wrap  gap-5  lg:gap-10">
+        </section>
+      )}
+      <div className="w-full flex justify-center flex-wrap  gap-5 ">
         {watchLaterList.map((watchlater: WatchLaterProps, index: number) => (
           <WatchLaterListItem key={index} {...watchlater} />
         ))}

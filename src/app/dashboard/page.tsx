@@ -1,9 +1,14 @@
+import DashboardTasksList from "@/components/dashboard/DashboardTasksList";
 import TasksCounter from "@/components/dashboard/TasksCounter";
 import AddTaskBtnRound from "@/components/tasks/AddTaskBtnRound";
 import TasksList from "@/components/tasks/TasksList";
+import WatchLaterList from "@/components/watchlater/WatchLaterList";
+import WatchLaterListItem from "@/components/watchlater/WatchLaterListItem";
+import { WatchLaterProps } from "@/props/WatchLaterProps";
 import { authOptions } from "@/utils/AuthOptions";
 import { NextPage } from "next";
 import { getServerSession } from "next-auth";
+import Link from "next/link";
 
 // TO DO : REFACTOR
 
@@ -11,7 +16,7 @@ const Dashboard: NextPage = async () => {
   const data = await getServerSession(authOptions);
 
   const headers = {
-    "Content-Type": "application/json", 
+    "Content-Type": "application/json",
     //@ts-ignore
     accessToken: data?.user?.accessToken,
   };
@@ -25,10 +30,19 @@ const Dashboard: NextPage = async () => {
   const res = await response.json();
   const tasks = res.tasks;
 
-  return (
-    <div className="p-10">
-      <AddTaskBtnRound />
+  const response2 = await fetch(
+    `${process.env.HOST}/api/watchlater/getwatchlaters`,
+    { cache: "no-cache", headers: headers }
+  );
 
+  const res2 = await response2.json();
+  const watchLaters: WatchLaterProps[] = res2.watchlaters;
+
+
+  
+
+  return (
+    <div className="w-full p-10">
       <section className="flex justify-center gap-3  md:gap-10 lg:gap:20 flex-wrap">
         <TasksCounter
           header="Today's Tasks"
@@ -47,9 +61,46 @@ const Dashboard: NextPage = async () => {
         />
       </section>
 
-      <section className="mt-10">
-        <h3 className="text-3xl font-semibold text-white">Today&#39;s Board</h3>
-        <TasksList tasks={tasks} isLoading={false} />
+      <section className="my-10 flex justify-center gap-3 flex-wrap">
+        {/*   TASKS */}
+        <div className="w-80 h-fit ">
+          <h3 className="text-2xl font-semibold text-white">
+            Your today&#39;s tasks
+          </h3>
+          <TasksList tasks={tasks.slice(0, 4)} isLoading={false} />
+
+          <div className="text-center">
+
+          <Link href={'/dashboard/tasks'}>
+            <p className="text-lg underline underline-offset-2">See all tasks</p>
+          </Link>
+          </div>
+        </div>
+
+        {/* WATCH LATERS */}
+        <div className="w-80 h-fit">
+          <h3 className="text-2xl font-semibold text-white">
+            Maybe you wanna watch
+          </h3>
+          <div>
+            <WatchLaterList
+              watchLaters={watchLaters.slice(0, 3)}
+              accessToken=""
+            />
+          </div>
+
+          <div className="text-center">
+
+          <Link href={'/dashboard/watchlater'}>
+            <p className="text-lg underline underline-offset-2">See all watch laters</p>
+          </Link>
+          </div>
+        </div>
+
+        {/* Notes */}
+        <div className="w-80 h-48 bg-[#1f1f1f1]">
+
+        </div>
       </section>
     </div>
   );

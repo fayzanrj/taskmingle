@@ -31,7 +31,7 @@ const TasksList: React.FC<TaskListProps> = ({ tasks, isLoading }) => {
     <div
       className={`py-10 px-10 lg:px-16 flex justify-center ${
         tasks.length >= 4 ? "sm:justify-center " : "sm:justify-start"
-      } gap-5  lg:gap-10 flex-wrap`}
+      } gap-5  flex-wrap`}
     >
       {tasks.map((task: TaskProps, index: number) => (
         <TaskItem key={index} {...task} />

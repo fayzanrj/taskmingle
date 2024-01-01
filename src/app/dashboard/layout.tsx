@@ -7,8 +7,8 @@ import { getServerSession } from "next-auth";
 
 export const metadata: Metadata = {
   title: {
-    default : "Dashboard",
-    template : `%s - Task Notify`
+    default: "Dashboard",
+    template: `%s - Task Notify`,
   },
 };
 
@@ -43,7 +43,7 @@ export default async function RootLayout({
         {/* Top Bar component */}
         <TopBar message={message} />
         {/* Rest of the pages */}
-        {children}
+        <div className="w-full">{children}</div>
       </div>
     </main>
   );

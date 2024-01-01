@@ -145,7 +145,7 @@ const NavItem: FC<NavItem> = ({ text, href, Icon, size, setState }) => {
   };
   return (
     <li
-      className={`  p-3 my-1 rounded-xl text-sm ${
+      className={`p-3 my-1 rounded-xl text-sm ${
         isActive ? "bg-[#19fa9a] text-black" : "text-[#8D8D8D]"
       }`}
       onClick={handleClick}

@@ -2,6 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
+html,
+body,
+* {
+  /* border-width: 1px; */
+  /* border-color: red; */
+  box-sizing: border-box;
+}
+
+body{
+  scrollbar-gutter: auto;
+}
+
 .BG_IMAGE {
   background-image: url("../assets/landingPageBg.png");
   background-position: center;
@@ -9,7 +21,7 @@
   background-repeat: no-repeat;
 }
 
-body{
+body {
   -webkit-tap-highlight-color: transparent; /* For iOS */
   user-select: none;
 }
@@ -131,8 +143,6 @@ html {
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
 
-
-
 .toggle-switch {
   position: relative;
   display: inline-block;
@@ -157,7 +167,7 @@ html {
 }
 
 .toggle-label:before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0.15rem;
   left: 0.1rem;
@@ -178,19 +188,19 @@ html {
 }
 
 .TAGS:nth-child(3n + 1) {
-  border-color: #8C2A3C;
-  background-color: #30121F;
-  color: #BB2A46;
+  border-color: #8c2a3c;
+  background-color: #30121f;
+  color: #bb2a46;
 }
 
 .TAGS:nth-child(3n + 2) {
-  border-color: #127C4C;
+  border-color: #127c4c;
   background-color: #123221;
-  color: #15C076;
+  color: #15c076;
 }
 
 .TAGS:nth-child(3n + 3) {
-  border-color: #5C4CA5;
-  background-color: #231F32;
-  color: #765DDC;
+  border-color: #5c4ca5;
+  background-color: #231f32;
+  color: #765ddc;
 }
