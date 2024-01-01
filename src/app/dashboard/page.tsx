@@ -25,6 +25,9 @@ const Dashboard: NextPage = async () => {
 
   const res = await response.json();
   const tasks = res.tasks;
+
+  
+  console.log("tasks client" , tasks)
   
   const response2 = await fetch(
     `${process.env.HOST}/api/watchlater/getwatchlaters`,

@@ -28,6 +28,7 @@ export const GET = async (req: NextRequest) => {
         startTime: "asc",
       },
     });
+    console.log("tasks server" , tasks)
 
     // Returing tasks as response
     return NextResponse.json({ tasks }, { status: 200 });
