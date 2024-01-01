@@ -17,6 +17,7 @@ const Dashboard: NextPage = async () => {
     accessToken: data?.user?.accessToken,
   };
 
+  const encodedDate = new Date().toDateString();
   const response = await fetch(
     `${process.env.HOST}/api/tasks/getAllTasks/${new Date().toDateString()}`,
     { cache: "no-store", headers: headers }
@@ -55,6 +56,7 @@ const Dashboard: NextPage = async () => {
 
 
       <section className="w-full overflow-hidden mt-16 mb-10 ">
+        <p>{encodedDate}</p>
         {/*   TASKS */}
         <DashboardTasksList tasks={tasks} />
 
