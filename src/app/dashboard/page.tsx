@@ -40,7 +40,7 @@ const Dashboard: NextPage = async () => {
   const watchLaters: WatchLaterProps[] = res2.watchlaters;
 
   return (
-    <div className="w-full p-10">
+    <div className="w-full py-10 px-5">
       <section className="flex justify-center gap-3  md:gap-10 lg:gap:20 flex-wrap">
         <TasksCounter
           header="Today's Tasks"

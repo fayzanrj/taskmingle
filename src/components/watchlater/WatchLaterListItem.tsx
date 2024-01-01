@@ -6,7 +6,7 @@ const WatchLaterListItem: React.FC<WatchLaterProps> = ({
   image,
 }) => {
   return (
-    <div className="w-[98%] h-80 text-sm sm:w-[17rem] sm:h-60 overflow-hidden rounded-lg bg-[#1D1F21] my-5 ">
+    <div className="w-[95%] h-80 text-sm sm:w-[17rem] sm:h-60 overflow-hidden rounded-lg bg-[#1D1F21] my-5 ">
       {/* Preview */}
       {image && (
         <a href={url}>

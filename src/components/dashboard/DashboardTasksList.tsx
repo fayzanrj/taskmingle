@@ -28,7 +28,7 @@ const DashboardTasksList: React.FC<DashboardTasksListProps> = ({ tasks }) => {
   }
 
   return (
-    <div className="w-80 h-fit ">
+    <div className="w-full md:w-80 h-fit ">
       <h3 className="text-2xl font-semibold text-white">
         Your today&#39;s tasks
       </h3>

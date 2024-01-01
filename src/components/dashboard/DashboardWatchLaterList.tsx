@@ -27,7 +27,7 @@ const DashboardWatchLaterList: React.FC<DashboardWatchLaterListPrps> = ({
   }
 
   return (
-    <div className="w-80 h-fit">
+    <div className="w-full md:w-80  h-fit">
       <h3 className="text-2xl font-semibold text-white">
         Maybe you wanna watch
       </h3>
