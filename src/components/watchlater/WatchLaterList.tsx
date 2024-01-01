@@ -36,8 +36,13 @@ const WatchLaterList: React.FC<WatchLaterListProps> = ({
   }
 
   // If there are no items in watch later
+  // If there are no tasks
   if (watchLaters.length === 0) {
-    return <NoItemFound variant="Watch Laters" />;
+    return (
+      <div className="mt-20">
+        <NoItemFound variant="Watch Laters" />
+      </div>
+    );
   }
 
   // Handle Refresh

@@ -16,7 +16,11 @@ const TasksTable: React.FC<TaskTableProps> = ({ tasks }) => {
 
   // If there are no tasks
   if (tasks.length === 0) {
-    return <NoItemFound variant="Tasks" />;
+    return (
+      <div className="mt-20">
+        <NoItemFound variant="Tasks" />
+      </div>
+    );
   }
   return (
     <table className="min-w-full  border border-[#323232] text-center">

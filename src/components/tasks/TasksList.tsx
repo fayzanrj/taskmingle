@@ -24,7 +24,11 @@ const TasksList: React.FC<TaskListProps> = ({ tasks, isLoading }) => {
 
   // If there are no tasks
   if (tasks.length === 0) {
-    return <NoItemFound variant="Tasks" />;
+    return (
+      <div className="mt-20">
+        <NoItemFound variant="Tasks" />
+      </div>
+    );
   }
 
   return (

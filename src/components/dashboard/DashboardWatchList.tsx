@@ -26,7 +26,7 @@ const DashboardWatchList: React.FC<DashboardWatchList> = ({ watchLater }) => {
     const container = document.getElementById("watchLaterContainer");
 
     if (container) {
-      const scrollAmount = 300; // You can adjust this value based on your preference
+      const scrollAmount = 252; // You can adjust this value based on your preference
       const newPosition =
         direction === "left"
           ? scrollPosition - scrollAmount
@@ -47,11 +47,18 @@ const DashboardWatchList: React.FC<DashboardWatchList> = ({ watchLater }) => {
 
   // If there are no tasks
   if (initialWatchLater?.length === 0) {
-    return <NoItemFound variant="Watch Laters" />;
+    return (
+      <div className="my-5">
+        <h3 className="my-5 text-2xl font-semibold text-white">
+          Maybe you would like to watch
+        </h3>{" "}
+        <NoItemFound variant="Watch Laters" />
+      </div>
+    );
   }
 
   return (
-    <div className="my-10">
+    <div className="my-5">
       <h3 className="my-5 text-2xl font-semibold text-white">
         Maybe you would like to watch
       </h3>
@@ -60,11 +67,16 @@ const DashboardWatchList: React.FC<DashboardWatchList> = ({ watchLater }) => {
           isOpen ? "md:w-[calc(100vw_-20rem)]" : "md:w-full"
         }  relative text-center flex justify-between gap-3`}
       >
-         {/* LEFT BUTTON */}
-         <button className="w-fit h-40 rounded-lg  z-20" onClick={() => handleScroll("left")}>
-          <MdArrowBackIos size={"2rem"} className="inline-block"  />
+        {/* LEFT BUTTON */}
+        <button
+          className="w-fit h-40 rounded-lg  z-20 disabled:text-stone-800"
+          onClick={() => handleScroll("left")}
+          disabled={
+            initialWatchLater === undefined || initialWatchLater?.length <= 0
+          }
+        >
+          <MdArrowBackIos size={"2rem"} className="inline-block" />
         </button>
-
 
         {/* LIST */}
         <div
@@ -79,7 +91,13 @@ const DashboardWatchList: React.FC<DashboardWatchList> = ({ watchLater }) => {
         </div>
 
         {/* Right scroll button */}
-        <button className="w-fit h-40 rounded-lg  z-20" onClick={() => handleScroll("right")}>
+        <button
+          className="w-fit h-40 rounded-lg  z-20 disabled:text-stone-800"
+          onClick={() => handleScroll("right")}
+          disabled={
+            initialWatchLater === undefined || initialWatchLater?.length <= 0
+          }
+        >
           <MdArrowForwardIos size={"2rem"} className="inline-block" />
         </button>
       </div>
@@ -98,7 +116,7 @@ const DashboardWatchListItem = ({
   image: string;
   title: string;
 }) => (
-  <div className="min-w-[18rem] h-56 rounded-lg overflow-hidden bg-[#1D1F21] ">
+  <div className="min-w-[15rem] max-w-[15rem] h-56 rounded-lg overflow-hidden bg-[#1D1F21] ">
     {/* Image */}
     <a href={url}>
       <img src={image} className="w-full" />
