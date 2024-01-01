@@ -20,7 +20,7 @@ const Dashboard: NextPage = async () => {
   const encodedDate = encodeURIComponent(new Date().toDateString());
   const response = await fetch(
     `${process.env.HOST}/api/tasks/getAllTasks/${encodedDate}`,
-    { headers, next: { revalidate: 1 } }
+    { headers, cache: "no-store" }
   );
 
   const res = await response.json();
@@ -28,7 +28,7 @@ const Dashboard: NextPage = async () => {
 
   const response2 = await fetch(
     `${process.env.HOST}/api/watchlater/getwatchlaters`,
-    { cache: "no-cache", headers: headers }
+    { cache: "no-store", headers: headers }
   );
 
   const res2 = await response2.json();
