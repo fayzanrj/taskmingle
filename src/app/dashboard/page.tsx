@@ -18,15 +18,14 @@ const Dashboard: NextPage = async () => {
   };
 
   const encodedDate = new Date().toDateString();
-  const newA = "/api/tasks/getAllTasks/" + encodedDate;
-  const response = await fetch(process.env.HOST + newA, {
-    cache: "no-store",
-    headers: headers,
-  });
+  const response = await fetch(
+    `${process.env.HOST}/api/tasks/getTodaysTasks`,
+    { cache: "no-store", headers: headers }
+  );
 
   const res = await response.json();
   const tasks = res.tasks;
-
+  
   const response2 = await fetch(
     `${process.env.HOST}/api/watchlater/getwatchlaters`,
     { cache: "no-store", headers: headers }
@@ -55,11 +54,9 @@ const Dashboard: NextPage = async () => {
         />
       </section>
 
+
       <section className="w-full overflow-hidden mt-16 mb-10 ">
-        <p>
-          {encodedDate}
-          {newA}
-        </p>
+        <p>{encodedDate}</p>
         {/*   TASKS */}
         <DashboardTasksList tasks={tasks} />
 
