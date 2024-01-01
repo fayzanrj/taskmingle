@@ -4,26 +4,40 @@ import React, { useContext, useEffect, useLayoutEffect, useState } from "react";
 import TaskItem from "../tasks/TaskItem";
 import NoItemFound from "../NoItemFound";
 import { AppContext } from "@/context/AppContext";
+import TasksList from "../tasks/TasksList";
+import Link from "next/link";
+import FetchError from "../FetchError";
 
 interface DashboardTasksListProps {
   tasks: TaskProps[] | undefined;
 }
 
 const DashboardTasksList: React.FC<DashboardTasksListProps> = ({ tasks }) => {
-//   const { setInitialTasks, initialTasks } = useContext(AppContext);
-const [ initialTasks , setInitialTasks] = useState<TaskProps[] | undefined>(tasks)
+  //   const { setInitialTasks, initialTasks } = useContext(AppContext);
+  const [initialTasks, setInitialTasks] = useState<TaskProps[] | undefined>(
+    tasks
+  );
+
+  if (initialTasks === undefined) {
+    return <FetchError />;
+  }
 
   // If there are no tasks
-  if (tasks?.length === 0) {
+  if (initialTasks?.length === 0) {
     return <NoItemFound variant="Tasks" />;
   }
 
   return (
-    <div className="max-w-full sm:max-w-[50%] z-30">
-      <div className="flex overflow-x-auto">
-        {initialTasks?.map((task: TaskProps, index: number) => (
-          <TaskItem key={index} {...task} />
-        ))}
+    <div className="w-80 h-fit ">
+      <h3 className="text-2xl font-semibold text-white">
+        Your today&#39;s tasks
+      </h3>
+      <TasksList tasks={initialTasks} isLoading={false} />
+
+      <div className="text-center">
+        <Link href={"/dashboard/tasks"}>
+          <p className="text-lg underline underline-offset-2">See all tasks</p>
+        </Link>
       </div>
     </div>
   );

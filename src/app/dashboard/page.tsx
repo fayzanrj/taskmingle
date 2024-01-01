@@ -1,4 +1,5 @@
 import DashboardTasksList from "@/components/dashboard/DashboardTasksList";
+import DashboardWatchLaterList from "@/components/dashboard/DashboardWatchLaterList";
 import TasksCounter from "@/components/dashboard/TasksCounter";
 import AddTaskBtnRound from "@/components/tasks/AddTaskBtnRound";
 import TasksList from "@/components/tasks/TasksList";
@@ -38,9 +39,6 @@ const Dashboard: NextPage = async () => {
   const res2 = await response2.json();
   const watchLaters: WatchLaterProps[] = res2.watchlaters;
 
-
-  
-
   return (
     <div className="w-full p-10">
       <section className="flex justify-center gap-3  md:gap-10 lg:gap:20 flex-wrap">
@@ -61,46 +59,15 @@ const Dashboard: NextPage = async () => {
         />
       </section>
 
-      <section className="my-10 flex justify-center gap-3 flex-wrap">
+      <section className="mt-16 mb-10 flex justify-center gap-3 flex-wrap">
         {/*   TASKS */}
-        <div className="w-80 h-fit ">
-          <h3 className="text-2xl font-semibold text-white">
-            Your today&#39;s tasks
-          </h3>
-          <TasksList tasks={tasks.slice(0, 4)} isLoading={false} />
-
-          <div className="text-center">
-
-          <Link href={'/dashboard/tasks'}>
-            <p className="text-lg underline underline-offset-2">See all tasks</p>
-          </Link>
-          </div>
-        </div>
+        <DashboardTasksList tasks={tasks} />
 
         {/* WATCH LATERS */}
-        <div className="w-80 h-fit">
-          <h3 className="text-2xl font-semibold text-white">
-            Maybe you wanna watch
-          </h3>
-          <div>
-            <WatchLaterList
-              watchLaters={watchLaters.slice(0, 3)}
-              accessToken=""
-            />
-          </div>
-
-          <div className="text-center">
-
-          <Link href={'/dashboard/watchlater'}>
-            <p className="text-lg underline underline-offset-2">See all watch laters</p>
-          </Link>
-          </div>
-        </div>
+        <DashboardWatchLaterList watchLaters={watchLaters} />
 
         {/* Notes */}
-        <div className="w-80 h-48 bg-[#1f1f1f1]">
-
-        </div>
+        <div className="w-80 h-48 bg-[#1f1f1f1]"></div>
       </section>
     </div>
   );

@@ -42,7 +42,7 @@ const WatchLaterInputField: React.FC<WatchLaterInputFieldProps> = ({
         value={state}
         onChange={onChange}
         disabled={isLoading}
-        onBlur={handleBlur} // Use the conditional handleBlur function
+        onBlur={handleBlur} 
         className="w-full rounded-lg p-2 my-1 bg-[#1F1F1F] outline-none font-semibold"
       />
     </div>
