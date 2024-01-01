@@ -1,5 +1,6 @@
 // Possible values for task status
-type TaskStatus = "Pending" | "Completed" | "Overdue";
+// type TaskStatus = "Pending" | "Completed" | "Overdue";
+type TaskStatus = string;
 
 export const getCurrentStatus = (date: string, taskStatus: TaskStatus) => {
   if (taskStatus === "Completed") return "Completed";
