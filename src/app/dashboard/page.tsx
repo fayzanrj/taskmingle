@@ -19,15 +19,12 @@ const Dashboard: NextPage = async () => {
 
   const encodedDate = new Date().toDateString();
   const response = await fetch(
-    `${process.env.HOST}/api/tasks/getTodaysTasks`,
+    `${process.env.HOST}/api/tasks/getAllTasks/${new Date().toDateString()}`,
     { cache: "no-store", headers: headers }
   );
 
   const res = await response.json();
   const tasks = res.tasks;
-
-  
-  console.log("tasks client" , tasks)
   
   const response2 = await fetch(
     `${process.env.HOST}/api/watchlater/getwatchlaters`,
