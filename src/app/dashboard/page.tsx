@@ -16,16 +16,7 @@ const Dashboard: NextPage = async () => {
     //@ts-ignore
     accessToken: data?.user?.accessToken,
   };
-
-  const encodedDate = new Date().toDateString();
-  const encodedDae = new Date().toTimeString();
-  const response = await fetch(
-    `${process.env.HOST}/api/tasks/getAllTasks/${new Date().toDateString()}`,
-    { cache: "no-store", headers: headers }
-  );
-
-  const res = await response.json();
-  const tasks = res.tasks;
+  
   
   const response2 = await fetch(
     `${process.env.HOST}/api/watchlater/getwatchlaters`,
@@ -57,10 +48,10 @@ const Dashboard: NextPage = async () => {
 
 
       <section className="w-full overflow-hidden mt-16 mb-10 ">
-        <p>{encodedDate}</p>
-        <p>{encodedDae}</p>
+       
         {/*   TASKS */}
-        <DashboardTasksList tasks={tasks} />
+        {/* @ts-ignore */}
+        <DashboardTasksList accessToken={data?.user?.accessToken}/>
 
         {/* WATCH LATERS */}
         <DashboardWatchList watchLater={watchLaters} />

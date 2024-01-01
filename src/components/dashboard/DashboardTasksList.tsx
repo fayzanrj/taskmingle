@@ -1,36 +1,43 @@
 "use client";
 import { AppContext } from "@/context/AppContext";
 import { TaskProps } from "@/props/TaskProps";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { MdArrowBackIos, MdArrowForwardIos } from "react-icons/md";
 import FetchError from "../FetchError";
 import NoItemFound from "../NoItemFound";
 import RenderTags from "../tasks/RenderTags";
+import toast from "react-hot-toast";
+import { getErrorMessage } from "@/libs/GetErrorMessage";
+import { fetchTasks } from "@/libs/FetchTasks";
 
-interface DashboardTasksListProps {
-  tasks: TaskProps[] | undefined;
+interface DashboardTasksList {
+  accessToken: string;
 }
 
-// if (initialTasks?.length === 0) {
-//   return (
-//     <div className="my-5">
-//       <h3 className="my-5 text-2xl font-semibold text-white">
-//         Your today&#39;s tasks
-//       </h3>{" "}
-//       <NoItemFound variant="Tasks" />
-//     </div>
-//   );
-// }
-
-const DashboardTasksList: React.FC<DashboardTasksListProps> = ({ tasks }) => {
+const DashboardTasksList: React.FC<DashboardTasksList> = ({ accessToken }) => {
   const { isOpen } = useContext(AppContext);
-  //   const { setInitialTasks, initialTasks } = useContext(AppContext);
-  const [initialTasks, setInitialTasks] = useState<TaskProps[] | undefined>(
-    tasks
-  );
-
-  // State to keep track of the current scroll position
+  const [initialTasks, setInitialTasks] = useState<TaskProps[] | [] | undefined>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [scrollPosition, setScrollPosition] = useState(0);
+
+  useEffect(() => {
+    const fetchTodaysTasks = async () => {
+      const date = new Date();
+      try {
+        const currentTasks: TaskProps[] | undefined = await fetchTasks(
+          date,
+          accessToken
+        );
+        setInitialTasks(currentTasks);
+      } catch (error) {
+        const errorMessage = getErrorMessage(error);
+        toast.error(errorMessage);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchTodaysTasks();
+  }, []);
 
   const handleScroll = (direction: "left" | "right") => {
     const container = document.getElementById("tasksContainer");
@@ -52,7 +59,7 @@ const DashboardTasksList: React.FC<DashboardTasksListProps> = ({ tasks }) => {
   };
 
   if (initialTasks === undefined) {
-    return <FetchError />;
+    return ;
   }
 
   return (
@@ -70,7 +77,7 @@ const DashboardTasksList: React.FC<DashboardTasksListProps> = ({ tasks }) => {
         <button
           className="w-fit h-40 rounded-lg  z-20 disabled:text-stone-800"
           onClick={() => handleScroll("left")}
-          disabled={tasks === undefined || tasks?.length <= 0}
+          disabled={initialTasks === undefined || initialTasks?.length <= 0}
         >
           <MdArrowBackIos size={"2rem"} className="inline-block" />
         </button>
@@ -80,7 +87,9 @@ const DashboardTasksList: React.FC<DashboardTasksListProps> = ({ tasks }) => {
           id="tasksContainer"
           className="md:w-[91%] mx-auto overflow-x-auto flex gap-3 scroll-smooth NO_SCROLLBAR"
         >
-          {initialTasks?.length > 0 ? (
+          {isLoading ? (
+            <DashboardTasksListSkeleton />
+          ) : initialTasks?.length > 0 ? (
             initialTasks?.map((task: TaskProps, index: number) => (
               <DashboardTasksListItem key={index} {...task} />
             ))
@@ -93,7 +102,7 @@ const DashboardTasksList: React.FC<DashboardTasksListProps> = ({ tasks }) => {
         <button
           className="w-fit h-40 rounded-lg  z-20 disabled:text-stone-800"
           onClick={() => handleScroll("right")}
-          disabled={tasks === undefined || tasks?.length <= 0}
+          disabled={initialTasks === undefined || initialTasks?.length <= 0}
         >
           <MdArrowForwardIos size={"2rem"} className="inline-block" />
         </button>
@@ -115,7 +124,7 @@ const DashboardTasksListItem: React.FC<TaskProps> = ({
     <div className="min-w-[15rem] max-w-[15rem] h-44 rounded-lg overflow-hidden bg-[#1D1F21] p-3">
       {/* Tags */}
       <div className="text-right mb-4 overflow-hidden py-1">
-        <RenderTags tags={tags.slice(0,2) || []} />
+        <RenderTags tags={tags.slice(0, 2) || []} />
       </div>
 
       {/* Task title */}
@@ -130,3 +139,13 @@ const DashboardTasksListItem: React.FC<TaskProps> = ({
     </div>
   );
 };
+
+const DashboardTasksListSkeleton = () => (
+  <>
+  <div className="min-w-[15rem] max-w-[15rem] h-44 rounded-lg bg-[#404040] animate-pulse"></div>
+  <div className="min-w-[15rem] max-w-[15rem] h-44 rounded-lg bg-[#404040] animate-pulse"></div>
+  <div className="min-w-[15rem] max-w-[15rem] h-44 rounded-lg bg-[#404040] animate-pulse"></div>
+  <div className="min-w-[15rem] max-w-[15rem] h-44 rounded-lg bg-[#404040] animate-pulse"></div>
+  <div className="min-w-[15rem] max-w-[15rem] h-44 rounded-lg bg-[#404040] animate-pulse"></div>
+  </>
+);

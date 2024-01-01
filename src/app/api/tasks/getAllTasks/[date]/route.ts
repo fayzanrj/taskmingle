@@ -19,7 +19,6 @@ export const GET = async (
       return ThrowUnAuthorizedError();
     }
 
-    console.log("date" , params.date)
 
     // Finding all the user's tasks for the given date and ordering them in ascending order
     const tasks = await prisma.task.findMany({
