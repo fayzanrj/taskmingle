@@ -1,6 +1,6 @@
 "use client";
 import { getErrorMessage } from "@/libs/GetErrorMessage";
-import { getTime } from "@/libs/GetFormattedData";
+import { addZero, getTime } from "@/libs/GetFormattedData";
 import { TaskProps } from "@/props/TaskProps";
 import axios from "axios";
 import { useSession } from "next-auth/react";
@@ -51,12 +51,12 @@ const TaskForm: React.FC<TaskFormProps> = ({
       ? //@ts-ignore
         `${new Date(date).getFullYear()}-${
           //@ts-ignore
-          new Date(date).getMonth() + 1
+          addZero(new Date(date).getMonth() + 1)
           //@ts-ignore
-        }-${new Date(date).getDate()}`
-      : `${new Date().getFullYear()}-${
+        }-${addZero(new Date(date).getDate())}`
+      : `${new Date().getFullYear()}-${addZero(
           new Date().getMonth() + 1
-        }-${new Date().getDate()}`
+        )}-${addZero(new Date().getDate())}`
   );
 
   // Tags state
@@ -87,7 +87,7 @@ const TaskForm: React.FC<TaskFormProps> = ({
     setStartingTime("");
     setSelectedDate("");
     setSelectedTags("");
-    setUrlLink("")
+    setUrlLink("");
   };
 
   // Handle save function
@@ -145,9 +145,9 @@ const TaskForm: React.FC<TaskFormProps> = ({
         <h1 className="text-3xl font-bold">Add a Task</h1>
       </header>
 
-      <div className="w-4/5 sm:w-[39rem] mx-auto ">
+      <div className="w-full sm:w-[39rem] mx-auto ">
         <div className="flex justify-between items-center flex-wrap md:gap-5 ">
-          <section className="w-4/5 sm:w-80 px-1">
+          <section className="w-full  px-5 sm:w-80 sm:px-1">
             {/* Input components for task details */}
             <AddTaskTextInput
               label="Task title"
@@ -173,7 +173,7 @@ const TaskForm: React.FC<TaskFormProps> = ({
             />
           </section>
 
-          <section className=" w-4/5 sm:w-48 px-1">
+          <section className="w-full px-5 sm:w-48 sm:px-1">
             {/* Input components for date and time */}
             <AddTaskDateInput
               label="Select a Date"
@@ -198,14 +198,14 @@ const TaskForm: React.FC<TaskFormProps> = ({
           </section>
         </div>
 
-        <section>
-          <label htmlFor="url">Add a link</label>
+        <section className="w-full  sm:px-1">
+          <label htmlFor="url" className="ml-2">Add a link</label>
           <input
             type="url"
             id="url"
             value={urlLink}
             onChange={(e) => setUrlLink(e.currentTarget.value)}
-            className="w-full px-3 py-2 bg-[#1F1F1F] rounded-lg outline-none"
+            className="w-full px-3 py-2 mt-1 bg-[#1F1F1F] rounded-lg outline-none"
             placeholder="Paste a link"
           />
         </section>

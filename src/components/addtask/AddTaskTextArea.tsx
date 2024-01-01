@@ -20,7 +20,7 @@ const AddTaskTextArea: React.FC<TextAreaProps> = ({
 }) => (
   <div className="my-5">
     {/* Label for the textarea */}
-    <label htmlFor={id}>{label}</label>
+    <label htmlFor={id} className="ml-2">{label}</label>
     <br />
     {/* Textarea field */}
     <textarea
@@ -29,7 +29,7 @@ const AddTaskTextArea: React.FC<TextAreaProps> = ({
       value={state}
       onChange={(e): void => setState(e.currentTarget.value)}
       placeholder={placeholder}
-      className="w-full px-3 py-2 bg-[#1F1F1F] rounded-lg outline-none resize-none SCROLL_BAR"
+      className="w-full px-3 py-2  mt-1 bg-[#1F1F1F] rounded-lg outline-none resize-none SCROLL_BAR"
     />
   </div>
 );

@@ -13,27 +13,32 @@ const AddTaskTimeInput: React.FC<DateTimeInputProps> = ({
   // Checing current date
   const isCurrentDate =
     selectedDate ===
-    `${new Date().getFullYear()}-${
+    `${addZero(new Date().getFullYear())}-${addZero(
       new Date().getMonth() + 1
-    }-${new Date().getDate()}`;
+    )}-${addZero(new Date().getDate())}`;
 
   // Function to hanle change
   const handleChange = (e: React.FormEvent<HTMLInputElement>): void => {
-    if (
-      isCurrentDate &&
+    const passedTime =
       e.currentTarget.value <
+      `${addZero(new Date().getHours())}:${addZero(new Date().getMinutes())}`;
+
+    if (isCurrentDate && passedTime) {
+      setState(
         `${addZero(new Date().getHours())}:${addZero(new Date().getMinutes())}`
-    ) {
-      setState(`${new Date().getHours()}:${new Date().getMinutes()}`);
+      );
+      console.log(
+        `${addZero(new Date().getHours())}:${addZero(new Date().getMinutes())}`
+      );
     } else {
       setState(e.currentTarget.value);
     }
   };
 
   return (
-    <div className="my-5 text-center">
+    <div className="my-5 ">
       {/* Label for the time input */}
-      <label htmlFor={id}>{label}</label>
+      <label htmlFor={id} className="ml-2">{label}</label>
       <br />
       {/* Time input field */}
       <input
@@ -41,7 +46,7 @@ const AddTaskTimeInput: React.FC<DateTimeInputProps> = ({
         type="time"
         value={state}
         onChange={handleChange}
-        className="w-full px-3 py-2 bg-[#1F1F1F] rounded-lg outline-none"
+        className="w-full px-3 py-2 mt-1 bg-[#1F1F1F] rounded-lg outline-none"
       />
     </div>
   );
