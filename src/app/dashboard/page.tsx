@@ -3,7 +3,7 @@ import DashboardWatchList from "@/components/dashboard/DashboardWatchList";
 import TasksCounter from "@/components/dashboard/TasksCounter";
 import { WatchLaterProps } from "@/props/WatchLaterProps";
 import { authOptions } from "@/utils/AuthOptions";
-import next, { NextPage } from "next";
+import { NextPage } from "next";
 import { getServerSession } from "next-auth";
 
 // TO DO : REFACTOR
@@ -19,8 +19,8 @@ const Dashboard: NextPage = async () => {
 
   const encodedDate = encodeURIComponent(new Date().toDateString());
   const response = await fetch(
-    `${process.env.HOST}/api/tasks/getAllTasks/${encodedDate}`,
-    { cache: "no-store",headers : headers }
+    `${process.env.HOST}/api/tasks/getAllTasks/${encodeURIComponent(new Date().toDateString())}`,
+    { cache: "no-store", headers: headers }
   );
 
   const res = await response.json();
