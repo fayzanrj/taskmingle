@@ -2,27 +2,28 @@
 import { AppContext } from "@/context/AppContext";
 import { TaskProps } from "@/props/TaskProps";
 import React, { useContext, useState } from "react";
-import { MdArrowBackIos, MdArrowForwardIos } from "react-icons/md";
 import FetchError from "../FetchError";
 import NoItemFound from "../NoItemFound";
 import TaskItem from "../tasks/TaskItem";
+import { WatchLaterProps } from "@/props/WatchLaterProps";
+import { MdArrowBackIos, MdArrowForwardIos } from "react-icons/md";
 
-interface DashboardTasksListProps {
-  tasks: TaskProps[] | undefined;
+interface DashboardWatchList {
+  watchLater: WatchLaterProps[] | undefined;
 }
 
-const DashboardTasksList: React.FC<DashboardTasksListProps> = ({ tasks }) => {
+const DashboardWatchList: React.FC<DashboardWatchList> = ({ watchLater }) => {
   const { isOpen } = useContext(AppContext);
   //   const { setInitialTasks, initialTasks } = useContext(AppContext);
-  const [initialTasks, setInitialTasks] = useState<TaskProps[] | undefined>(
-    tasks
-  );
+  const [initialWatchLater, setInitialWatchLater] = useState<
+    WatchLaterProps[] | undefined
+  >(watchLater);
 
   // State to keep track of the current scroll position
   const [scrollPosition, setScrollPosition] = useState(0);
 
   const handleScroll = (direction: "left" | "right") => {
-    const container = document.getElementById("tasksContainer");
+    const container = document.getElementById("watchLaterContainer");
 
     if (container) {
       const scrollAmount = 300; // You can adjust this value based on your preference
@@ -40,39 +41,41 @@ const DashboardTasksList: React.FC<DashboardTasksListProps> = ({ tasks }) => {
     }
   };
 
-  if (initialTasks === undefined) {
+  if (initialWatchLater === undefined) {
     return <FetchError />;
   }
 
   // If there are no tasks
-  if (initialTasks?.length === 0) {
-    return <NoItemFound variant="Tasks" />;
+  if (initialWatchLater?.length === 0) {
+    return <NoItemFound variant="Watch Laters" />;
   }
 
   return (
-    <div>
+    <div className="my-10">
       <h3 className="my-5 text-2xl font-semibold text-white">
-        Your today&#39;s tasks
+        Maybe you would like to watch
       </h3>
-
       <div
         className={`w-full h-full ${
           isOpen ? "md:w-[calc(100vw_-20rem)]" : "md:w-full"
         }  relative text-center flex justify-between gap-3`}
       >
-        {/* LEFT BUTTON */}
-        <button className="w-fit h-40 rounded-lg  z-20" onClick={() => handleScroll("left")}>
+         {/* LEFT BUTTON */}
+         <button className="w-fit h-40 rounded-lg  z-20" onClick={() => handleScroll("left")}>
           <MdArrowBackIos size={"2rem"} className="inline-block"  />
         </button>
 
+
         {/* LIST */}
         <div
-          id="tasksContainer"
+          id="watchLaterContainer"
           className="md:w-[91%] mx-auto overflow-x-auto flex gap-3 scroll-smooth NO_SCROLLBAR"
         >
-          {initialTasks?.map((task: TaskProps, index: number) => (
-            <TaskItem key={index} {...task} />
-          ))}
+          {initialWatchLater?.map(
+            (watchlater: WatchLaterProps, index: number) => (
+              <DashboardWatchListItem key={index} {...watchlater} />
+            )
+          )}
         </div>
 
         {/* Right scroll button */}
@@ -84,4 +87,22 @@ const DashboardTasksList: React.FC<DashboardTasksListProps> = ({ tasks }) => {
   );
 };
 
-export default DashboardTasksList;
+export default DashboardWatchList;
+
+const DashboardWatchListItem = ({
+  url,
+  image,
+  title,
+}: {
+  url: string;
+  image: string;
+  title: string;
+}) => (
+  <div className="min-w-[18rem] h-56 rounded-lg overflow-hidden bg-[#1D1F21] ">
+    {/* Image */}
+    <a href={url}>
+      <img src={image} className="w-full" />
+    </a>
+    <p className=" px-2 font-semibold">{title}</p>
+  </div>
+);

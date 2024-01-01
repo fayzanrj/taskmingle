@@ -5,11 +5,13 @@ import React, { createContext, useEffect, useState } from "react";
 export const AppContext = createContext<any | undefined>(undefined);
 
 export function AppState({ children }: { children: React.ReactNode }) {
-  const [initialTasks, setInitialTasks] = useState<TaskProps[] | []>([]);
+  
+  // Variable state
+  const [isOpen, setIsOpen] = useState<boolean>(true);
 
 
   return (
-    <AppContext.Provider value={{ initialTasks, setInitialTasks }}>
+    <AppContext.Provider value={{isOpen, setIsOpen}}>
       {children}
     </AppContext.Provider>
   );

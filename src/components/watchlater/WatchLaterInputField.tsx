@@ -30,7 +30,7 @@ const WatchLaterInputField: React.FC<WatchLaterInputFieldProps> = ({
   };
 
   return (
-    <div className="w-4/5 sm:w-96 mt-5">
+    <div className="w-full sm:w-96 mt-5">
       <label htmlFor={id} className="text-[1rem] ml-1 font-semibold">
         {label}
       </label>

@@ -1,15 +1,10 @@
 import DashboardTasksList from "@/components/dashboard/DashboardTasksList";
-import DashboardWatchLaterList from "@/components/dashboard/DashboardWatchLaterList";
+import DashboardWatchList from "@/components/dashboard/DashboardWatchList";
 import TasksCounter from "@/components/dashboard/TasksCounter";
-import AddTaskBtnRound from "@/components/tasks/AddTaskBtnRound";
-import TasksList from "@/components/tasks/TasksList";
-import WatchLaterList from "@/components/watchlater/WatchLaterList";
-import WatchLaterListItem from "@/components/watchlater/WatchLaterListItem";
 import { WatchLaterProps } from "@/props/WatchLaterProps";
 import { authOptions } from "@/utils/AuthOptions";
 import { NextPage } from "next";
 import { getServerSession } from "next-auth";
-import Link from "next/link";
 
 // TO DO : REFACTOR
 
@@ -59,15 +54,15 @@ const Dashboard: NextPage = async () => {
         />
       </section>
 
-      <section className="mt-16 mb-10 flex justify-center gap-3 flex-wrap">
+      <section className="w-full overflow-hidden mt-16 mb-10 ">
         {/*   TASKS */}
         <DashboardTasksList tasks={tasks} />
 
         {/* WATCH LATERS */}
-        <DashboardWatchLaterList watchLaters={watchLaters} />
+        <DashboardWatchList watchLater={watchLaters} />
 
         {/* Notes */}
-        <div className="w-80 h-48 bg-[#1f1f1f1]"></div>
+        {/* <div className="w-80 h-48 bg-[#1f1f1f1]"></div> */}
       </section>
     </div>
   );

@@ -112,7 +112,7 @@ const InputField: React.FC<InputFieldPropTypes> = ({
       <br />
 
       {/* Field */}
-      <div className="relative">
+      <div className="relative ">
         <input
           id={id}
           aria-label="FormInputField"

@@ -4,7 +4,7 @@ import useDeviceWidth from "@/hooks/useDeviceWidth";
 import { signOut } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import React, { FC, useState } from "react";
+import React, { FC, useContext, useState } from "react";
 import { IconType } from "react-icons";
 import { BsListTask } from "react-icons/bs";
 import { CgProfile } from "react-icons/cg";
@@ -15,6 +15,7 @@ import { IoIosArrowDropleft } from "react-icons/io";
 import { MdSpaceDashboard } from "react-icons/md";
 import { SlMenu } from "react-icons/sl";
 import Logo from "../Logo";
+import { AppContext } from "@/context/AppContext";
 
 // TO DO : WORK ON HREFS
 
@@ -61,8 +62,7 @@ const TopNavLinks: NavLink[] = [
 ];
 
 const Sidebar: React.FC = () => {
-  // Variable state
-  const [isOpen, setIsOpen] = useState<boolean>(true);
+  const {isOpen, setIsOpen} = useContext(AppContext)
 
   // Function to show and hide sidebar
   const toggleSidebar = (): void => setIsOpen(!isOpen);

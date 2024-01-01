@@ -84,7 +84,7 @@ const WatchLaterForm = () => {
         {/* Preview */}
         <PreviewSection title={title} url={url} image={image} />
 
-        <section className="mt-10">
+        <section className="w-4/5 sm:w-96  mt-10">
           {/* Input */}
           <WatchLaterInputField
             type="url"
