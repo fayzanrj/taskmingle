@@ -36,7 +36,7 @@ const DashboardTasksList: React.FC<DashboardTasksListProps> = ({ tasks }) => {
     const container = document.getElementById("tasksContainer");
 
     if (container) {
-      const scrollAmount = 300; // You can adjust this value based on your preference
+      const scrollAmount = 252; // You can adjust this value based on your preference
       const newPosition =
         direction === "left"
           ? scrollPosition - scrollAmount
@@ -64,7 +64,7 @@ const DashboardTasksList: React.FC<DashboardTasksListProps> = ({ tasks }) => {
       <div
         className={`w-full h-full ${
           isOpen ? "md:w-[calc(100vw_-20rem)]" : "md:w-full"
-        }  relative text-center flex justify-between gap-3`}
+        }  relative text-center flex justify-between gap-[0.575rem]`}
       >
         {/* LEFT BUTTON */}
         <button
