@@ -5,30 +5,42 @@ import { WatchLaterProps } from "@/props/WatchLaterProps";
 import { authOptions } from "@/utils/AuthOptions";
 import { NextPage } from "next";
 import { getServerSession } from "next-auth";
+import prisma from "../db";
 
 // TO DO : REFACTOR
 
 const Dashboard: NextPage = async () => {
   const data = await getServerSession(authOptions);
 
-  const headers = {
-    "Content-Type": "application/json",
-    //@ts-ignore
-    accessToken: data?.user?.accessToken,
-  };
+  // const headers = {
+  //   "Content-Type": "application/json",
+  //   //@ts-ignore
+  //   accessToken: data?.user?.accessToken,
+  // };
 
-  const encodedDate = encodeURIComponent(new Date().toDateString());
-  const response = await fetch(
-    `${process.env.HOST}/api/tasks/getAllTasks/${encodedDate}`,
-    { headers, cache: "no-cache"}
-  );
+  // const encodedDate = encodeURIComponent(new Date().toDateString());
+  // const response = await fetch(
+  //   `${process.env.HOST}/api/tasks/getAllTasks/${encodedDate}`,
+  //   { headers, cache: "no-cache"}
+  // );
 
-  const res = await response.json();
-  const tasks = res.tasks;
+  // const res = await response.json();
+  // const tasks = res.tasks;
+  const date = new Date().toDateString();
+  const tasks = await prisma.task.findMany({
+    where: {
+      //@ts-ignore
+      createdById: data?.user?.id,
+      date: date,
+    },
+    orderBy: {
+      startTime: "asc",
+    },
+  });
 
   const response2 = await fetch(
     `${process.env.HOST}/api/watchlater/getwatchlaters`,
-    {cache: "no-cache", headers: headers }
+    { cache: "no-cache", headers: headers }
   );
 
   const res2 = await response2.json();
