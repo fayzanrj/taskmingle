@@ -3,9 +3,8 @@ import DashboardWatchList from "@/components/dashboard/DashboardWatchList";
 import TasksCounter from "@/components/dashboard/TasksCounter";
 import { WatchLaterProps } from "@/props/WatchLaterProps";
 import { authOptions } from "@/utils/AuthOptions";
-import { NextPage } from "next";
+import next, { NextPage } from "next";
 import { getServerSession } from "next-auth";
-import prisma from "../db";
 
 // TO DO : REFACTOR
 
@@ -18,25 +17,14 @@ const Dashboard: NextPage = async () => {
     accessToken: data?.user?.accessToken,
   };
 
-  // const encodedDate = encodeURIComponent(new Date().toDateString());
-  // const response = await fetch(
-  //   `${process.env.HOST}/api/tasks/getAllTasks/${encodedDate}`,
-  //   { headers, cache: "no-cache"}
-  // );
+  const encodedDate = encodeURIComponent(new Date().toDateString());
+  const response = await fetch(
+    `${process.env.HOST}/api/tasks/getAllTasks/${encodedDate}`,
+    { headers, next: { revalidate: 1 } }
+  );
 
-  // const res = await response.json();
-  // const tasks = res.tasks;
-  const date = new Date().toDateString();
-  const tasks = await prisma.task.findMany({
-    where: {
-      //@ts-ignore
-      createdById: data?.user?.id,
-      date: date,
-    },
-    orderBy: {
-      startTime: "asc",
-    },
-  });
+  const res = await response.json();
+  const tasks = res.tasks;
 
   const response2 = await fetch(
     `${process.env.HOST}/api/watchlater/getwatchlaters`,
@@ -68,8 +56,7 @@ const Dashboard: NextPage = async () => {
 
       <section className="w-full overflow-hidden mt-16 mb-10 ">
         {/*   TASKS */}
-        {/* @ts-ignore */}
-        <DashboardTasksList tasks={tasks || undefined} />
+        <DashboardTasksList tasks={tasks} />
 
         {/* WATCH LATERS */}
         <DashboardWatchList watchLater={watchLaters} />
