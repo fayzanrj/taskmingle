@@ -17,7 +17,7 @@ const Dashboard: NextPage = async () => {
     accessToken: data?.user?.accessToken,
   };
 
-  const encodedDate = encodeURIComponent(new Date().toDateString());
+  const encodedDate = new Date().toDateString();
   const response = await fetch(
     `${process.env.HOST}/api/tasks/getAllTasks/${encodeURIComponent(new Date().toDateString())}`,
     { cache: "no-store", headers: headers }
