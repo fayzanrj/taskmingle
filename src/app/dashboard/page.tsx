@@ -19,7 +19,7 @@ const Dashboard: NextPage = async () => {
 
   const encodedDate = new Date().toDateString();
   const response = await fetch(
-    `${process.env.HOST}/api/tasks/getAllTasks/${new Date().toDateString()}`,
+    `${process.env.HOST}/api/tasks/getAllTasks/${encodedDate}`,
     { cache: "no-store", headers: headers }
   );
 
