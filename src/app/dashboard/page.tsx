@@ -18,6 +18,7 @@ const Dashboard: NextPage = async () => {
   };
 
   const encodedDate = new Date().toDateString();
+  const encodedDae = new Date().toTimeString();
   const response = await fetch(
     `${process.env.HOST}/api/tasks/getAllTasks/${new Date().toDateString()}`,
     { cache: "no-store", headers: headers }
@@ -57,6 +58,7 @@ const Dashboard: NextPage = async () => {
 
       <section className="w-full overflow-hidden mt-16 mb-10 ">
         <p>{encodedDate}</p>
+        <p>{encodedDae}</p>
         {/*   TASKS */}
         <DashboardTasksList tasks={tasks} />
 
