@@ -198,7 +198,7 @@ const TaskForm: React.FC<TaskFormProps> = ({
           </section>
         </div>
 
-        <section className="w-full  sm:px-1">
+        <section className="w-full px-5 sm:px-1">
           <label htmlFor="url" className="ml-2">Add a link</label>
           <input
             type="url"
@@ -211,7 +211,7 @@ const TaskForm: React.FC<TaskFormProps> = ({
         </section>
       </div>
 
-      <section className="w-[90%] h-10  mx-auto my-10  relative">
+      <section className="w-[90%] h-10  mx-auto my-10 mb-14 relative">
         {/* Buttons for cancel and save actions */}
         <button disabled={isLoading} className="h-10 w-24 absolute right-28">
           Cancel
