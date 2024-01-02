@@ -14,13 +14,11 @@ interface TasksCounterProps {
 const getColor = (header: string): string => {
   if (header === "Today's Tasks") {
     return "#19fa9a";
-  } else if (header === "Monthly Tasks") {
+  } else{
     return "#22C1C3";
-  } else {
-    return "#E23050";
-  }
+  } 
 };
-const TasksCounter: React.FC<TasksCounterProps> = ({
+const TaskStatItem: React.FC<TasksCounterProps> = ({
   header,
   totalTasks,
   completedTasks,
@@ -61,4 +59,4 @@ const TasksCounter: React.FC<TasksCounterProps> = ({
   );
 };
 
-export default TasksCounter;
+export default TaskStatItem;

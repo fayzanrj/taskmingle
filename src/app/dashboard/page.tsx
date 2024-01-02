@@ -1,6 +1,7 @@
 import DashboardTasksList from "@/components/dashboard/DashboardTasksList";
 import DashboardWatchList from "@/components/dashboard/DashboardWatchList";
-import TasksCounter from "@/components/dashboard/TasksCounter";
+import TaskStats from "@/components/dashboard/TaskStats";
+import TasksCounter from "@/components/dashboard/TaskStatItem";
 import { WatchLaterProps } from "@/props/WatchLaterProps";
 import { authOptions } from "@/utils/AuthOptions";
 import { NextPage } from "next";
@@ -17,11 +18,6 @@ const Dashboard: NextPage = async () => {
     accessToken: data?.user?.accessToken,
   };
 
-  const newRes = await fetch(`${process.env.HOST}/api/tasks/getUserTaskStats`, {
-    cache: "no-store",
-    headers: headers,
-  });
-
   const response = await fetch(
     `${process.env.HOST}/api/watchlater/getwatchlaters`,
     { cache: "no-store", headers: headers }
@@ -32,23 +28,8 @@ const Dashboard: NextPage = async () => {
 
   return (
     <div className="w-full py-10 px-5">
-      <section className="flex justify-center gap-3  md:gap-10 lg:gap:20 flex-wrap">
-        <TasksCounter
-          header="Today's Tasks"
-          totalTasks={20}
-          completedTasks={13}
-        />
-        <TasksCounter
-          header="Monthly Tasks"
-          totalTasks={31}
-          completedTasks={23}
-        />
-        <TasksCounter
-          header="Overdue Tasks"
-          totalTasks={3}
-          completedTasks={1}
-        />
-      </section>
+    {/* @ts-ignore */}
+      <TaskStats accessToken={data?.user?.accessToken} />
 
       <section className="w-full overflow-hidden mt-16 mb-10 ">
         {/*   TASKS */}

@@ -1,4 +1,4 @@
-import logo from "@/assets/logo/taskMingleLogo.png";
+import logo from "@/assets/logo/taskNotifyLogo.png";
 import Image from "next/image";
 import React from "react";
 
