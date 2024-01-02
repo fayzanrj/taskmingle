@@ -11,8 +11,9 @@ import NoItemFound from "../NoItemFound";
 import WatchLaterListItem from "./WatchLaterListItem";
 
 const WatchLaterList: React.FC<{
-  watchLaters: WatchLaterProps[];
-}> = ({ watchLaters }) => {
+  watchLaters: WatchLaterProps[]
+  accessToken : string
+}> = ({ watchLaters , accessToken}) => {
   const [watchLaterList, setWatchLaterList] =
     useState<WatchLaterProps[]>(watchLaters);
   const [isLoading, setIsLoading] = useState<boolean>(false);
