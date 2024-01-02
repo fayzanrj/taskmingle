@@ -16,15 +16,19 @@ const Dashboard: NextPage = async () => {
     //@ts-ignore
     accessToken: data?.user?.accessToken,
   };
-  
-  
-  const response2 = await fetch(
+
+  const newRes = await fetch(`${process.env.HOST}/api/tasks/getUserTaskStats`, {
+    cache: "no-store",
+    headers: headers,
+  });
+
+  const response = await fetch(
     `${process.env.HOST}/api/watchlater/getwatchlaters`,
     { cache: "no-store", headers: headers }
   );
 
-  const res2 = await response2.json();
-  const watchLaters: WatchLaterProps[] = res2.watchlaters;
+  const res = await response.json();
+  const watchLaters: WatchLaterProps[] = res.watchlaters;
 
   return (
     <div className="w-full py-10 px-5">
@@ -46,18 +50,16 @@ const Dashboard: NextPage = async () => {
         />
       </section>
 
-
       <section className="w-full overflow-hidden mt-16 mb-10 ">
-       
         {/*   TASKS */}
         {/* @ts-ignore */}
-        <DashboardTasksList accessToken={data?.user?.accessToken}/>
+        <DashboardTasksList accessToken={data?.user?.accessToken} />
 
         {/* WATCH LATERS */}
         <DashboardWatchList watchLater={watchLaters} />
 
         {/* Notes */}
-       
+
         {/* <div className="w-80 h-48 bg-[#1f1f1f1]"></div> */}
       </section>
     </div>
