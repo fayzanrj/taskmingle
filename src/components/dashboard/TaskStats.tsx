@@ -39,10 +39,6 @@ const TaskStats: React.FC<{accessToken : string}> = ({accessToken}) => {
     accessToken,
   };
 
-  if (!taskStats) {
-    return <FetchError />;
-  }
-
   useEffect(() => {
     const fetchTaskStats = async () => {
       const encodedDate = encodeURIComponent(new Date().toDateString());
@@ -66,6 +62,11 @@ const TaskStats: React.FC<{accessToken : string}> = ({accessToken}) => {
     // Calling function
     fetchTaskStats()
   }, [accessToken]);
+
+  
+  if (!taskStats) {
+    return <FetchError />;
+  }
 
   return (
     <section className="flex justify-center gap-3  md:gap-10 lg:gap:20 flex-wrap">
