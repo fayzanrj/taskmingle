@@ -1,105 +1,96 @@
 "use client";
 import { AppContext } from "@/context/AppContext";
-import { TaskProps } from "@/props/TaskProps";
+import { WatchLaterProps } from "@/props/WatchLaterProps";
 import React, { useContext, useState } from "react";
 import FetchError from "../FetchError";
 import NoItemFound from "../NoItemFound";
-import TaskItem from "../tasks/TaskItem";
-import { WatchLaterProps } from "@/props/WatchLaterProps";
-import { MdArrowBackIos, MdArrowForwardIos } from "react-icons/md";
+import ScrollButton from "./ScrollButton";
 
-interface DashboardWatchList {
+const DashboardWatchList: React.FC<{
   watchLater: WatchLaterProps[] | undefined;
-}
-
-const DashboardWatchList: React.FC<DashboardWatchList> = ({ watchLater }) => {
+}> = ({ watchLater }) => {
+  // Context
   const { isOpen } = useContext(AppContext);
-  //   const { setInitialTasks, initialTasks } = useContext(AppContext);
+
+  // Variable States
   const [initialWatchLater, setInitialWatchLater] = useState<
     WatchLaterProps[] | undefined
   >(watchLater);
-
-  // State to keep track of the current scroll position
   const [scrollPosition, setScrollPosition] = useState(0);
 
+  // Function to scroll
   const handleScroll = (direction: "left" | "right") => {
     const container = document.getElementById("watchLaterContainer");
 
     if (container) {
-      const scrollAmount = 252; // You can adjust this value based on your preference
+      const scrollAmount = 252;
       const newPosition =
         direction === "left"
           ? scrollPosition - scrollAmount
           : scrollPosition + scrollAmount;
 
-      container.scrollTo({
-        left: newPosition,
-        behavior: "smooth",
-      });
+      if (newPosition >= 0 && newPosition < container.scrollWidth) {
+        container.scrollTo({
+          left: newPosition,
+          behavior: "smooth",
+        });
 
-      setScrollPosition(newPosition);
+        setScrollPosition(newPosition);
+      } else {
+        setScrollPosition(0);
+      }
     }
   };
 
+  // If there is an error
   if (initialWatchLater === undefined) {
     return <FetchError />;
   }
 
-  // If there are no tasks
-  if (initialWatchLater?.length === 0) {
-    return (
-      <div className="my-5">
-        <h3 className="my-5 text-2xl font-semibold text-white">
-          Maybe you would like to watch
-        </h3>{" "}
-        <NoItemFound variant="Watch Laters" />
-      </div>
-    );
-  }
-
   return (
     <div className="my-5">
+      {/* Heading */}
       <h3 className="my-5 text-2xl font-semibold text-white">
         Maybe you would like to watch
       </h3>
       <div
-        className={`w-full h-full ${
+        className={`w-full h-full relative text-center flex justify-between gap-[0.585rem] ${
           isOpen ? "md:w-[calc(100vw_-20rem)]" : "md:w-full"
-        }  relative text-center flex justify-between gap-[0.585rem]`}
+        } `}
       >
         {/* LEFT BUTTON */}
-        <button
-          className="w-fit h-40 rounded-lg  z-20 disabled:text-stone-800"
+        <ScrollButton
+          direction="left"
           onClick={() => handleScroll("left")}
           disabled={
-            initialWatchLater === undefined || initialWatchLater?.length <= 0
+            initialWatchLater === undefined || initialWatchLater.length <= 0
           }
-        >
-          <MdArrowBackIos size={"2rem"} className="inline-block" />
-        </button>
+        />
 
         {/* LIST */}
         <div
           id="watchLaterContainer"
           className="md:w-[91%] mx-auto overflow-x-auto flex gap-3 scroll-smooth NO_SCROLLBAR"
         >
-          {initialWatchLater?.map(
-            (watchlater: WatchLaterProps, index: number) => (
-              <DashboardWatchListItem key={index} {...watchlater} />
+          {initialWatchLater.length > 0 ? (
+            initialWatchLater.map(
+              (watchlater: WatchLaterProps, index: number) => (
+                <DashboardWatchListItem key={index} {...watchlater} />
+              )
             )
+          ) : (
+            <NoItemFound variant="Watch Laters" />
           )}
         </div>
 
         {/* Right scroll button */}
-        <button
-          className="w-fit h-40 rounded-lg  z-20 disabled:text-stone-800"
+        <ScrollButton
+          direction="right"
           onClick={() => handleScroll("right")}
           disabled={
-            initialWatchLater === undefined || initialWatchLater?.length <= 0
+            initialWatchLater === undefined || initialWatchLater.length <= 0
           }
-        >
-          <MdArrowForwardIos size={"2rem"} className="inline-block" />
-        </button>
+        />
       </div>
     </div>
   );
@@ -107,6 +98,7 @@ const DashboardWatchList: React.FC<DashboardWatchList> = ({ watchLater }) => {
 
 export default DashboardWatchList;
 
+// List Item Component
 const DashboardWatchListItem = ({
   url,
   image,

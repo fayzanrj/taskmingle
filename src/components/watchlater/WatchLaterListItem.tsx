@@ -9,8 +9,8 @@ const WatchLaterListItem: React.FC<WatchLaterProps> = ({
     <div className="text-sm w-[17rem] h-60 overflow-hidden rounded-lg bg-[#1D1F21] my-5 ">
       {/* Preview */}
       {image && (
-        <a href={url}>
-          <img src={image} className="w-full h-3/5" />
+        <a href={url} target="_blank" aria-label="link">
+          <img src={image} className="w-full h-3/5" alt="image" />
         </a>
       )}
 

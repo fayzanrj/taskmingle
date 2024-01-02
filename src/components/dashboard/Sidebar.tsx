@@ -160,7 +160,7 @@ const NavItem: FC<NavItem> = ({ text, href, Icon, size, setState }) => {
         </span>
 
         {/* Text */}
-        <p className="font-bold">{text}</p>
+        <p className="font-bold w-full">{text}</p>
       </Link>
     </li>
   );

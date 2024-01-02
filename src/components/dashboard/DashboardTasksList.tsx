@@ -1,26 +1,30 @@
 "use client";
 import { AppContext } from "@/context/AppContext";
+import { fetchTasks } from "@/libs/FetchTasks";
+import { getErrorMessage } from "@/libs/GetErrorMessage";
 import { TaskProps } from "@/props/TaskProps";
 import React, { useContext, useEffect, useState } from "react";
-import { MdArrowBackIos, MdArrowForwardIos } from "react-icons/md";
+import toast from "react-hot-toast";
 import FetchError from "../FetchError";
 import NoItemFound from "../NoItemFound";
+import DashboardTasksListSkeleton from "../skeletons/DashboardTasksListSkeleton";
 import RenderTags from "../tasks/RenderTags";
-import toast from "react-hot-toast";
-import { getErrorMessage } from "@/libs/GetErrorMessage";
-import { fetchTasks } from "@/libs/FetchTasks";
+import ScrollButton from "./ScrollButton";
 
-interface DashboardTasksList {
+const DashboardTasksList: React.FC<{
   accessToken: string;
-}
-
-const DashboardTasksList: React.FC<DashboardTasksList> = ({ accessToken }) => {
+}> = ({ accessToken }) => {
+  // Context
   const { isOpen } = useContext(AppContext);
-  const [initialTasks, setInitialTasks] = useState<TaskProps[] | [] | undefined>([]);
+
+  // Variable states
+  const [initialTasks, setInitialTasks] = useState<TaskProps[] | undefined>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [scrollPosition, setScrollPosition] = useState(0);
 
+  // Use effect to get initial tasks
   useEffect(() => {
+    // Function
     const fetchTodaysTasks = async () => {
       const date = new Date();
       try {
@@ -36,76 +40,68 @@ const DashboardTasksList: React.FC<DashboardTasksList> = ({ accessToken }) => {
         setIsLoading(false);
       }
     };
-    fetchTodaysTasks();
-  }, []);
 
+    // Calling Function
+    fetchTodaysTasks();
+  }, [accessToken]);
+
+  // Function to scroll
   const handleScroll = (direction: "left" | "right") => {
     const container = document.getElementById("tasksContainer");
 
-    if (container) {
-      const scrollAmount = 252; // You can adjust this value based on your preference
+    if (container && scrollPosition >= 0) {
+      const scrollAmount = 252;
+
       const newPosition =
         direction === "left"
           ? scrollPosition - scrollAmount
           : scrollPosition + scrollAmount;
+      if (scrollPosition >= 0 && newPosition < container.scrollWidth) {
+        container.scrollTo({
+          left: newPosition,
+          behavior: "smooth",
+        });
 
-      container.scrollTo({
-        left: newPosition,
-        behavior: "smooth",
-      });
-
-      setScrollPosition(newPosition);
+        setScrollPosition(newPosition);
+      } else {
+        setScrollPosition(0);
+      }
     }
   };
 
+  // If there is an error fetching tasks
   if (initialTasks === undefined) {
-    return ;
+    return <FetchError />;
   }
 
   return (
     <div>
+      {/* Heading */}
       <h3 className="my-5 text-2xl font-semibold text-white">
         Your today&#39;s tasks
       </h3>
 
       <div
-        className={`w-full h-full ${
+        className={`w-full h-full relative text-center flex justify-between gap-[0.585rem] ${
           isOpen ? "md:w-[calc(100vw_-20rem)]" : "md:w-full"
-        }  relative text-center flex justify-between gap-[0.585rem]`}
+        } `}
       >
         {/* LEFT BUTTON */}
-        <button
-          className="w-fit h-40 rounded-lg  z-20 disabled:text-stone-800"
+        <ScrollButton
+          direction="left"
           onClick={() => handleScroll("left")}
-          disabled={initialTasks === undefined || initialTasks?.length <= 0}
-        >
-          <MdArrowBackIos size={"2rem"} className="inline-block" />
-        </button>
+          disabled={initialTasks === undefined || initialTasks.length <= 0}
+        />
 
         {/* LIST */}
-        <div
-          id="tasksContainer"
-          className="md:w-[91%] mx-auto overflow-x-auto flex gap-3 scroll-smooth NO_SCROLLBAR"
-        >
-          {isLoading ? (
-            <DashboardTasksListSkeleton />
-          ) : initialTasks?.length > 0 ? (
-            initialTasks?.map((task: TaskProps, index: number) => (
-              <DashboardTasksListItem key={index} {...task} />
-            ))
-          ) : (
-            <NoItemFound variant="Tasks" />
-          )}
-        </div>
+        <TasksContainer isLoading={isLoading} initialTasks={initialTasks} />
 
         {/* Right scroll button */}
-        <button
-          className="w-fit h-40 rounded-lg  z-20 disabled:text-stone-800"
+        <ScrollButton
+          direction="right"
           onClick={() => handleScroll("right")}
-          disabled={initialTasks === undefined || initialTasks?.length <= 0}
-        >
-          <MdArrowForwardIos size={"2rem"} className="inline-block" />
-        </button>
+          disabled={initialTasks === undefined || initialTasks.length <= 0}
+        />
       </div>
     </div>
   );
@@ -113,12 +109,11 @@ const DashboardTasksList: React.FC<DashboardTasksList> = ({ accessToken }) => {
 
 export default DashboardTasksList;
 
+// Task List item Component
 const DashboardTasksListItem: React.FC<TaskProps> = ({
   taskTitle,
   tags,
   taskDesc,
-  startTime,
-  status,
 }) => {
   return (
     <div className="min-w-[15rem] max-w-[15rem] h-44 rounded-lg overflow-hidden bg-[#1D1F21] p-3">
@@ -140,12 +135,23 @@ const DashboardTasksListItem: React.FC<TaskProps> = ({
   );
 };
 
-const DashboardTasksListSkeleton = () => (
-  <>
-  <div className="min-w-[15rem] max-w-[15rem] h-44 rounded-lg bg-[#404040] animate-pulse"></div>
-  <div className="min-w-[15rem] max-w-[15rem] h-44 rounded-lg bg-[#404040] animate-pulse"></div>
-  <div className="min-w-[15rem] max-w-[15rem] h-44 rounded-lg bg-[#404040] animate-pulse"></div>
-  <div className="min-w-[15rem] max-w-[15rem] h-44 rounded-lg bg-[#404040] animate-pulse"></div>
-  <div className="min-w-[15rem] max-w-[15rem] h-44 rounded-lg bg-[#404040] animate-pulse"></div>
-  </>
+// Task Container Component
+const TasksContainer: React.FC<{
+  isLoading: boolean;
+  initialTasks: TaskProps[];
+}> = ({ isLoading, initialTasks }) => (
+  <div
+    id="tasksContainer"
+    className="md:w-[91%] mx-auto overflow-x-auto flex gap-3 scroll-smooth NO_SCROLLBAR"
+  >
+    {isLoading ? (
+      <DashboardTasksListSkeleton />
+    ) : initialTasks.length > 0 ? (
+      initialTasks.map((task: TaskProps, index: number) => (
+        <DashboardTasksListItem key={index} {...task} />
+      ))
+    ) : (
+      <NoItemFound variant="Tasks" />
+    )}
+  </div>
 );

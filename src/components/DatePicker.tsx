@@ -33,6 +33,8 @@ const DatePicker: React.FC<DatePickerProps> = ({
   const [active, setActive] = useState<Date>(new Date());
   const scrollContainerRef = useRef<HTMLDivElement | null>(null);
 
+  const controller = useRef(new AbortController());
+
   // Scrolling to center of date picker calender if it is scrollable when mounted
   useEffect(() => {
     if (scrollContainerRef.current) {
@@ -43,6 +45,7 @@ const DatePicker: React.FC<DatePickerProps> = ({
 
     // Cleanup function when the component is unmounted
     return () => {
+      controller.current.abort();
     };
   }, []);
 
@@ -67,11 +70,13 @@ const DatePicker: React.FC<DatePickerProps> = ({
   const handleClick = async (date: Date) => {
     setActive(date);
     setIsLoading(true);
+
+    const { signal } = controller.current;
     try {
       const currentTasks: TaskProps[] | undefined = await fetchTasks(
         date,
         // @ts-ignore
-        session?.user?.accessToken,
+        session?.user?.accessToken
       );
       setTasks(currentTasks);
     } catch (error) {
@@ -98,7 +103,11 @@ const DatePicker: React.FC<DatePickerProps> = ({
 
       <div className="w-full sm:w-[31rem] lg:w-[45rem] xl:w-full mx-auto flex justify-center gap-1 overflow-hidden duration-500 text-white">
         {/* Scroll left button */}
-        <button className="xl:opacity-30" onClick={() => handleScroll("prev")}>
+        <button
+          className="xl:opacity-30"
+          aria-label="scroll-btn-left"
+          onClick={() => handleScroll("prev")}
+        >
           <MdArrowBackIos />
         </button>
 
@@ -110,6 +119,7 @@ const DatePicker: React.FC<DatePickerProps> = ({
           {dateRangeArray.map((date) => (
             // Date Button
             <button
+              aria-label="date-picker-button"
               key={date.toString()}
               className={`w-12 px-2 lg:px-0 cursor-pointer mx-2 py-3 rounded-lg font-semibold ${
                 active.toLocaleDateString() === date.toLocaleDateString()
@@ -136,7 +146,11 @@ const DatePicker: React.FC<DatePickerProps> = ({
         </div>
 
         {/* Right scroll button */}
-        <button className="xl:opacity-30" onClick={() => handleScroll("next")}>
+        <button
+          className="xl:opacity-30"
+          aria-label="scroll-btn-right"
+          onClick={() => handleScroll("next")}
+        >
           <MdArrowForwardIos />
         </button>
       </div>

@@ -8,6 +8,8 @@ import toast from "react-hot-toast";
 import ActivityLoader from "../ActivityLoader";
 import GoBack from "../GoBack";
 import WatchLaterInputField from "./WatchLaterInputField";
+import PreviewSection from "./PreviewSection";
+import AddWatchLaterButton from "./AddWatchLaterButton";
 
 const WatchLaterForm = () => {
   const { data: session } = useSession();
@@ -99,44 +101,10 @@ const WatchLaterForm = () => {
         </section>
 
         {/* Submit button */}
-        <SubmitButton isLoading={isLoading} />
+        <AddWatchLaterButton isLoading={isLoading} />
       </form>
     </div>
   );
 };
-
-// Preview Section component
-const PreviewSection = ({
-  url,
-  image,
-  title,
-}: {
-  url: string;
-  title: string;
-  image: string;
-}) => (
-  <section className="w-4/5 sm:w-96 h-56 bg-[#1F1F1F] rounded-lg SCROLL_BAR relative">
-    {!url && (
-      <div className="w-full text-center absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 font-semibold text-lg text-white">
-        Enter a URL to preview
-      </div>
-    )}
-    {image && <img src={image} className="w-full h-full" />}
-    <p className="whitespace-nowrap md:whitespace-normal">{title}</p>
-  </section>
-);
-
-// Submit Button
-const SubmitButton = ({ isLoading }: { isLoading: boolean }) => (
-  <div className="w-4/5 sm:w-96 h-9 mt-5">
-    <button
-      type="submit"
-      className="h-10 w-16 bg-[#19fa9a] rounded-lg text-[#1F1F1F] float-right font-semibold"
-      disabled={isLoading}
-    >
-      {isLoading ? <ActivityLoader /> : "Add"}
-    </button>
-  </div>
-);
 
 export default WatchLaterForm;

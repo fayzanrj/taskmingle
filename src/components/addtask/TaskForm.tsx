@@ -146,7 +146,7 @@ const TaskForm: React.FC<TaskFormProps> = ({
       </header>
 
       <div className="w-full sm:w-[39rem] mx-auto ">
-        <div className="flex justify-between items-center flex-wrap md:gap-5 ">
+        <div className="flex justify-between items-center flex-wrap lg:gap-5 ">
           <section className="w-full  px-5 sm:w-80 sm:px-1">
             {/* Input components for task details */}
             <AddTaskTextInput

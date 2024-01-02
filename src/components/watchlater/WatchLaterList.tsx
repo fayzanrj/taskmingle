@@ -10,15 +10,9 @@ import FetchError from "../FetchError";
 import NoItemFound from "../NoItemFound";
 import WatchLaterListItem from "./WatchLaterListItem";
 
-interface WatchLaterListProps {
+const WatchLaterList: React.FC<{
   watchLaters: WatchLaterProps[];
-  accessToken?: string;
-}
-
-const WatchLaterList: React.FC<WatchLaterListProps> = ({
-  watchLaters,
-  accessToken,
-}) => {
+}> = ({ watchLaters }) => {
   const [watchLaterList, setWatchLaterList] =
     useState<WatchLaterProps[]>(watchLaters);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -36,7 +30,6 @@ const WatchLaterList: React.FC<WatchLaterListProps> = ({
   }
 
   // If there are no items in watch later
-  // If there are no tasks
   if (watchLaters.length === 0) {
     return (
       <div className="mt-20">
@@ -63,29 +56,30 @@ const WatchLaterList: React.FC<WatchLaterListProps> = ({
   };
   return (
     <>
-      {accessToken && (
-        <section className=" h-10 my-10 w-full flex justify-end items-center gap-5">
-          {/* Add watch later page link */}
-          <Link href={"/dashboard/watchlater/addwatchlater"}>
-            <button className="py-1.5 px-3 bg-[#19fa9a] rounded-lg text-[#1F1F1F] font-semibold">
-              Add watch later
-            </button>
-          </Link>
-
-          <button
-            disabled={isLoading}
-            onClick={handleRefresh}
-            className="w-16 h-10 rounded-lg"
-          >
-            {isLoading ? <ActivityLoader /> : "Refresh"}
+      <section className=" h-10 my-10 w-full flex justify-end items-center gap-5">
+        {/* Add watch later page link */}
+        <Link href={"/dashboard/watchlater/addwatchlater"}>
+          <button className="py-1.5 px-3 bg-[#19fa9a] rounded-lg text-[#1F1F1F] font-semibold">
+            Add watch later
           </button>
-        </section>
-      )}
-      <div className="w-full flex justify-center flex-wrap  gap-5 ">
+        </Link>
+
+        {/* Refresh button */}
+        <button
+          disabled={isLoading}
+          onClick={handleRefresh}
+          className="w-16 h-10 rounded-lg"
+        >
+          {isLoading ? <ActivityLoader /> : "Refresh"}
+        </button>
+      </section>
+
+      {/* Watch Laters */}
+      <section className="w-full flex justify-center flex-wrap  gap-5 ">
         {watchLaterList.map((watchlater: WatchLaterProps, index: number) => (
           <WatchLaterListItem key={index} {...watchlater} />
         ))}
-      </div>
+      </section>
     </>
   );
 };

@@ -20,7 +20,7 @@ const Notifications: React.FC = () => {
   return (
     <div className="absolute top-1/2 right-3 text-white  transform -translate-y-1/2">
       {/* Bell Icon */}
-      <button className="cursor-pointer" onClick={handleClick}>
+      <button className="cursor-pointer" onClick={handleClick} aria-label="notification-btn">
         <FaBell size="1.6rem" />
       </button>
 
