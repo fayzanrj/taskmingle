@@ -43,7 +43,7 @@ const WatchLaterList: React.FC<{
   };
 
   // if there is an error fetching watch later
-  if (watchLaters === undefined) {
+  if (watchLaterList === undefined) {
     return (
       <>
         <ButtonSection isLoading={isLoading} handleRefresh={handleRefresh} />
@@ -53,7 +53,7 @@ const WatchLaterList: React.FC<{
   }
 
   // If there are no items in watch later
-  if (watchLaters.length === 0) {
+  if (watchLaterList.length === 0) {
     return (
       <>
         <ButtonSection isLoading={isLoading} handleRefresh={handleRefresh} />

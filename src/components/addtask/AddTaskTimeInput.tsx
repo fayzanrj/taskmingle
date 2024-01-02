@@ -27,9 +27,6 @@ const AddTaskTimeInput: React.FC<DateTimeInputProps> = ({
       setState(
         `${addZero(new Date().getHours())}:${addZero(new Date().getMinutes())}`
       );
-      console.log(
-        `${addZero(new Date().getHours())}:${addZero(new Date().getMinutes())}`
-      );
     } else {
       setState(e.currentTarget.value);
     }

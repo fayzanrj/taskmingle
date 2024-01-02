@@ -14,7 +14,7 @@ const WatchLaterListItem: React.FC<WatchLaterListItemProps> = ({
 }) => {
   return (
     <div>
-      <div className="text-sm w-[17rem] h-60 overflow-hidden rounded-lg bg-[#1D1F21]">
+      <div className="text-sm w-[16rem] h-60 overflow-hidden rounded-lg bg-[#1D1F21]">
         {/* Preview */}
         {image && (
           <a href={url} target="_blank" aria-label="link">
@@ -24,8 +24,8 @@ const WatchLaterListItem: React.FC<WatchLaterListItemProps> = ({
 
         {/* Link  and title*/}
         <div className="p-2 select-text overflow-hidden">
-          <p className="font-bold text-[1rem] whitespace-nowrap">
-            {title.slice(0, 28) + (title.length > 28 ? "...." : "")}
+          <p className="w-full overflow-hidden font-bold text-[1rem] whitespace-nowrap text-ellipsis">
+            {title}
           </p>
           <p className="text-xs mt-2">
             Link :{" "}

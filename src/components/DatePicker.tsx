@@ -1,12 +1,13 @@
 "use client";
 import { Months } from "@/constants/Months";
+import { AppContext } from "@/context/AppContext";
 import { fetchTasks } from "@/libs/FetchTasks";
 import { getErrorMessage } from "@/libs/GetErrorMessage";
 import { TaskProps } from "@/props/TaskProps";
 import axios from "axios";
 import { addDays, format } from "date-fns";
 import { useSession } from "next-auth/react";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
 import { MdArrowBackIos, MdArrowForwardIos } from "react-icons/md";
 
@@ -28,6 +29,9 @@ const DatePicker: React.FC<DatePickerProps> = ({
 }) => {
   // Getting user data
   const { data: session } = useSession();
+
+  // context
+  const { isOpen } = useContext(AppContext);
 
   // Variable states
   const [active, setActive] = useState<Date>(new Date());
@@ -101,7 +105,11 @@ const DatePicker: React.FC<DatePickerProps> = ({
         <p className="text-xl font-semibold">{getMonth(active)}</p>
       </div>
 
-      <div className="w-full sm:w-[31rem] lg:w-[45rem] xl:w-full mx-auto flex justify-center gap-1 overflow-hidden duration-500 text-white">
+      <div
+        className={`w-full mx-auto flex justify-center gap-1 overflow-hidden duration-500 text-white ${
+          isOpen ? "md:w-[calc(100vw_-20rem)]" : "md:w-full"
+        } `}
+      >
         {/* Scroll left button */}
         <button
           className="xl:opacity-30"

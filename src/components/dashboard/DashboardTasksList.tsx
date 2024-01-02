@@ -123,13 +123,13 @@ const DashboardTasksListItem: React.FC<TaskProps> = ({
       </div>
 
       {/* Task title */}
-      <h2 className="text-2xl font-semibold whitespace-nowrap text-center">
-        {taskTitle.slice(0, 18) + (taskTitle.length > 18 ? "...." : "")}
+      <h2 className="w-full text-ellipsis overflow-hidden text-2xl font-semibold whitespace-nowrap text-center">
+        {taskTitle}
       </h2>
 
       {/* Task Description */}
       <p className="text-sm text-left mt-2 mb-1 px-5 py-2 text-ellipsis break-words">
-        {taskDesc.slice(0, 40) + (taskDesc.length > 40 ? "....." : ".")}
+        {taskDesc.slice(0, 50) + (taskDesc.length > 50 ? "....." : ".")}
       </p>
     </div>
   );

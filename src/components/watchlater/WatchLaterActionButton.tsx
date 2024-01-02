@@ -14,7 +14,7 @@ const WatchLaterActionButton: React.FC<{
   return (
     <>
       <div
-        className={`w-[17rem] my-2 relative overflow-hidden duration-200 ${
+        className={`w-[16rem] my-2 relative overflow-hidden duration-200 ${
           isOpen ? "h-28" : "h-0"
         }`}
       >
@@ -31,7 +31,7 @@ const WatchLaterActionButton: React.FC<{
 
       {/* Open Menu Button */}
       <button
-        className="w-[17rem] h-10 rounded-lg bg-[#1D1F21] "
+        className="w-[16rem] h-10 rounded-lg bg-[#1D1F21] "
         onClick={() => setIsOpen(!isOpen)}
       >
         <IoIosArrowDown

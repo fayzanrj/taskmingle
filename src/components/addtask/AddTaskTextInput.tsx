@@ -3,7 +3,7 @@ import React from "react";
 // Task Input interface
 interface AddTaskTextInputProps {
   label: string;
-  id: string;
+  id: "taskTitle" | "taskTags";
   placeholder: string;
   state: string;
   setState: React.Dispatch<React.SetStateAction<string>>;
@@ -18,13 +18,16 @@ const AddTaskTextInput: React.FC<AddTaskTextInputProps> = ({
 }) => (
   <div className="my-5">
     {/* Label for the input */}
-    <label htmlFor={id} className="ml-2">{label}</label>
+    <label htmlFor={id} className="ml-2">
+      {label} <span className="text-sm">({state.length}/20)</span>
+    </label>
     <br />
     {/* Input field */}
     <input
       id={id}
       type="text"
       value={state}
+      maxLength={20}
       onChange={(e): void => setState(e.currentTarget.value)}
       placeholder={placeholder}
       className="w-full px-3 py-2  mt-1 bg-[#1F1F1F] rounded-lg outline-none"
@@ -32,4 +35,4 @@ const AddTaskTextInput: React.FC<AddTaskTextInputProps> = ({
   </div>
 );
 
-export default AddTaskTextInput
+export default AddTaskTextInput;

@@ -145,12 +145,12 @@ const TaskForm: React.FC<TaskFormProps> = ({
         <h1 className="text-3xl font-bold">Add a Task</h1>
       </header>
 
-      <div className="w-full sm:w-[39rem] mx-auto ">
-        <div className="flex justify-between items-center flex-wrap lg:gap-5 ">
+      <div className="w-full lg:w-[39rem] mx-auto ">
+        <div className="flex justify-center lg:justify-between items-center flex-wrap md:gap-5 lg:gap-5 ">
           <section className="w-full  px-5 sm:w-80 sm:px-1">
             {/* Input components for task details */}
             <AddTaskTextInput
-              label="Task title"
+              label="Title"
               id="taskTitle"
               placeholder="Write a title for your task"
               state={title}
@@ -160,7 +160,7 @@ const TaskForm: React.FC<TaskFormProps> = ({
               label="Description"
               id="taskDesc"
               placeholder="Write a description for your task"
-              rows={4}
+              rows={5}
               state={desc}
               setState={setDesc}
             />
