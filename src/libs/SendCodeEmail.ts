@@ -19,7 +19,7 @@ export const SendCodeEmail = async (
     });
 
     const emailSent = await transporter.sendMail({
-      from: `"Task Mingke" <${process.env.EMAIL}>`,
+      from: `"Task Notify" <${process.env.EMAIL}>`,
       to: email,
       subject: subject,
       html: `Hi ${name}, hope you are doing good. Your verification code is ${code}.`,
