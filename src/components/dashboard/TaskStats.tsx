@@ -80,7 +80,7 @@ const TaskStats: React.FC<{accessToken : string}> = ({accessToken}) => {
             completedTasks={taskStats?.todaysTasks?.completed}
           />
           <TaskStatItem
-            header="Weeekly Tasks"
+            header="Weekly Tasks"
             totalTasks={taskStats.weeklyTasks.total}
             completedTasks={taskStats.weeklyTasks.completed}
           />

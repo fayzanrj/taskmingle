@@ -5,7 +5,7 @@ const roboto = Roboto({ subsets: ["latin"], weight: "500" });
 
 // Task Counter interface
 interface TasksCounterProps {
-  header: string;
+  header: "Today's Tasks" | "Weekly Tasks";
   totalTasks: number;
   completedTasks: number;
 }
