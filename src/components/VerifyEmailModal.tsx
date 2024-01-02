@@ -110,7 +110,7 @@ const VerifyEmailModal: React.FC<VerifyEmailModalProps> = ({
           <button
             disabled={isLoading}
             type="submit"
-            className="mt-12 w-28 h-10 font-semibold text-lg bg-[#19fa9a] rounded-lg outline-none"
+            className="mt-12 w-28 h-10 font-semibold text-lg bg-[#19fa9a] text-black rounded-lg outline-none"
           >
             {isLoading ? <ActivityLoader /> : "Verify"}
           </button>

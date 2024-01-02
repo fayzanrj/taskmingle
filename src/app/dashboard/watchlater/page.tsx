@@ -26,12 +26,7 @@ const WatchLater: NextPage = async () => {
   const watchLaters: WatchLaterProps[] = res.watchlaters;
 
   return (
-    <div className="relative pt-10 px-5">
-      {/* Heading */}
-      <div className="text-center">
-        <h2 className="font-bold text-3xl">Watch Laters</h2>
-      </div>
-
+    <div className="relative py-5 px-5">
       {/* Watch Later List */}
       <WatchLaterList
         watchLaters={watchLaters}

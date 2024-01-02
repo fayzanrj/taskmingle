@@ -5,11 +5,9 @@ import axios from "axios";
 import { useSession } from "next-auth/react";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
-import ActivityLoader from "../ActivityLoader";
 import GoBack from "../GoBack";
-import WatchLaterInputField from "./WatchLaterInputField";
-import PreviewSection from "./PreviewSection";
 import AddWatchLaterButton from "./AddWatchLaterButton";
+import PreviewSection from "./PreviewSection";
 
 const WatchLaterForm = () => {
   const { data: session } = useSession();
@@ -17,6 +15,7 @@ const WatchLaterForm = () => {
   const [url, setUrl] = useState<string>("");
   const [title, setTitle] = useState<string>("");
   const [image, setImage] = useState<string>("");
+  const [note, setNote] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   // Handle change function
@@ -55,7 +54,7 @@ const WatchLaterForm = () => {
       // API REQUEST
       const res = await axios.post(
         "/api/watchlater/addwatchlater",
-        { url, title, image },
+        { url, title, image, note },
         { headers }
       );
 
@@ -87,21 +86,48 @@ const WatchLaterForm = () => {
         <PreviewSection title={title} url={url} image={image} />
 
         <section className="w-4/5 sm:w-96  mt-10">
-          {/* Input */}
-          <WatchLaterInputField
-            type="url"
-            label="Enter URL"
-            placeHolder="https://example.com"
-            id="url"
-            state={url}
-            onChange={handleUrlChange}
-            isLoading={isLoading}
-            onBlur={handleBlur}
-          />
+          {/* URL Input */}
+          <div className="w-full sm:w-96 mt-5">
+            <label htmlFor={"url"} className="text-[1rem] ml-1 font-semibold">
+              Add a url
+            </label>
+            <br />
+            <input
+              type={"url"}
+              id={"url"}
+              placeholder="e.g. youtube.com"
+              value={url}
+              onChange={handleUrlChange}
+              disabled={isLoading}
+              onBlur={handleBlur}
+              className="w-full rounded-lg p-2 my-1 bg-[#1F1F1F] outline-none font-semibold"
+            />
+          </div>
+
+          {/* Note input */}
+          <div className="w-full sm:w-96 mt-5">
+            <label htmlFor={note} className="text-[1rem] ml-1 font-semibold">
+              Add a note <span className="text-sm">({note.length}/80)</span>
+            </label>
+            <br />
+            <input
+              type={"text"}
+              id={note}
+              placeholder={"e.g. To become a better developer"}
+              maxLength={80}
+              value={note}
+              onChange={(e) => setNote(e.currentTarget.value)}
+              disabled={isLoading}
+              className="w-full rounded-lg p-2 my-1 bg-[#1F1F1F] outline-none font-semibold"
+            />
+          </div>
         </section>
 
         {/* Submit button */}
-        <AddWatchLaterButton isLoading={isLoading} />
+        <AddWatchLaterButton
+          isLoading={isLoading}
+          isDisabled={!!(isLoading || !url || !note)}
+        />
       </form>
     </div>
   );

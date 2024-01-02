@@ -9,7 +9,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 export const DELETE = async (
   req: NextRequest,
-  { params }: { params: { taskId: string } }
+  { params }: { params: { watchLaterId: string } }
 ) => {
   try {
     // Verify user by verifying access token
@@ -20,22 +20,22 @@ export const DELETE = async (
       return ThrowUnAuthorizedError();
     }
 
-    // finding task
-    const task = await prisma.task.delete({
+    // finding watchLater
+    const watchLater = await prisma.watchLater.delete({
       where: {
-        id: params.taskId,
+        id: params.watchLaterId,
         createdById: user.id,
       },
     });
 
-    // if task not found
-    if (!task) {
-      return ThrowNotFoundError("No task found");
+    // if watchLater not found
+    if (!watchLater) {
+      return ThrowNotFoundError("No watch later found");
     }
 
     // returning success message
     return NextResponse.json(
-      { message: "Task has been deleted" },
+      { message: "Item has been deleted" },
       { status: 200 }
     );
   } catch (error: any) {

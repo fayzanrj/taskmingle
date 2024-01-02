@@ -113,6 +113,8 @@ const DashboardWatchListItem = ({
     <a href={url}>
       <img src={image} className="w-full" />
     </a>
-    <p className=" px-2 font-semibold">{title}</p>
+    <p className="py-1 px-2 font-semibold">
+      {title.slice(0, 70) + (title.length > 70 ? "....." : "")}
+    </p>
   </div>
 );
