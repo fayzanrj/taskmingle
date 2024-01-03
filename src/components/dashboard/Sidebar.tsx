@@ -57,7 +57,7 @@ const TopNavLinks: NavLink[] = [
     text: "Notes",
     href: ROUTES.NOTES,
     Icon: PiNotepadFill,
-    size: 1.3,
+    size: 1.5,
   },
 ];
 

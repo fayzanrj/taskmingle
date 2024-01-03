@@ -27,8 +27,7 @@ const Notifications: React.FC = () => {
       {/* Notification Modal */}
       {isModalOpen && (
         <div
-          style={{ zIndex: 9999 }}
-          className="absolute w-[80vw] sm:w-96 h-96  bg-[#1F1F1F] rounded-lg shadow-lg drop-shadow-lg top-5 right-[98%]"
+          className="absolute w-[80vw] sm:w-96 h-96  bg-[#1F1F1F] rounded-lg shadow-lg drop-shadow-lg top-5 right-[98%] z-40"
         >
           {/* Heading */}
           <div className="px-3 mt-3 h-10 border-b-[.1px] border-gray-400 relative">

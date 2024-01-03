@@ -64,7 +64,7 @@ const TaskDetails: React.FC<{ params: Params }> = async ({ params }) => {
       {/* Button to go back */}
       <GoBack />
 
-      <div className="w-11/12 sm:w-[30rem] md:w-[32rem] p-2 mx-auto top-1/2 left-1/2 transform duration-500">
+      <div className="w-11/12 sm:w-[30rem] md:w-[32rem] p-2 mx-auto  transform duration-500">
         {/* TAGS */}
         <div className="text-right mb-4">
           <RenderTags tags={task?.tags || []} />
