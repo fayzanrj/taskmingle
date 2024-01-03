@@ -5,11 +5,11 @@ import ScreenActivityLoader from "../ScreenActivityLoader";
 
 const NoteTextArea: React.FC<{ note: string }> = ({ note }) => {
   const [noteValue, setNoteValue] = useState<string>(note);
-  const [isLoading, setIsLoading] = useState<boolean>(true)
+  const [isLoading, setIsLoading] = useState<boolean>(false)
 
   return (
     <>
-      <NoteActionBtns />
+      <NoteActionBtns note={noteValue} />
       <textarea
         value={noteValue}
         onChange={(e) => setNoteValue(e.currentTarget.value)}
