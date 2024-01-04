@@ -8,23 +8,23 @@ const ToggleThemeButton = () => {
   const { isDarkMode, setIsDarkMode } = useContext(AppContext);
 
   return (
-    <li className="p-3 my-1 rounded-xl text-sm  dark:text-[#8D8D8D] text-black ">
+    <li className="h-[2.9rem] overflow-hidden px-3 my-1 rounded-xl text-sm  dark:text-[#8D8D8D] text-black ">
       <button
         onClick={() => setIsDarkMode(!isDarkMode)}
-        className="w-full h-full text-left relative overflow-hidden"
+        className="w-full h-full text-left relative"
       >
         {/* Icon */}
-        <span>
+        <span className="pl-0.5">
           {isDarkMode ? (
-            <IoSunny className="inline-block" size="1.2rem" />
+            <IoSunny className="inline-block" size="1.1rem" />
           ) : (
-            <FaMoon className="inline-block" size="1rem" />
+            <FaMoon className="inline-block" size=".9rem" />
           )}
         </span>
 
         {/* Text */}
-        <p className="font-bold w-full absolute left-12 top-1/2 transform -translate-y-1/2">
-          {isDarkMode ? "Enable Light Mode" : "Enable Dark Mode"}
+        <p className="font-bold w-full absolute left-9 top-1/2 transform -translate-y-1/2">
+          {isDarkMode ? "Light Mode" : "Dark Mode"}
         </p>
       </button>
     </li>

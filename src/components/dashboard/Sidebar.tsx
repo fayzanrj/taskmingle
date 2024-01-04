@@ -137,14 +137,13 @@ const NavItem: FC<NavItem> = ({ text, href, Icon, size, setState }) => {
   };
   return (
     <li
-      className={`p-3 my-1 rounded-xl text-sm  ${
+      className={`relative p-3 my-1 rounded-xl text-sm  ${
         isActive ? "bg-[#19fa9a] text-black" : "dark:text-[#8D8D8D] text-black"
       }`}
       onClick={handleClick}
     >
       <Link
         href={href === "dashboard" ? "/dashboard" : `/dashboard/${href}`}
-        className="relative"
       >
         {/* Icon */}
         <span>
@@ -152,7 +151,7 @@ const NavItem: FC<NavItem> = ({ text, href, Icon, size, setState }) => {
         </span>
 
         {/* Text */}
-        <p className="font-bold w-full absolute left-12 top-1/2 transform -translate-y-1/2">
+        <p className=" font-bold w-fit absolute left-12 top-1/2 transform -translate-y-1/2">
           {text}
         </p>
       </Link>

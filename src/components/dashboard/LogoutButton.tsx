@@ -4,10 +4,10 @@ import { CiLogout } from "react-icons/ci";
 
 // Log out button
 const LogoutButton: React.FC = () => (
-  <li className="p-3 my-1 rounded-xl text-sm  dark:text-[#8D8D8D] text-black ">
+  <li className="h-[2.9rem] relative p-3 my-1 rounded-xl text-sm  dark:text-[#8D8D8D] text-black ">
     <button
       onClick={() => signOut()}
-      className="w-full h-full text-left relative overflow-hidden"
+      className="w-full h-full text-left overflow-hidden"
     >
       {/* Icon */}
       <span>
