@@ -8,11 +8,11 @@ const cinzel = Cinzel({ subsets: ["latin"] });
 
 export default function Home() {
   return (
-    <main className="BG_IMAGE">
+    <main className="BG_IMAGE dark:BG_IMAGE_DARK">
       {/* NAVBAR */}
       <Navbar />
 
-      <div className="w-full min-h-screen h-fit flex justify-center lg:justify-between items-center flex-wrap py-20 px-5 lg:px-15">
+      <div className="w-full min-h-screen h-fit flex justify-center lg:justify-between items-center flex-wrap py-20 px-5 lg:px-15 text-black dark:text-white">
         {/* SECTION 1 */}
         <section className="w-[28rem] p-10">
           <h1 className={`${cinzel.className} font-bold text-6xl`}>
@@ -21,7 +21,7 @@ export default function Home() {
             daily
           </h1>
 
-          <p className="my-5 text-sm text-gray-200">
+          <p className="my-5 text-sm  dark:text-gray-200">
             Start enjoying a more organized work in life to increase your
             productivity
           </p>

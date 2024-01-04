@@ -68,7 +68,7 @@ const LogInForm = () => {
 
   return (
     <form
-      className="w-11/12 md:w-96 h-96  bg-[#1f1f1f] shadow-lg rounded-md absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 px-7 py-8"
+      className="w-11/12 md:w-96 h-96  dark:bg-[#151515] bg-white shadow-lg rounded-md absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 px-7 py-8"
       onSubmit={handleLogIn}
     >
       {/* HEADING */}

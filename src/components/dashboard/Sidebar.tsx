@@ -144,7 +144,7 @@ const NavItem: FC<NavItem> = ({ text, href, Icon, size, setState }) => {
     >
       <Link
         href={href === "dashboard" ? "/dashboard" : `/dashboard/${href}`}
-        className="flex gap-5 items-center"
+        className="relative"
       >
         {/* Icon */}
         <span>
@@ -152,7 +152,9 @@ const NavItem: FC<NavItem> = ({ text, href, Icon, size, setState }) => {
         </span>
 
         {/* Text */}
-        <p className="font-bold w-full">{text}</p>
+        <p className="font-bold w-full absolute left-12 top-1/2 transform -translate-y-1/2">
+          {text}
+        </p>
       </Link>
     </li>
   );
