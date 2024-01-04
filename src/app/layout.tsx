@@ -25,7 +25,7 @@ export default function RootLayout({
   return (
     <html lang="en">
         <body
-          className={`${raleway.className} SCROLL_BAR bg-[#151515] text-white`}
+          className={`${raleway.className} SCROLL_BAR dark:bg-[#151515] dark:text-white bg-white `}
         >
           <Providers>
             <AppState>

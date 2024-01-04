@@ -55,7 +55,7 @@ interface TopBarProps {
 
 const TopBar: React.FC<TopBarProps> = ({ message }) => {
   return (
-    <div className="w-full h-16 px-10 bg-[#1F1F1F] text-white relative z-40">
+    <div className="w-full h-16 px-10 dark:bg-[#1F1F1F] dark:text-white bg-white text-black dark:border-b-0 border-b-2 border-gray-200 relative z-40">
       {/* GREETING */}
       <p className="max-w-[90%] text-lg md:text-2xl font-semibold absolute top-1/2 transform -translate-y-1/2">
         {message}

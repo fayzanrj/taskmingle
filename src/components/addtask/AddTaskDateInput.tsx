@@ -53,7 +53,7 @@ const AddTaskDateInput: React.FC<DateTimeInputProps> = ({
         max={calculateMaxDate()}
         value={state}
         onChange={(e): void => setState(e.currentTarget.value)}
-        className="w-full px-3 py-2  mt-1 bg-[#1F1F1F] rounded-lg outline-none"
+        className="w-full px-3 py-2  mt-1 dark:bg-[#1F1F1F] dark:border-0 border-2 border-gray-200 rounded-lg outline-none"
       />
     </div>
   );

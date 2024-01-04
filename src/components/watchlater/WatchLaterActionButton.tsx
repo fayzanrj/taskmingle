@@ -8,7 +8,7 @@ const WatchLaterActionButton: React.FC<{
   note: string;
   id: string;
   setWatchLaterList: React.Dispatch<React.SetStateAction<WatchLaterProps[]>>;
-}> = ({ note, id , setWatchLaterList}) => {
+}> = ({ note, id, setWatchLaterList }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   return (
@@ -19,19 +19,23 @@ const WatchLaterActionButton: React.FC<{
         }`}
       >
         {/* Note */}
-        <div className="w-10/12 h-28 overflow-y-auto rounded-lg bg-[#1D1F21] p-2 SCROLL_BAR">
+        <div className="w-10/12 h-28 overflow-y-auto rounded-lg dark:bg-[#1D1F21] bg-white border-[.1rem] border-stone-200 dark:border-0 p-2 SCROLL_BAR">
           <p>
             Note : <span>{note.slice(0, 80)}</span>
           </p>
         </div>
 
         {/* Delete watch later button */}
-        <WatchLaterDeleteButton id={id} setWatchLaterList={setWatchLaterList} setIsOpen={setIsOpen} />
+        <WatchLaterDeleteButton
+          id={id}
+          setWatchLaterList={setWatchLaterList}
+          setIsOpen={setIsOpen}
+        />
       </div>
 
       {/* Open Menu Button */}
       <button
-        className="w-[16rem] h-10 rounded-lg bg-[#1D1F21] "
+        className="w-[16rem] h-10 rounded-lg dark:bg-[#1D1F21] bg-white shadow-lg drop-shadow-lg"
         onClick={() => setIsOpen(!isOpen)}
       >
         <IoIosArrowDown

@@ -205,7 +205,7 @@ const TaskForm: React.FC<TaskFormProps> = ({
             id="url"
             value={urlLink}
             onChange={(e) => setUrlLink(e.currentTarget.value)}
-            className="w-full px-3 py-2 mt-1 bg-[#1F1F1F] rounded-lg outline-none"
+            className="w-full px-3 py-2 mt-1 dark:bg-[#1F1F1F] dark:border-0 border-2 border-gray-200 rounded-lg outline-none"
             placeholder="Paste a link"
           />
         </section>
@@ -213,7 +213,7 @@ const TaskForm: React.FC<TaskFormProps> = ({
 
       <section className="w-[90%] h-10  mx-auto my-10 mb-14 relative">
         {/* Buttons for cancel and save actions */}
-        <button disabled={isLoading} className="h-10 w-24 absolute right-28">
+        <button disabled={isLoading} className="h-10 font-semibold w-24 absolute right-28">
           Cancel
         </button>
 

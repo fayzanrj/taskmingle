@@ -27,7 +27,7 @@ const TaskStatItem: React.FC<TasksCounterProps> = ({
   const completedPercentage = (completedTasks / totalTasks) * 100;
 
   return (
-    <div className=" w-72 h-28 bg-[#1F1F1F] text-white shadow-xl drop-shadow-xl  py-3 px-4 rounded-lg relative">
+    <div className=" w-72 h-28 dark:bg-[#1D1F21] rounded-lg dark:border-0 border-[0.1rem] border-stone-200 shadow-xl drop-shadow-xl  py-3 px-4 relative">
       {/* Header */}
       <h3 className="text-xl font-semibold ">{header}</h3>
 
@@ -45,7 +45,7 @@ const TaskStatItem: React.FC<TasksCounterProps> = ({
         </div>
 
         {/* Task completion percentage */}
-        <div className="w-full h-1.5 bg-[#323232] rounded-full mt-2 shadow-sm drop-shadow-sm">
+        <div className="w-full h-1.5 dark:bg-[#323232] bg-stone-300 rounded-full mt-2 shadow-sm drop-shadow-sm">
           <div
             style={{
               width: `${completedPercentage}%`,

@@ -101,7 +101,7 @@ const DatePicker: React.FC<DatePickerProps> = ({
   return (
     <>
       {/* Month name */}
-      <div className="mx-auto text-center mt-5 mb-2 text-white">
+      <div className="mx-auto text-center mt-5 mb-2">
         <p className="text-xl font-semibold">{getMonth(active)}</p>
       </div>
 
@@ -129,9 +129,9 @@ const DatePicker: React.FC<DatePickerProps> = ({
             <button
               aria-label="date-picker-button"
               key={date.toString()}
-              className={`w-12 px-2 lg:px-0 cursor-pointer mx-2 py-3 rounded-lg font-semibold ${
+              className={`w-12 px-2 lg:px-0 cursor-pointer mx-2 py-3 rounded-lg font-semibold text-black dark:text-white ${
                 active.toLocaleDateString() === date.toLocaleDateString()
-                  ? "bg-green-300 text-[#323232]"
+                  ? "bg-green-300 dark:text-[#323232] text-black"
                   : ""
               }`}
               onClick={() => handleClick(date)}

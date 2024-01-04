@@ -97,7 +97,7 @@ const ButtonSection: React.FC<{
       <button
         disabled={isLoading}
         onClick={handleRefresh}
-        className="w-16 h-10 rounded-lg"
+        className="w-16 h-10 rounded-lg font-semibold"
       >
         {isLoading ? <ActivityLoader /> : "Refresh"}
       </button>

@@ -17,5 +17,5 @@ const NotesSkeleton = () => {
 export default NotesSkeleton;
 
 const NotesSkeletonItem = () => (
-  <div className="w-56 h-56 bg-[#404040] rounded-lg shadow-lg p-4 overflow-hidden text-ellipsis cursor-pointer animate-pulse"></div>
+  <div className="w-56 h-56 dark:bg-[#404040] bg-gray-200 rounded-lg shadow-lg p-4 overflow-hidden text-ellipsis cursor-pointer animate-pulse"></div>
 );

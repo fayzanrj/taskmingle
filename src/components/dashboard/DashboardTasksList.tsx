@@ -116,7 +116,7 @@ const DashboardTasksListItem: React.FC<TaskProps> = ({
   taskDesc,
 }) => {
   return (
-    <div className="min-w-[15rem] max-w-[15rem] h-44 rounded-lg overflow-hidden bg-[#1D1F21] p-3">
+    <div className="min-w-[15rem] max-w-[15rem] h-44 overflow-hidden dark:bg-[#1D1F21] rounded-lg dark:border-0 border-[0.1rem] border-stone-200 p-3">
       {/* Tags */}
       <div className="text-right mb-4 overflow-hidden py-1">
         <RenderTags tags={tags.slice(0, 2) || []} />

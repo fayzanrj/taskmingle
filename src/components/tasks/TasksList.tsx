@@ -3,7 +3,7 @@ import React from "react";
 import FetchError from "../FetchError";
 import NoItemFound from "../NoItemFound";
 import TaskItem from "./TaskItem";
-import TaskItemSkeleton from "./TaskItemSkeleton";
+import TaskItemSkeleton from "../skeletons/TaskItemSkeleton";
 
 // Task List interface
 interface TaskListProps {

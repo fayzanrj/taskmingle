@@ -100,7 +100,7 @@ const WatchLaterForm = () => {
               onChange={handleUrlChange}
               disabled={isLoading}
               onBlur={handleBlur}
-              className="w-full rounded-lg p-2 my-1 bg-[#1F1F1F] outline-none font-semibold"
+              className="w-full rounded-lg p-2 my-1 dark:bg-[#1F1F1F] dark:border-0 border-2 border-gray-200 outline-none font-semibold"
             />
           </div>
 
@@ -118,7 +118,7 @@ const WatchLaterForm = () => {
               value={note}
               onChange={(e) => setNote(e.currentTarget.value)}
               disabled={isLoading}
-              className="w-full rounded-lg p-2 my-1 bg-[#1F1F1F] outline-none font-semibold"
+              className="w-full rounded-lg p-2 my-1 dark:bg-[#1F1F1F] dark:border-0 border-2 border-gray-200 outline-none font-semibold"
             />
           </div>
         </section>

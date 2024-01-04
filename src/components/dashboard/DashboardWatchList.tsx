@@ -108,12 +108,12 @@ const DashboardWatchListItem = ({
   image: string;
   title: string;
 }) => (
-  <div className="min-w-[15rem] max-w-[15rem] h-56 rounded-lg overflow-hidden bg-[#1D1F21] ">
+  <div className="min-w-[15rem] max-w-[15rem] h-56  overflow-hidden dark:bg-[#1D1F21] rounded-lg  ">
     {/* Image */}
     <a href={url}>
       <img src={image} className="w-full" />
     </a>
-    <p className="py-1 px-2 font-semibold">
+    <p className="py-1 px-2 font-semibold dark:border-0 border-[0.1rem] border-stone-200 border-t-0 rounded-lg ">
       {title.slice(0, 70) + (title.length > 70 ? "....." : "")}
     </p>
   </div>

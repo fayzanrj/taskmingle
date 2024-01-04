@@ -32,7 +32,7 @@ const AddTaskTextArea: React.FC<TextAreaProps> = ({
       maxLength={150}
       onChange={(e): void => setState(e.currentTarget.value)}
       placeholder={placeholder}
-      className="w-full px-3 py-2  mt-1 bg-[#1F1F1F] rounded-lg outline-none resize-none SCROLL_BAR"
+      className="w-full px-3 py-2  mt-1 dark:bg-[#1F1F1F] dark:border-0 border-2 border-gray-200 rounded-lg outline-none resize-none SCROLL_BAR"
     />
   </div>
 );

@@ -19,7 +19,7 @@ const NoteTextArea: React.FC<NoteProps> = ({ content, id }) => {
         value={noteContent}
         placeholder="Start writing from here."
         onChange={(e) => setNoteContent(e.currentTarget.value)}
-        className="mt-3 h-[70svh] w-full px-2 md:px-1 bg-transparent outline-none resize-none SCROLL_BAR"
+        className="mt-3 h-[70svh] w-full px-2 md:px-1 bg-transparent outline-none resize-none dark-font-normal font-semibold SCROLL_BAR"
       />
       {isLoading && <ScreenActivityLoader />}
     </>

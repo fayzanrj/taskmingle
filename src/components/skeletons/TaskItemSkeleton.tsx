@@ -2,7 +2,7 @@
 const TaskItemSkeletonItem = () => {
   return (
     <div className="block">
-      <div className="w-80 h-56 sm:w-72 sm:h-40 rounded-xl bg-[#404040] select-none block"></div>
+      <div className="w-80 h-56 sm:w-72 sm:h-40 rounded-xl dark:bg-[#404040] bg-gray-200 select-none block"></div>
       {/* <div className="w-40 h-5 sm:w-32 ml-2 rounded-full bg-gray-200 mt-2 block"></div> */}
     </div>
   );

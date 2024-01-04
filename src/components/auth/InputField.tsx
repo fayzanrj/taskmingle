@@ -127,7 +127,7 @@ const InputField: React.FC<InputFieldPropTypes> = ({
               : handleValidate(e.target.value);
           }}
           onBlur={() => validateField(state)}
-          className={`w-full rounded-lg p-2 my-1  bg-[#151515]  outline-none font-semibold ${
+          className={`w-full rounded-lg p-2 my-1 dark:bg-[#1F1F1F] dark:border-0 border-2 border-gray-20  outline-none font-semibold ${
             type === "password" && state.length > 0 && "pr-7"
           }`}
         />

@@ -20,14 +20,14 @@ const Notifications: React.FC = () => {
   return (
     <div className="absolute top-1/2 right-3 text-white  transform -translate-y-1/2">
       {/* Bell Icon */}
-      <button className="cursor-pointer" onClick={handleClick} aria-label="notification-btn">
-        <FaBell size="1.6rem" />
+      <button className="cursor-pointer " onClick={handleClick} aria-label="notification-btn">
+        <FaBell size="1.6rem" className="dark:text-white text-black" />
       </button>
 
       {/* Notification Modal */}
       {isModalOpen && (
         <div
-          className="absolute w-[80vw] sm:w-96 h-96  bg-[#1F1F1F] rounded-lg shadow-lg drop-shadow-lg top-5 right-[98%] z-40"
+          className="absolute w-[80vw] sm:w-96 h-96  dark:bg-[#1F1F1F] bg-white dark:text-white text-black rounded-lg shadow-lg drop-shadow-lg top-5 right-[98%] z-40"
         >
           {/* Heading */}
           <div className="px-3 mt-3 h-10 border-b-[.1px] border-gray-400 relative">

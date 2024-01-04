@@ -46,7 +46,7 @@ const WatchLaterDeleteButton: React.FC<{
   return (
     <div className="w-[15%] h-28 absolute top-0 right-0">
       <button
-        className="w-full h-full rounded-lg bg-[#1D1F21]"
+        className="w-full h-full rounded-lg dark:bg-[#1D1F21] bg-white border-[.1rem] border-stone-200 dark:border-0"
         onClick={handleDelete}
         disabled={isLoading}
       >

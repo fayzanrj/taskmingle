@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { MdClose, MdDone } from "react-icons/md";
 import ActivityLoader from "../ActivityLoader";
+import TaskStatusSkeleton from "../skeletons/TaskStatusSkeleton";
 
 // Possible task status values
 type TaskStatus = "Pending" | "Completed" | "Overdue" | null;
@@ -95,7 +96,7 @@ const TaskStatus: React.FC<MarkButtonProps> = ({
 
   // If tasks status is getting fetched
   if (taskStatus === null) {
-    return <Skeleton />;
+    return <TaskStatusSkeleton />;
   }
 
   return (
@@ -135,8 +136,3 @@ const TaskStatus: React.FC<MarkButtonProps> = ({
 
 // Export MarkAsBtn component
 export default TaskStatus;
-
-// Skeleton
-const Skeleton = () => {
-  return <div className="h-20 sm:h-10 bg-[#404040]  rounded-lg animate-pulse"></div>;
-};

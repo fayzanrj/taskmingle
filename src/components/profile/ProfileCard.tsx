@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { FiLock } from "react-icons/fi";
-import ProfileSkeleton from "./ProfileSkeleton";
+import ProfileSkeleton from "../skeletons/ProfileSkeleton";
 import SendRemindersBtn from "./SendRemindersBtn";
 import VerifyEmailBtn from "./VerifyEmailBtn";
 import { getErrorMessage } from "@/libs/GetErrorMessage";

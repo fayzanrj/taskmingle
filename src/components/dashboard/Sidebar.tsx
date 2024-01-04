@@ -16,6 +16,9 @@ import { MdSpaceDashboard } from "react-icons/md";
 import { PiNotepadFill } from "react-icons/pi";
 import { SlMenu } from "react-icons/sl";
 import Logo from "../Logo";
+import ToggleTheme from "../ToggleThemeButton";
+import LogoutButton from "./LogoutButton";
+import ToggleThemeButton from "../ToggleThemeButton";
 
 // TO DO : WORK ON HREFS
 
@@ -62,7 +65,7 @@ const TopNavLinks: NavLink[] = [
 ];
 
 const Sidebar: React.FC = () => {
-  const {isOpen, setIsOpen} = useContext(AppContext)
+  const { isOpen, setIsOpen } = useContext(AppContext);
 
   // Function to show and hide sidebar
   const toggleSidebar = (): void => setIsOpen(!isOpen);
@@ -72,16 +75,16 @@ const Sidebar: React.FC = () => {
       {/* EMPTY DIV TO COVER THE SPACE BEHIND THE SIDE NAV BECAUSE OF USING POSTION FIXED */}
       {isOpen && <div className="hidden md:block md:min-w-[16rem] "></div>}
       <nav
-        className={`min-w-[60%] md:min-w-[16rem] h-full py-2 bg-[#1f1f1f] border-r-2 border-[#262626] duration-500 z-50 fixed ${
+        className={`min-w-[60%] md:min-w-[16rem] h-full py-2 dark:bg-[#1f1f1f] bg-white border-r-2 dark:border-[#262626] border-gray-200 duration-500 z-50 fixed ${
           isOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
         {/* Opening and closing button for sidebar */}
         <button
           aria-label="Nav-toggle-button"
-          className={`absolute top-4 text-[#8D8D8D] ${
+          className={`absolute top-4 dark:text-[#8D8D8D] text-black ${
             isOpen ? "-right-4" : "-right-9 rotate-180 fixed"
-          } duration-500 bg-[#1f1f1f] rounded-full`}
+          } duration-500 dark:bg-[#1f1f1f] bg-white rounded-full`}
           onClick={toggleSidebar}
         >
           <IoIosArrowDropleft size="2rem" />
@@ -108,24 +111,13 @@ const Sidebar: React.FC = () => {
             Icon={CgProfile}
             setState={setIsOpen}
           />
+          <ToggleThemeButton />
           <LogoutButton />
         </ul>
       </nav>
     </aside>
   );
 };
-
-// Log out button
-const LogoutButton: React.FC = () => (
-  <li className="relative p-3 my-1 rounded-xl text-[#8D8D8D] text-sm">
-    <button onClick={() => signOut()}>
-      <span className="aboslute">
-        <CiLogout className="inline-block font-semibold" size="1.3rem" />
-      </span>
-      <p className="absolute inline-block ml-4 font-semibold">LOG OUT</p>
-    </button>
-  </li>
-);
 
 // Navigation item
 const NavItem: FC<NavItem> = ({ text, href, Icon, size, setState }) => {
@@ -145,8 +137,8 @@ const NavItem: FC<NavItem> = ({ text, href, Icon, size, setState }) => {
   };
   return (
     <li
-      className={`p-3 my-1 rounded-xl text-sm ${
-        isActive ? "bg-[#19fa9a] text-black" : "text-[#8D8D8D]"
+      className={`p-3 my-1 rounded-xl text-sm  ${
+        isActive ? "bg-[#19fa9a] text-black" : "dark:text-[#8D8D8D] text-black"
       }`}
       onClick={handleClick}
     >
