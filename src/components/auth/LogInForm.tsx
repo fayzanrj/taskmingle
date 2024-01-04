@@ -72,7 +72,7 @@ const LogInForm = () => {
       onSubmit={handleLogIn}
     >
       {/* HEADING */}
-      <Header variant="LOG IN" />
+      <Header  />
 
       {/* Email Input */}
       <InputField

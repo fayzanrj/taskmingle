@@ -108,7 +108,7 @@ const SignUpForm = () => {
         className="w-11/12 md:w-96 h-[33rem] dark:bg-[#151515] bg-white shadow-lg rounded-md absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 px-7 py-5"
         onSubmit={handleSignUp}
       >
-        <Header variant="SIGN UP" />
+        <Header/>
 
         {/* Name Input Field */}
         <InputField

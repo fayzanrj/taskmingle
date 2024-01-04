@@ -13,6 +13,27 @@ body,
 body {
   scrollbar-gutter: auto;
 }
+
+.logo{
+  position: relative;
+  padding: 2px 13px 2px 10px;
+  margin-left: 10px;
+  color: black;
+}
+
+.logo::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  transform: skewX(-33deg);
+  background-color: #19fa9a;
+  border-radius: 0.5rem; /* 6px rounded corners */
+  z-index: -1;
+}
+
 .BG_IMAGE {
   background-image: url("../assets/landingPageBgLight.png");
   background-position: center;
@@ -20,7 +41,7 @@ body {
   background-repeat: no-repeat;
 }
 
-:is(.dark .dark\:BG_IMAGE_DARK){
+:is(.dark .dark\:BG_IMAGE_DARK) {
   background-image: url("../assets/landingPageBg.png");
 }
 

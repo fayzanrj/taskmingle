@@ -3,19 +3,16 @@ import Logo from "../Logo";
 import Link from "next/link";
 import ThemeToggleNavbarBtn from "../landingPage/ThemeToggleNavbarBtn";
 
-interface HeaderProps {
-  variant: "SIGN UP" | "LOG IN";
-}
-const Header: React.FC<HeaderProps> = ({ variant }) => {
+const Header: React.FC = () => {
   return (
-    <header className="flex justify-between items-center">
+    <header className="text-center relative">
       {/* Logo */}
       <Link href={"/"}>
         <Logo width={80} height={1} />
       </Link>
-      {/* Header text */}
-      <h1 className="text-3xl font-bold underline">{variant}</h1>
-      <ThemeToggleNavbarBtn />
+      <div className="absolute top-1/2  transform -translate-y-1/2 right-0">
+        <ThemeToggleNavbarBtn />
+      </div>
     </header>
   );
 };

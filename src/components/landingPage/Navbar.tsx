@@ -21,7 +21,7 @@ const navLinks: NavLink[] = [
     text: "Sign Up",
     href: "/signup",
     className:
-      "bg-gradient-to-br from-[#19fa9a] to-[#22C1C3] text-white py-4 px-9 rounded-lg",
+      "bg-gradient-to-br from-[#19fa9a] to-[#22C1C3] font-semibold py-4 px-9 rounded-lg text-black",
   },
 ];
 
@@ -35,17 +35,11 @@ const Navbar: React.FC = () => {
   };
 
   return (
-    <nav className="p-4 w-screen bg-white dark:bg-[#1f1f1f]  md:bg-transparent fixed top-0 z-50">
+    <nav className="p-4 w-screen bg-[#DDFEF0] dark:bg-[#010D08] dark:md:bg-transparent  md:bg-transparent fixed top-0 z-50">
       <div className=" flex items-center justify-between">
         {/* Logo */}
         <Link href="/">
-          <Image
-            width={120}
-            height={100}
-            quality={100}
-            src={require("@/assets/logo/landingPageLogo.png")}
-            alt="logo"
-          />
+          <Logo/>
         </Link>
 
         {/* Hamburger menu button for small screens */}
@@ -71,7 +65,7 @@ const Navbar: React.FC = () => {
 
         {/* Navbar */}
         <div
-          className={`w-4/5 sm:w-2/5 md:w-fit h-[100svh] md:h-full py-16 md:py-0 block md:flex bg-white dark:bg-[#1f1f1f] md:dark:bg-transparent md:bg-transparent text-center fixed right-0 top-0 md:relative border-l-2 border-stoner-200 md:border-0 transition-transform transform ${
+          className={`w-4/5 sm:w-2/5 md:w-fit h-[100svh] md:h-full py-16 md:py-0 block md:flex bg-[#DDFEF0] dark:bg-[#010D08] dark:md:bg-transparent md:bg-transparent text-center fixed right-0 top-0 md:relative transition-transform transform ${
             isOpen ? "translate-x-0" : "translate-x-full"
           } md:translate-x-0 `}
         >
