@@ -6,42 +6,46 @@ import { WatchLaterProps } from "@/props/WatchLaterProps";
 import { authOptions } from "@/utils/AuthOptions";
 import { NextPage } from "next";
 import { getServerSession } from "next-auth";
+import { NoteProps } from "@/props/NoteProps";
+import { getHeaders } from "@/libs/GetHeaders";
+import DashboardNotesList from "@/components/dashboard/DashboardNotesList";
 
 // TO DO : REFACTOR
 
 const Dashboard: NextPage = async () => {
-  const data = await getServerSession(authOptions);
+  const headers = await getHeaders();
 
-  const headers = {
-    "Content-Type": "application/json",
-    //@ts-ignore
-    accessToken: data?.user?.accessToken,
-  };
-
-  const response = await fetch(
+  // Watch Later sessoin
+  const watchLaterFetch = await fetch(
     `${process.env.HOST}/api/watchlater/getwatchlaters`,
     { cache: "no-store", headers: headers }
   );
 
-  const res = await response.json();
-  const watchLaters: WatchLaterProps[] = res.watchlaters;
+  const watchLaterFetchRes = await watchLaterFetch.json();
+  const watchLaters: WatchLaterProps[] = watchLaterFetchRes.watchlaters;
+
+  // Notes fetch
+  const notesFetch = await fetch(`${process.env.HOST}/api/notes/getAllNotes`, {
+    cache: "no-store",
+    headers: headers,
+  });
+
+  const notesFetchRes = await notesFetch.json();
+  const notes: NoteProps[] = notesFetchRes.notes;
 
   return (
     <div className="w-full py-10 px-5">
-    {/* @ts-ignore */}
-      <TaskStats accessToken={data?.user?.accessToken} />
+      <TaskStats accessToken={headers.accessToken} />
 
       <section className="w-full overflow-hidden mt-16 mb-10 ">
         {/*   TASKS */}
-        {/* @ts-ignore */}
-        <DashboardTasksList accessToken={data?.user?.accessToken} />
+        <DashboardTasksList accessToken={headers.accessToken} />
 
         {/* WATCH LATERS */}
         <DashboardWatchList watchLater={watchLaters} />
 
         {/* Notes */}
-
-        {/* <div className="w-80 h-48 bg-[#1f1f1f1]"></div> */}
+        <DashboardNotesList notes={notes} />
       </section>
     </div>
   );

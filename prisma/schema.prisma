@@ -19,6 +19,7 @@ model User {
   tasks      Task[]       @relation("createdByUser")
   codes      Code[]       @relation("createdByUser")
   watchlater WatchLater[] @relation("createdByUser")
+  notes      Note[]       @relation("createdByUser")
 }
 
 model Task {
@@ -53,6 +54,15 @@ model WatchLater {
   title       String
   image       String
   note        String
+  createdBy   User      @relation("createdByUser", fields: [createdById], references: [id])
+  createdById String    @db.ObjectId
+  createdAt   DateTime? @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Note {
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  content     String
   createdBy   User      @relation("createdByUser", fields: [createdById], references: [id])
   createdById String    @db.ObjectId
   createdAt   DateTime? @default(now())

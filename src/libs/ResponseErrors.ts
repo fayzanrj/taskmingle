@@ -8,14 +8,14 @@ export const ThrowServerError = () => {
   );
 };
 
-export const ThrowIncompleteError = (): Response => {
-  return NextResponse.json({ msg: "Incomplete data" }, { status: 400 });
+export const ThrowIncompleteError = (): NextResponse => {
+  return NextResponse.json({ message: "Incomplete data" }, { status: 400 });
 };
 
-export const ThrowUnAuthorizedError = (): Response => {
+export const ThrowUnAuthorizedError = (): NextResponse => {
   return NextResponse.json({ message: "Not authorized" }, { status: 401 });
 };
 
-export const ThrowNotFoundError = (message: string) => {
+export const ThrowNotFoundError = (message: string) : NextResponse => {
   return NextResponse.json({ message }, { status: 401 });
 };

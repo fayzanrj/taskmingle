@@ -85,7 +85,7 @@ const ButtonSection: React.FC<{
   handleRefresh: () => void;
 }> = ({ isLoading, handleRefresh }) => {
   return (
-    <section className=" h-10 my-10 w-full flex justify-end items-center gap-5">
+    <section className=" h-10 my-2 w-full flex justify-end items-center gap-5">
       {/* Add watch later page link */}
       <Link href={"/dashboard/watchlater/addwatchlater"}>
         <button className="py-1.5 px-3 bg-[#19fa9a] rounded-lg text-[#1F1F1F] font-semibold">

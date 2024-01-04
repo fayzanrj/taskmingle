@@ -26,7 +26,7 @@ const WatchLater: NextPage = async () => {
   const watchLaters: WatchLaterProps[] = res.watchlaters;
 
   return (
-    <div className="relative py-5 px-5">
+    <div className="relative p-5">
       {/* Watch Later List */}
       <WatchLaterList
         watchLaters={watchLaters}
