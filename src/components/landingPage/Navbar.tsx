@@ -39,7 +39,7 @@ const Navbar: React.FC = () => {
       <div className=" flex items-center justify-between">
         {/* Logo */}
         <Link href="/">
-          <Logo/>
+          <Logo width={10} height={10} />
         </Link>
 
         {/* Hamburger menu button for small screens */}
