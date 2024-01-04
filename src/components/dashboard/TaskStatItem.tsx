@@ -14,9 +14,9 @@ interface TasksCounterProps {
 const getColor = (header: string): string => {
   if (header === "Today's Tasks") {
     return "#19fa9a";
-  } else{
+  } else {
     return "#22C1C3";
-  } 
+  }
 };
 const TaskStatItem: React.FC<TasksCounterProps> = ({
   header,
@@ -24,7 +24,8 @@ const TaskStatItem: React.FC<TasksCounterProps> = ({
   completedTasks,
 }) => {
   // Calculating percentage of completed tasks
-  const completedPercentage = (completedTasks / totalTasks) * 100;
+  const completedPercentage =
+    totalTasks === 0 ? 0 : (completedTasks / totalTasks) * 100;
 
   return (
     <div className=" w-72 h-28 dark:bg-[#1D1F21] rounded-lg dark:border-0 border-[0.1rem] border-stone-200 shadow-xl drop-shadow-xl  py-3 px-4 relative">
