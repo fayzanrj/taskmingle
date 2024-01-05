@@ -9,26 +9,14 @@ import { useRouter } from "next/navigation";
 
 const NotesActionBtns: React.FC<{
   isRefreshing: boolean;
-  setIsRefreshing: React.Dispatch<React.SetStateAction<boolean>>;
   setAllNotes: React.Dispatch<React.SetStateAction<NoteProps[]>>;
-}> = ({ isRefreshing, setIsRefreshing, setAllNotes }) => {
+  handleRefresh : () => void
+}> = ({ isRefreshing, handleRefresh, setAllNotes }) => {
   const [isCreatingNote, setIsCreatingNote] = useState<boolean>(false);
   const headers = useHeaders();
   const nav = useRouter();
 
-  const handleRefresh = async () => {
-    try {
-      setIsRefreshing(true);
-      const res = await axios.get("/api/notes/getAllNotes", { headers });
-      setAllNotes(res.data.notes);
-    } catch (error: any) {
-      console.error(error);
-      const errorMessage = getErrorMessage(error);
-      toast.error(errorMessage);
-    } finally {
-      setIsRefreshing(false);
-    }
-  };
+  
 
   // function to create note
   const handleCreate = async () => {

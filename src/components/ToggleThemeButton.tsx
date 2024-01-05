@@ -1,6 +1,7 @@
 "use client";
 import { AppContext } from "@/context/AppContext";
 import { useContext } from "react";
+import toast from "react-hot-toast";
 import { FaMoon } from "react-icons/fa";
 import { IoSunny } from "react-icons/io5";
 
@@ -10,7 +11,7 @@ const ToggleThemeButton = () => {
   return (
     <li className="h-[2.9rem] overflow-hidden px-3 my-1 rounded-xl text-sm  dark:text-[#8D8D8D] text-black ">
       <button
-        onClick={() => setIsDarkMode(!isDarkMode)}
+        onClick={() => {setIsDarkMode(!isDarkMode) ;toast.success('hiii')}}
         className="w-full h-full text-left relative"
       >
         {/* Icon */}

@@ -8,7 +8,7 @@ const Header: React.FC = () => {
     <header className="text-center relative">
       {/* Logo */}
       <Link href={"/"}>
-        <Logo width={80} height={1} />
+        <Logo />
       </Link>
       <div className="absolute top-1/2  transform -translate-y-1/2 right-0">
         <ThemeToggleNavbarBtn />

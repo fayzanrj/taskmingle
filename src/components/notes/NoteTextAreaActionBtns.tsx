@@ -28,6 +28,7 @@ const NoteTextAreaActionBtns: React.FC<{
       const res = await axios.delete(`/api/notes/deleteNote/${id}`, {headers});
       nav.back();
       toast.success(res.data.message);
+      nav.push('/dashboard/notes')
     } catch (error: any) {
       console.error(error);
       const errorMessage = getErrorMessage(error);

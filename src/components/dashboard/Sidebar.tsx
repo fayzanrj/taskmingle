@@ -2,10 +2,10 @@
 import { ROUTES } from "@/constants/NavRoutes";
 import { AppContext } from "@/context/AppContext";
 import useDeviceWidth from "@/hooks/useDeviceWidth";
-import { signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import React, { FC, useContext } from "react";
+import React, { FC, useContext, useEffect } from "react";
 import { IconType } from "react-icons";
 import { CgProfile } from "react-icons/cg";
 import { CiLogout } from "react-icons/ci";
@@ -19,6 +19,8 @@ import Logo from "../Logo";
 import ToggleTheme from "../ToggleThemeButton";
 import LogoutButton from "./LogoutButton";
 import ToggleThemeButton from "../ToggleThemeButton";
+import { pusherClient } from "@/pusher/pusher";
+import { error } from "console";
 
 // TO DO : WORK ON HREFS
 
@@ -65,10 +67,28 @@ const TopNavLinks: NavLink[] = [
 ];
 
 const Sidebar: React.FC = () => {
+  const { data: session } = useSession();
+
   const { isOpen, setIsOpen } = useContext(AppContext);
 
   // Function to show and hide sidebar
   const toggleSidebar = (): void => setIsOpen(!isOpen);
+
+  // useEffect(() => {
+  //   //@ts-ignore
+  //   const user = session?.user?.id;
+  //   try {
+  //     console.log({ user });
+  //     const pusher = pusherClient.subscribe(user);
+  //     console.log(pusher);
+  //   } catch (error: any) {
+  //     console.error(error);
+  //   }
+
+  //   return () => {
+  //     pusherClient.unsubscribe(user);
+  //   };
+  // }, []);
 
   return (
     <aside>
@@ -92,7 +112,7 @@ const Sidebar: React.FC = () => {
 
         {/* LOGO */}
         <div className="my-3">
-          <Logo width={150} height={100} />
+          <Logo />
         </div>
 
         {/* Top navigation bar */}
@@ -142,9 +162,7 @@ const NavItem: FC<NavItem> = ({ text, href, Icon, size, setState }) => {
       }`}
       onClick={handleClick}
     >
-      <Link
-        href={href === "dashboard" ? "/dashboard" : `/dashboard/${href}`}
-      >
+      <Link href={href === "dashboard" ? "/dashboard" : `/dashboard/${href}`}>
         {/* Icon */}
         <span>
           <Icon className="" size={`${size}rem`} />

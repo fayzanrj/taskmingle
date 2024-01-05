@@ -1,23 +1,43 @@
 "use client";
 import { AppContext } from "@/context/AppContext";
 import { WatchLaterProps } from "@/props/WatchLaterProps";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import FetchError from "../FetchError";
 import NoItemFound from "../NoItemFound";
 import ScrollButton from "./ScrollButton";
 import { NoteProps } from "@/props/NoteProps";
 import NotesListItem from "../notes/NotesListItem";
+import { pusherClient } from "@/pusher/pusher";
 
 const DashboardNotesList: React.FC<{
-  notes: NoteProps[] | undefined;
+  notes: NoteProps[];
 }> = ({ notes }) => {
   // Context
   const { isOpen } = useContext(AppContext);
 
   // Variable States
-  const [initialNotes, setInitialNotes] = useState<NoteProps[] | undefined>(
-    notes
-  );
+  const [initialNotes, setInitialNotes] = useState<NoteProps[]>(notes);
+
+  const handleAddNote = (newNote: NoteProps) => {
+    console.log(newNote);
+    setInitialNotes((prevNotes) => [...prevNotes, newNote]);
+  };
+
+  const handleDeleteNote = (noteId: string) => {
+    setInitialNotes((prevNotes) =>
+      prevNotes.filter((note) => note.id !== noteId)
+    );
+  };
+
+  // useEffect(() => {
+  //   pusherClient.bind("addNote", handleAddNote);
+  //   pusherClient.bind("deleteNote", handleDeleteNote);
+
+  //   return () => {
+  //     pusherClient.unbind("addNote", handleAddNote);
+  //     pusherClient.unbind("deleteNote", handleDeleteNote);
+  //   };
+  // }, []);
 
   const [scrollPosition, setScrollPosition] = useState(0);
 
@@ -53,9 +73,7 @@ const DashboardNotesList: React.FC<{
   return (
     <div className="my-5">
       {/* Heading */}
-      <h3 className="my-5 text-2xl font-semibold text-white">
-        Your notes
-      </h3>
+      <h3 className="my-5 text-2xl font-semibold text-white">Your notes</h3>
       <div
         className={`w-full h-full relative text-center flex justify-between gap-[0.585rem] ${
           isOpen ? "md:w-[calc(100vw_-20rem)]" : "md:w-full"

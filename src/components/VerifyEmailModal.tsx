@@ -65,13 +65,12 @@ const VerifyEmailModal: React.FC<VerifyEmailModalProps> = ({
 
   return (
     <div
-      style={{ zIndex: 999 }}
-      className="w-full h-full flex justify-center items-center absolute top-0 left-0 bg-[rgb(0,0,0,0.2)]"
+      className="w-full h-full flex justify-center items-center absolute top-0 left-0 bg-[rgb(0,0,0,0.2)] z-20"
     >
-      <div className="w-[90%] sm:w-[60%] md:w-[30rem] h-96 p-10 rounded-lg bg-[#1F1F1F] text-center relative">
+      <div className="w-[90%] sm:w-[60%] md:w-[30rem] h-96 p-10 rounded-lg dark:bg-[#1F1F1F] bg-white text-center relative">
         {/* LOGO */}
         <div>
-          <Logo width={100} height={100} />
+          <Logo />
           <button
             className="absolute top-9 right-3"
             onClick={() => setState(false)}
@@ -101,7 +100,7 @@ const VerifyEmailModal: React.FC<VerifyEmailModalProps> = ({
             disabled={isLoading}
             maxLength={6}
             placeholder="Enter code here"
-            className="w-[40%] text-2xl font-semibold bg-[#1F1F1F] border-stone-700 border-b-2 rounded-none text-center outline-none placeholder:text-sm disabled:bg-white"
+            className="w-[50%] text-2xl font-semibold dark:bg-[#1F1F1F] bg-white border-stone-700 border-b-2 rounded-none text-center outline-none placeholder:text-sm disabled:bg-transparent"
             value={code}
             onChange={(e) => setCode(e.currentTarget.value)}
           />
