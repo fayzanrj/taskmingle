@@ -34,7 +34,7 @@ export const DELETE = async (
       return ThrowNotFoundError("No note found");
     }
 
-    pusherServer.trigger(user.id, "deleteNote", note.id);
+    // pusherServer.trigger(user.id, "deleteNote", note.id);
     // returning success message
     return NextResponse.json(
       { message: "Note has been deleted" },
