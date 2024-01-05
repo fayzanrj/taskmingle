@@ -37,7 +37,7 @@ const NoteDetail: React.FC<{ params: any }> = async ({ params }) => {
   return (
     <div className="relative">
       {/* Go back Button */}
-      <GoBack href="/dashboard/notes" />
+      <GoBack />
 
       <div className="w-full min-h-[calc(100svh_-_7.5rem)] sm:w-[30rem] md:w-[32rem] p-2 mx-auto mt-10">
         <NoteTextArea {...note} />
