@@ -28,7 +28,7 @@ export const POST = async (req: NextRequest) => {
       return ThrowServerError();
     }
 
-    pusherServer.trigger(user.id, "addNote", note);
+    // pusherServer.trigger(user.id, "addNote", note);
     
     // Send response back
     return NextResponse.json(
