@@ -87,7 +87,7 @@ const TaskStatus = ({ taskId, date }: { taskId: string; date: string }) => {
   if (!taskStatus) {
     return (
       <div>
-        <p>Couldn't find task&#39;s status</p>
+        <p>Couldn&#39;t find task&#39;s status</p>
       </div>
     );
   }
