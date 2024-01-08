@@ -120,7 +120,7 @@ const DatePicker: React.FC<DatePickerProps> = ({
               disabled={isLoading}
               className={`min-w-[3rem] mx-0.5 py-3 text-black dark:text-white font-semibold rounded-lg cursor-pointer ${
                 active.toLocaleDateString() === date.toLocaleDateString()
-                  ? "bg-green-300 dark:text-black"
+                  ? "bg-green-300 dark:text-[#000000]"
                   : "bg-transparent"
               }`}
             >
