@@ -72,7 +72,7 @@ const WatchLaterForm = () => {
   return (
     <div className="py-10 relative">
       {/* Go back button */}
-      <GoBack />
+      <GoBack href="/dasboard/watchlater" />
 
       {/* Heading */}
       <div className="text-center">

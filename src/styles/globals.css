@@ -212,17 +212,24 @@ html {
 .TAGS:nth-child(3n + 1) {
   border-color: #8c2a3c;
   background-color: #30121f;
-  color: #bb2a46;
 }
 
 .TAGS:nth-child(3n + 2) {
   border-color: #127c4c;
   background-color: #123221;
-  color: #15c076;
 }
 
 .TAGS:nth-child(3n + 3) {
   border-color: #5c4ca5;
   background-color: #231f32;
+}
+
+:is(.dark .dark\:TAGS:nth-child(3n + 1)){
+  color: #bb2a46;
+}
+:is(.dark .dark\:TAGS:nth-child(3n + 2)){
+  color : #15c076
+}
+:is(.dark .dark\:TAGS:nth-child(3n + 3)){
   color: #765ddc;
 }

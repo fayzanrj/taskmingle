@@ -1,6 +1,5 @@
 "use client";
 import useHeaders from "@/hooks/useHeaders";
-import { getErrorMessage } from "@/libs/GetErrorMessage";
 import { handleApiError } from "@/libs/handleApiError";
 import axios from "axios";
 import { useRouter } from "next/navigation";

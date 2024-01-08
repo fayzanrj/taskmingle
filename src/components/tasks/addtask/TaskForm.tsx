@@ -13,6 +13,7 @@ import AddTaskTextArea from "./AddTaskTextArea";
 import AddTaskTextInput from "./AddTaskTextInput";
 import AddTaskTimeInput from "./AddTaskTimeInput";
 import useHeaders from "@/hooks/useHeaders";
+import { filterTags } from "@/libs/filterTags";
 
 // Task Form Interface
 interface TaskFormProps {
@@ -79,7 +80,8 @@ const TaskForm: React.FC<TaskFormProps> = ({
   };
 
   // Handle save function
-  const handleSubmit = async () => {
+  const handleSubmit = async (e : React.FormEvent) => {
+    e.preventDefault()
     setIsLoading(true);
 
     // setting new task with user selected values
@@ -89,7 +91,7 @@ const TaskForm: React.FC<TaskFormProps> = ({
       startTime: startingTime,
       reminderAt: remindAt,
       date: new Date(selectedDate).toDateString(),
-      tags: selectedTags.split(","),
+      tags: filterTags(selectedTags),
       link: urlLink,
       status: "Pending",
     };
@@ -126,7 +128,7 @@ const TaskForm: React.FC<TaskFormProps> = ({
         <h1 className="text-3xl font-bold">Add a Task</h1>
       </header>
 
-      <form action={handleSubmit} className="w-full lg:w-[39rem] mx-auto">
+      <form onSubmit={handleSubmit} className="w-full lg:w-[39rem] mx-auto">
         <div className="flex justify-center lg:justify-between items-center flex-wrap md:gap-5 lg:gap-5">
           <section className="w-full sm:w-80 px-5 sm:px-1">
             {/* Input components for task details */}
@@ -205,6 +207,7 @@ const TaskForm: React.FC<TaskFormProps> = ({
           </button>
 
           <button
+            type="submit"
             disabled={
               isLoading ||
               !title ||
