@@ -87,7 +87,7 @@ const TaskStatus = ({ taskId, date }: { taskId: string; date: string }) => {
   if (!taskStatus) {
     return (
       <div>
-        <p>Couldn't find task's status</p>
+        <p>Couldn't find task&#39;s status</p>
       </div>
     );
   }
@@ -99,7 +99,7 @@ const TaskStatus = ({ taskId, date }: { taskId: string; date: string }) => {
         {taskStatus}
       </p>
 
-      {/* Button for updating the task's status */}
+      {/* Button for updating the task status */}
       <button onClick={handleClick} className="w-56 h-10 text-right relative">
         {isLoading ? (
           <ActivityLoader />
