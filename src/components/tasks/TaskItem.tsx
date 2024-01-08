@@ -1,31 +1,43 @@
-import { getCurrentStatus } from "@/libs/GetCurrentStatus";
 import { TaskProps } from "@/props/TaskProps";
 import Link from "next/link";
 import React from "react";
 
+type TaskStatus = "Pending" | "Completed" | "Overdue";
+const getCurrentStatus = (date: string, taskStatus: TaskStatus) => {
+  if (taskStatus === "Completed") return "Completed";
+  if (taskStatus === "Overdue") return "Overdue";
+  const currentDate = new Date();
+  currentDate.setHours(0, 0, 0, 0);
+
+  if (currentDate <= new Date(date)) {
+    return "Pending";
+  } else {
+    return "Overdue";
+  }
+};
 // Task Item Props
 const TaskItem: React.FC<TaskProps> = ({
   taskTitle,
   taskDesc,
   startTime,
-  tags,
   id,
   status,
   date,
 }) => {
   // Finding current status of the task
   const currentStatus = getCurrentStatus(date, status);
+
   return (
     <article>
       <Link href={`/dashboard/tasks/taskdetail/${id}`}>
-        <div className="w-80 h-44 sm:w-72 sm:h-40 p-3 rounded-xl shadow-lg drop-shadow-lg relative cursor-pointer select-none dark:bg-[#1D1F21] overflow-hidden box-border">
+        <div className="w-80 sm:w-72 h-44 sm:h-40 p-3 rounded-xl bg-white dark:bg-[#1D1F21] shadow-lg drop-shadow-lg relative cursor-pointer select-none overflow-hidden box-border">
           {/* Task title */}
-          <h2 className="w-full text-ellipsis overflow-hidden text-2xl font-semibold whitespace-nowrap text-center ">
+          <h2 className="w-full text-center text-ellipsis text-2xl font-semibold overflow-hidden whitespace-nowrap">
             {taskTitle}
           </h2>
 
           {/* Task Description */}
-          <p className="text-sm mt-2 mb-1 text-ellipsis break-words">
+          <p className="mt-2 mb-1 text-sm text-ellipsis break-words">
             {taskDesc.slice(0, 100) + (taskDesc.length > 100 ? "....." : "a")}
           </p>
 

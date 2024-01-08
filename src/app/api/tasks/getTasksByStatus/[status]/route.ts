@@ -1,14 +1,11 @@
-import { verifyJwt } from "@/libs/Jwt";
-import {
-  ThrowIncompleteError,
-  ThrowServerError,
-  ThrowUnAuthorizedError,
-} from "@/libs/ResponseErrors";
-import { TaskProps } from "@/props/TaskProps";
-import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/app/db";
-import { verifyUser } from "@/libs/VerifyUser";
 import { getInitialDate } from "@/libs/GetInitialDate";
+import {
+  ThrowServerError,
+  ThrowUnAuthorizedError
+} from "@/libs/backend/ResponseErrors";
+import { verifyUser } from "@/libs/backend/VerifyUser";
+import { NextRequest, NextResponse } from "next/server";
 
 export const GET = async (
   req: NextRequest,

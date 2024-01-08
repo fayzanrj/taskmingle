@@ -1,9 +1,9 @@
-import { verifyJwt } from "@/libs/Jwt";
-import { ThrowIncompleteError, ThrowServerError, ThrowUnAuthorizedError } from "@/libs/ResponseErrors";
+import { verifyJwt } from "@/utilities/Jwt";
+import { ThrowIncompleteError, ThrowServerError, ThrowUnAuthorizedError } from "@/libs/backend/ResponseErrors";
 import { TaskProps } from "@/props/TaskProps";
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/app/db";
-import { verifyUser } from "@/libs/VerifyUser";
+import { verifyUser } from "@/libs/backend/VerifyUser";
 
 const checkData = (data: TaskProps): boolean => {
   const {

@@ -1,14 +1,13 @@
-import { verifyJwt } from "@/libs/Jwt";
+import prisma from "@/app/db";
 import {
-  ThrowIncompleteError,
   ThrowNotFoundError,
   ThrowServerError,
   ThrowUnAuthorizedError,
-} from "@/libs/ResponseErrors";
-import { TaskProps } from "@/props/TaskProps";
+} from "@/libs/backend/ResponseErrors";
+import { verifyUser } from "@/libs/backend/VerifyUser";
 import { NextRequest, NextResponse } from "next/server";
-import prisma from "@/app/db";
-import { verifyUser } from "@/libs/VerifyUser";
+
+export const revalidate = true;
 
 export const GET = async (
   req: NextRequest,
@@ -27,6 +26,7 @@ export const GET = async (
     const note = await prisma.note.findUnique({
       where: {
         id: params.noteId,
+        createdById: user.id,
       },
     });
 

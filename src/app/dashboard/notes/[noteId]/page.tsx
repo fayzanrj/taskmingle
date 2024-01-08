@@ -1,43 +1,37 @@
 import GoBack from "@/components/GoBack";
 import NoteTextArea from "@/components/notes/NoteTextArea";
+import { getHeaders } from "@/libs/GetHeaders";
 import { NoteProps } from "@/props/NoteProps";
-import { authOptions } from "@/utils/AuthOptions";
-import { getServerSession } from "next-auth";
 import React from "react";
 
-//@ts-ignore
-const NoteDetail: React.FC<{ params: any }> = async ({ params }) => {
-  const data = await getServerSession(authOptions);
+const NoteDetail = async ({ params }: { params: { noteId: string } }) => {
+  if (params.noteId.length !== 24) {
+    return (
+      <div className="relative">
+        {/* Go back Button */}
+        <GoBack href="/dashboard/notes" />
+        <div className="mt-20 text-center">
+          <h3 className="text-3xl font-semibold">Error 404 : No note found</h3>
+        </div>
+      </div>
+    );
+  }
 
-  // HEADERS FOR API REQUEST
-  const headers: Record<string, string> = {
-    "Content-Type": "application/json",
-    // @ts-ignore
-    accessToken: data?.user?.accessToken,
-  };
-
+  const headers = await getHeaders();
   const response = await fetch(
     `${process.env.HOST}/api/notes/getNote/${params.noteId}`,
     {
-      next: { revalidate: 5 },
+      cache: "no-store",
       headers: headers,
     }
   );
   const res = await response.json();
   const note: NoteProps = res.note;
 
-  if (!note) {
-    return (
-      <div className="mt-20 text-center">
-        <h3 className="text-3xl font-semibold">No note found</h3>
-      </div>
-    );
-  }
-
   return (
     <div className="relative">
       {/* Go back Button */}
-      <GoBack />
+      <GoBack href="/dashboard/notes" />
 
       <div className="w-full min-h-[calc(100svh_-_7.5rem)] sm:w-[30rem] md:w-[32rem] p-2 mx-auto mt-10">
         <NoteTextArea {...note} />

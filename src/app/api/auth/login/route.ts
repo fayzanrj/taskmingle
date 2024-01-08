@@ -1,15 +1,13 @@
 import prisma from "@/app/db";
-import { ThrowIncompleteError, ThrowServerError } from "@/libs/ResponseErrors";
+import {
+  ThrowIncompleteError,
+  ThrowServerError,
+} from "@/libs/backend/ResponseErrors";
 import { NextRequest, NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
-import { signJwtAccessToken } from "@/libs/Jwt";
+import { signJwtAccessToken } from "@/utilities/Jwt";
+import { UserProps } from "@/props/UserProps";
 
-interface UserProps {
-  id: string;
-  name: string;
-  email: string;
-  isVerified: boolean | null;
-}
 
 export const POST = async (req: NextRequest) => {
   try {
@@ -33,7 +31,7 @@ export const POST = async (req: NextRequest) => {
     }
 
     // comparing password
-    const isPasswordCorrect = await bcrypt.compareSync(
+    const isPasswordCorrect = bcrypt.compareSync(
       data.password,
       user.password
     );
@@ -49,6 +47,7 @@ export const POST = async (req: NextRequest) => {
       id: user.id,
       name: user.name,
       email: user.email,
+      profilePic: user.profilePic,
       isVerified: user.isVerified,
     };
 

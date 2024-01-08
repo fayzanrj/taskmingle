@@ -7,6 +7,7 @@ import { Toaster } from "react-hot-toast";
 
 const raleway = Raleway({ subsets: ["latin"] });
 
+
 export const metadata: Metadata = {
   title: {
     default: "Task Notify",
@@ -14,7 +15,6 @@ export const metadata: Metadata = {
   },
   description:
     "Difficulty remebering your chores or tasks? We will help you remeber",
-  // category :
 };
 
 export default function RootLayout({
@@ -25,7 +25,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${raleway.className} SCROLL_BAR dark:bg-[#151515] dark:text-white bg-white `}
+        className={`${raleway.className} dark:text-white bg-white dark:bg-[#151515] SCROLL_BAR`}
       >
         <Providers>
           <AppState>
@@ -33,11 +33,8 @@ export default function RootLayout({
               position="top-right"
               containerStyle={{ fontWeight: 500 }}
               toastOptions={{
-                style: {
-                  marginTop: "4%",
-                },
                 className:
-                  "bg-white text-black dark:text-white dark:bg-[#1F1F1F]",
+                  "text-black dark:text-white bg-white dark:bg-[#1F1F1F]",
               }}
             />
             {children}

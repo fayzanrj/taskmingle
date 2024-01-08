@@ -1,4 +1,5 @@
-import { getErrorMessage } from "@/libs/GetErrorMessage";
+import { isValidCode } from "@/libs/IsValidCode";
+import { handleApiError } from "@/libs/handleApiError";
 import { UserProps } from "@/props/UserProps";
 import axios from "axios";
 import { useRouter } from "next/navigation";
@@ -7,7 +8,7 @@ import toast from "react-hot-toast";
 import { IoMdClose } from "react-icons/io";
 import ActivityLoader from "./ActivityLoader";
 import Logo from "./Logo";
-import { isValidCode } from "@/libs/IsValidCode";
+import ThemeToggleNavbarBtn from "@/components/landingPage/LandingThemeToggleBtn";
 
 // TO DO : ADD VALIDATION
 
@@ -55,19 +56,15 @@ const VerifyEmailModal: React.FC<VerifyEmailModalProps> = ({
       }
       setState(false); // Closing Modal
     } catch (error: any) {
-      console.error(error);
-      const errorMessage = getErrorMessage(error);
-      toast.error(errorMessage);
+      handleApiError(error);
     } finally {
       setIsLoading(false);
     }
   };
 
   return (
-    <div
-      className="w-full h-full flex justify-center items-center absolute top-0 left-0 bg-[rgb(0,0,0,0.2)] z-20"
-    >
-      <div className="w-[90%] sm:w-[60%] md:w-[30rem] h-96 p-10 rounded-lg dark:bg-[#1F1F1F] bg-white text-center relative">
+    <div className="w-full h-full bg-[rgb(0,0,0,0.2)] flex justify-center items-center absolute top-0 left-0 z-20">
+      <div className="w-[90%] sm:w-[60%] md:w-[30rem] h-96 p-10 text-center rounded-lg bg-white dark:bg-[#1F1F1F] relative">
         {/* LOGO */}
         <div>
           <Logo />
@@ -76,8 +73,11 @@ const VerifyEmailModal: React.FC<VerifyEmailModalProps> = ({
             onClick={() => setState(false)}
             disabled={isLoading}
           >
-            <IoMdClose className="" size="1.5rem" />
+            <IoMdClose size="1.5rem" />
           </button>
+          <div className="absolute top-[1.95rem] left-3">
+            <ThemeToggleNavbarBtn />
+          </div>
         </div>
 
         <div>
@@ -100,16 +100,17 @@ const VerifyEmailModal: React.FC<VerifyEmailModalProps> = ({
             disabled={isLoading}
             maxLength={6}
             placeholder="Enter code here"
-            className="w-[50%] text-2xl font-semibold dark:bg-[#1F1F1F] bg-white border-stone-700 border-b-2 rounded-none text-center outline-none placeholder:text-sm disabled:bg-transparent"
+            className="w-[50%] text-2xl text-center font-semibold placeholder:text-sm border-b-2 border-stone-700 rounded-none bg-white dark:bg-[#1F1F1F] disabled:bg-transparent outline-none "
             value={code}
             onChange={(e) => setCode(e.currentTarget.value)}
           />
           <br />
           {/* Verify Button */}
           <button
-            disabled={isLoading}
+            aria-label="verify-email-button"
             type="submit"
-            className="mt-12 w-28 h-10 font-semibold text-lg bg-[#19fa9a] text-black rounded-lg outline-none"
+            disabled={isLoading}
+            className="w-28 h-10 mt-12 text-lg text-black font-semibold rounded-lg bg-[#19fa9a] outline-none"
           >
             {isLoading ? <ActivityLoader /> : "Verify"}
           </button>

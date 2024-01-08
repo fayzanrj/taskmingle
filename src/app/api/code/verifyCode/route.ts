@@ -2,12 +2,8 @@ import prisma from "@/app/db";
 import {
   ThrowIncompleteError,
   ThrowServerError,
-  ThrowUnAuthorizedError,
-} from "@/libs/ResponseErrors";
-import { SendCodeEmail } from "@/libs/SendCodeEmail";
-import { verifyUser } from "@/libs/VerifyUser";
+} from "@/libs/backend/ResponseErrors";
 import { NextRequest, NextResponse } from "next/server";
-import { generateCode } from "@/libs/GenerateCode";
 
 export const POST = async (req: NextRequest) => {
   try {
@@ -33,7 +29,7 @@ export const POST = async (req: NextRequest) => {
       where: { id: data.userId },
       data: { isVerified: true },
     });
-    
+
     // deleting code
     const deleteCode = await prisma.code.delete({
       where: { id: codeExists.id },

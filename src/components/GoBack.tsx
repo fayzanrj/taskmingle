@@ -1,21 +1,18 @@
 "use client";
-import { useRouter } from "next/navigation";
-import React from "react";
+import Link from "next/link";
 import { FaArrowLeftLong } from "react-icons/fa6";
 
-const GoBack: React.FC = () => {
-  // Router for navigation
-  const router = useRouter();
+const GoBack = ({ href }: { href: string }) => {
   return (
     <>
-      <button
+      <Link
+        href={href}
         className="absolute top-4 left-4 select-none cursor-pointer"
-        onClick={() => router.back()}
       >
         <FaArrowLeftLong className="inline-block" />
-        <p className="inline-block ml-1 font-semibold text-sm">Go back</p>
-      </button>
-      <div className="w-full h-4 "></div>
+        <p className="ml-1 text-sm font-semibold inline-block">Go back</p>
+      </Link>
+      <div className="w-full h-4"></div>
     </>
   );
 };

@@ -6,7 +6,7 @@ import {
 } from "@/libs/FormValidations";
 import React, { useState } from "react";
 import RenderIcon from "./RenderIcon";
-import ShowPassBtn from "./ShowPassBtn";
+import ShowPassButton from "./ShowPassButton";
 
 // Error interface
 interface ErrorProps {
@@ -68,7 +68,6 @@ const InputField: React.FC<InputFieldPropTypes> = ({
           return newList;
         });
       }
-
       // Setting error
       setError(!isValid);
     }
@@ -87,7 +86,6 @@ const InputField: React.FC<InputFieldPropTypes> = ({
           return newList;
         });
       }
-      
       // Setting error
       setError(!passwordMatches);
     }
@@ -101,8 +99,9 @@ const InputField: React.FC<InputFieldPropTypes> = ({
   return (
     <div className="my-3">
       {/* Field Label */}
-      <label htmlFor={id} className="text-[1rem] ml-1 font-semibold">
+      <label htmlFor={id} className="ml-1 text-[1rem] font-semibold">
         {label}
+        {/* Validation icon */}
         <span>
           {state.length > 0 && variant !== "NO_VALIDATION" && (
             <RenderIcon error={error} label={label} />
@@ -127,13 +126,13 @@ const InputField: React.FC<InputFieldPropTypes> = ({
               : handleValidate(e.target.value);
           }}
           onBlur={() => validateField(state)}
-          className={`w-full rounded-lg p-2 my-1 dark:bg-[#1F1F1F] dark:border-[#1f1f1f] border-2 border-gray-20  outline-none font-semibold ${
+          className={`w-full my-1 p-2 font-semibold rounded-lg border-2 dark:border-[#1f1f1f] dark:bg-[#1F1F1F] outline-none ${
             type === "password" && state.length > 0 && "pr-7"
           }`}
         />
         {/* Eye button to toggle password type */}
         {type === "password" && state.length > 0 && (
-          <ShowPassBtn showPass={showPass} setShowPass={setShowPass} />
+          <ShowPassButton showPass={showPass} setShowPass={setShowPass} />
         )}
       </div>
     </div>

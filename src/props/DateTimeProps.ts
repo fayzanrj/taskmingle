@@ -4,4 +4,6 @@ export interface DateTimeInputProps {
   state: string;
   setState: React.Dispatch<React.SetStateAction<string>>;
   selectedDate?: string;
+  variant?: "EDIT" | "ADD";
+  date?: string;
 }

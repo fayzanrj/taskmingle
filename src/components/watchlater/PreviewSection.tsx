@@ -1,23 +1,38 @@
 import React from "react";
 
-const PreviewSection = ({
-  url,
-  image,
-  title,
-}: {
+// Preview Section interface
+interface PreviewSectionProps {
   url: string;
   title: string;
   image: string;
+}
+
+const PreviewSection: React.FC<PreviewSectionProps> = ({
+  url,
+  image,
+  title,
 }) => (
-  <section className="w-[90%] sm:w-96 h-[50vw] sm:h-56 dark:bg-[#1F1F1F] dark:border-0 border-2 border-gray-200  rounded-lg SCROLL_BAR relative font-semibold">
-    {!url && (
-      <div className="w-full text-center absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 font-semibold text-lg">
-        Enter a URL to preview
-      </div>
-    )}
-    {image && <img src={image} className="w-full h-full" alt="image" />}
-    <p className="whitespace-normal">{title.slice(0,90)  + (title.length > 90 ? "...." : "")}</p>
+  <section className="w-full sm:w-96 h-[65vw] sm:h-72">
+    <div className="w-[90%] sm:w-96 h-[50vw] sm:h-56 m-auto font-semibold rounded-lg border-2 dark:border-[#1F1F1F] dark:bg-[#1F1F1F] relative SCROLL_BAR">
+      {/* Enter url message */}
+      {!url && <EnterUrlMessage />}
+
+      {/* Image */}
+      {image && <img src={image} className="w-full h-full" alt="image" />}
+    </div>
+
+    {/* Url preview title */}
+    <p className="w-[90%] mx-auto font-semibold">
+      {title.slice(0, 90) + (title.length > 90 ? "...." : "")}
+    </p>
   </section>
 );
 
 export default PreviewSection;
+
+// Enter url message component
+const EnterUrlMessage = () => (
+  <div className="w-full text-center text-lg font-semibold absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+    Enter a URL to preview
+  </div>
+);

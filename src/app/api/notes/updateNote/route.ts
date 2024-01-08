@@ -3,9 +3,11 @@ import {
   ThrowIncompleteError,
   ThrowServerError,
   ThrowUnAuthorizedError,
-} from "@/libs/ResponseErrors";
-import { verifyUser } from "@/libs/VerifyUser";
+} from "@/libs/backend/ResponseErrors";
+import { verifyUser } from "@/libs/backend/VerifyUser";
 import { NextRequest, NextResponse } from "next/server";
+
+export const revalidate = true;
 
 export const PUT = async (req: NextRequest) => {
   try {
@@ -39,7 +41,7 @@ export const PUT = async (req: NextRequest) => {
 
     // Send response back
     return NextResponse.json(
-      { message: "Note has been updated" },
+      { message: "Note has been saved" },
       { status: 200 }
     );
   } catch (error: any) {

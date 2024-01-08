@@ -1,18 +1,16 @@
 "use client";
-import DatePicker from "@/components/DatePicker";
+import DatePicker from "@/components/tasks/DatePicker";
 import { fetchTasks } from "@/libs/FetchTasks";
-import { getErrorMessage } from "@/libs/GetErrorMessage";
 import { getInitialDate } from "@/libs/GetInitialDate";
+import { handleApiError } from "@/libs/handleApiError";
 import { TaskProps } from "@/props/TaskProps";
 import { useEffect, useState } from "react";
-import toast from "react-hot-toast";
 import TasksList from "./TasksList";
 
-const TaskPanel: React.FC<{ accessToken: string }> = ({ accessToken }) => {
+const TaskPanel = ({ accessToken }: { accessToken: string }) => {
   // Variable states
   const [tasks, setTasks] = useState<TaskProps[] | undefined>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  
 
   // Fetching current date tasks
   useEffect(() => {
@@ -21,13 +19,11 @@ const TaskPanel: React.FC<{ accessToken: string }> = ({ accessToken }) => {
       try {
         const currentTasks: TaskProps[] | undefined = await fetchTasks(
           new Date(),
-          accessToken,
+          accessToken
         );
-          setTasks(currentTasks);
+        setTasks(currentTasks);
       } catch (error) {
-        console.error(error);
-        const errorMessage = getErrorMessage(error);
-        toast.error(errorMessage);
+        handleApiError(error);
       } finally {
         setIsLoading(false);
       }
@@ -35,9 +31,6 @@ const TaskPanel: React.FC<{ accessToken: string }> = ({ accessToken }) => {
 
     // Fetching
     fetchData();
-
-    return () => {
-    };
   }, [accessToken]);
 
   // Getting inital date for the date picker calender

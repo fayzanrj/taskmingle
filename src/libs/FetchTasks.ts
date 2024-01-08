@@ -1,28 +1,23 @@
 import { TaskProps } from "@/props/TaskProps";
-import axios, { AxiosResponse } from "axios";
-import toast from "react-hot-toast";
-import { getErrorMessage } from "./GetErrorMessage";
+import axios from "axios";
+import { handleApiError } from "./handleApiError";
 
 export const fetchTasks = async (
   date: Date,
-  accessToken: string,
+  accessToken: string
 ): Promise<TaskProps[] | undefined> => {
   // Encooding given date
   const encodedDate = encodeURIComponent(new Date(date).toDateString());
 
   try {
-    const res: AxiosResponse<{ tasks: TaskProps[] }> = await axios.get(
-      `/api/tasks/getAllTasks/${encodedDate}`,
-      {
-        headers: {
-          "Content-Type": "application/json",
-          accessToken: accessToken,
-        },
-      }
-    );
+    const res = await axios.get(`/api/tasks/getAllTasks/${encodedDate}`, {
+      headers: {
+        "Content-Type": "application/json",
+        accessToken: accessToken,
+      },
+    });
     return res.data.tasks;
   } catch (error: any) {
-    const errorMessage = getErrorMessage(error);
-    toast.error(errorMessage);
+    handleApiError(error);
   }
 };

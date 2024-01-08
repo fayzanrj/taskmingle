@@ -9,7 +9,10 @@ interface RenderIconProps {
 }
 
 const RenderIcon: React.FC<RenderIconProps> = ({ error, label }) => (
-  <span
+  <button
+    aria-label="validation-button"
+    type="button"
+    tabIndex={-1}
     onClick={() =>
       error
         ? label === "Confirm Password"
@@ -17,22 +20,23 @@ const RenderIcon: React.FC<RenderIconProps> = ({ error, label }) => (
           : toast.error(`Please enter a valid ${label.toLowerCase()}`)
         : toast.success(`${label} is valid`)
     }
+    className="outline-none"
   >
-     {/* Check or Cross icon based on the error status */}
+    {/* Check or Cross icon based on the error status */}
     {error ? (
       <FaTimesCircle
         size="1rem"
         color="red"
-        className="inline-block ml-2 cursor-pointer"
+        className="ml-2 inline-block cursor-pointer outline-none"
       />
     ) : (
       <FaCheckCircle
         size="1rem"
         color="#19fa9a"
-        className="inline-block ml-2 cursor-pointer"
+        className="ml-2 inline-block cursor-pointer outline-none"
       />
     )}
-  </span>
+  </button>
 );
 
 export default RenderIcon;

@@ -1,12 +1,15 @@
-import TaskForm from "@/components/addtask/TaskForm";
+import GoBack from "@/components/GoBack";
+import NoTaskFound from "@/components/tasks/NoTaskFound";
+import TaskForm from "@/components/tasks/addtask/TaskForm";
+import { getHeaders } from "@/libs/GetHeaders";
 import { TaskProps } from "@/props/TaskProps";
-import { authOptions } from "@/utils/AuthOptions";
+import { authOptions } from "@/utilities/AuthOptions";
 import { Metadata } from "next";
 import { getServerSession } from "next-auth";
 import React from "react";
 
 interface Params {
-  taskId: number;
+  taskId: string;
 }
 
 export const metadata: Metadata = {
@@ -14,15 +17,13 @@ export const metadata: Metadata = {
 };
 
 const EditTask: React.FC<{ params: Params }> = async ({ params }) => {
-  // Fetching user session data for authentication
-  const data = await getServerSession(authOptions);
+  // If id provided is not of 24 chars
+  if (params.taskId.length !== 24) {
+    return <NoTaskFound />;
+  }
 
   // HEADERS FOR API REQUEST
-  const headers: Record<string, string> = {
-    "Content-Type": "application/json",
-    // @ts-ignore
-    accessToken: data?.user?.accessToken,
-  };
+  const headers = await getHeaders();
 
   // Fetching task details for the specified taskId
   const response = await fetch(
@@ -31,6 +32,11 @@ const EditTask: React.FC<{ params: Params }> = async ({ params }) => {
   );
   const res = await response.json();
   const task: TaskProps = res.task;
+
+  // if task is not found
+  if (!task) {
+    return <NoTaskFound />;
+  }
 
   // Rendering the TaskForm component with the retrieved task details
   return <TaskForm {...task} variant="EDIT" />;

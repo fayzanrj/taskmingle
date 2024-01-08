@@ -1,17 +1,16 @@
 import { TaskProps } from "@/props/TaskProps";
-import React from "react";
 import FetchError from "../FetchError";
 import NoItemFound from "../NoItemFound";
-import TaskItem from "./TaskItem";
 import TaskItemSkeleton from "../skeletons/TaskItemSkeleton";
+import TaskItem from "./TaskItem";
 
-// Task List interface
-interface TaskListProps {
+const TasksList = ({
+  tasks,
+  isLoading,
+}: {
   tasks: TaskProps[] | undefined;
   isLoading: boolean;
-}
-
-const TasksList: React.FC<TaskListProps> = ({ tasks, isLoading }) => {
+}) => {
   // If tasks are loading
   if (isLoading) {
     return <TaskItemSkeleton />;
@@ -33,9 +32,9 @@ const TasksList: React.FC<TaskListProps> = ({ tasks, isLoading }) => {
 
   return (
     <div
-      className={`py-10 px-10 lg:px-16 flex justify-center ${
+      className={`py-10 px-10 lg:px-16 flex flex-wrap justify-center ${
         tasks.length >= 4 ? "sm:justify-center " : "sm:justify-start"
-      } gap-5  flex-wrap`}
+      } gap-5`}
     >
       {tasks.map((task: TaskProps, index: number) => (
         <TaskItem key={index} {...task} />

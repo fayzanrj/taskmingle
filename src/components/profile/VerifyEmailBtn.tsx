@@ -1,5 +1,6 @@
 "use client";
-import { getErrorMessage } from "@/libs/GetErrorMessage";
+import useHeaders from "@/hooks/useHeaders";
+import { handleApiError } from "@/libs/handleApiError";
 import { UserProps } from "@/props/UserProps";
 import axios from "axios";
 import React, { useState } from "react";
@@ -12,23 +13,20 @@ import VerifyEmailModal from "../VerifyEmailModal";
 // Verify Button props
 interface VerifyEmailBtnProps {
   email: string;
-  headers: {
-    "Content-Type": string;
-    accessToken: string;
-  };
   userId: string;
   setUser: React.Dispatch<React.SetStateAction<UserProps>>;
 }
 
 const VerifyEmailBtn: React.FC<VerifyEmailBtnProps> = ({
   email,
-  headers,
   userId,
   setUser,
 }) => {
   // Variable states
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  // Headers for Api request
+  const headers = useHeaders();
 
   // Function to handle click i.e. to send code and open verify modal
   const handleClick = async () => {
@@ -38,9 +36,7 @@ const VerifyEmailBtn: React.FC<VerifyEmailBtnProps> = ({
       setIsModalOpen(true);
       toast.success(res.data.message);
     } catch (error: any) {
-      console.error(error);
-      const errorMessage = getErrorMessage(error);
-      toast.error(errorMessage);
+      handleApiError(error);
     } finally {
       setIsLoading(false);
     }
@@ -57,11 +53,11 @@ const VerifyEmailBtn: React.FC<VerifyEmailBtnProps> = ({
       {/* Verify button */}
       <div className="mt-2">
         <button
-          className="px-4 py-2 bg-[#19fa91] text-black font-bold rounded-lg flex items-center outline-none"
+          className="px-4 py-2 text-black font-bold rounded-lg bg-[#19fa91] flex items-center outline-none"
           onClick={handleClick}
         >
           <FiMail className="mr-1" />
-          Verify Your Email
+          <p>Verify Your Email</p>
         </button>
       </div>
 

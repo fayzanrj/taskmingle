@@ -1,4 +1,4 @@
-import TaskForm from "@/components/addtask/TaskForm";
+import TaskForm from "@/components/tasks/addtask/TaskForm";
 import { Metadata, NextPage } from "next";
 
 export const metadata: Metadata = {

@@ -1,34 +1,36 @@
-import { verifyJwt } from "@/libs/Jwt";
-import { ThrowIncompleteError, ThrowNotFoundError, ThrowServerError, ThrowUnAuthorizedError } from "@/libs/ResponseErrors";
-import { TaskProps } from "@/props/TaskProps";
-import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/app/db";
-import { verifyUser } from "@/libs/VerifyUser";
+import {
+  ThrowNotFoundError,
+  ThrowServerError,
+  ThrowUnAuthorizedError,
+} from "@/libs/backend/ResponseErrors";
+import { verifyUser } from "@/libs/backend/VerifyUser";
+import { NextRequest, NextResponse } from "next/server";
 
 export const GET = async (
   req: NextRequest,
   { params }: { params: { taskId: string } }
 ) => {
   try {
-   // Verifying user by verifying access token
-   const user = verifyUser(req);
+    // Verifying user by verifying access token
+    const user = verifyUser(req);
 
-   // If access token is not verified
-   if (!user) {
-     return ThrowUnAuthorizedError();
-   }
-
+    // If access token is not verified
+    if (!user) {
+      return ThrowUnAuthorizedError();
+    }
 
     // finding task
     const task = await prisma.task.findUnique({
       where: {
         id: params.taskId,
+        createdById: user.id,
       },
     });
 
     // if task not found
     if (!task) {
-      return ThrowNotFoundError("No task found")
+      return ThrowNotFoundError("No task found");
     }
 
     // returning task as response

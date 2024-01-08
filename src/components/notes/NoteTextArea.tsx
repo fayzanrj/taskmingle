@@ -1,35 +1,22 @@
 "use client";
-import { NoteProps } from "@/props/NoteProps";
-import React, { use, useEffect, useState } from "react";
+import { useState } from "react";
 import ScreenActivityLoader from "../ScreenActivityLoader";
 import NoteTextAreaActionBtns from "./NoteTextAreaActionBtns";
-import axios from "axios";
-import useHeaders from "@/hooks/useHeaders";
-import { getErrorMessage } from "@/libs/GetErrorMessage";
-import toast from "react-hot-toast";
 
-const NoteTextArea: React.FC<NoteProps> = ({ content, id }) => {
+const NoteTextArea = ({ id, content }: { id: string; content: string }) => {
+  // Variable states
   const [noteContent, setNoteContent] = useState<string>(content);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const headers = useHeaders();
+  const [isSpellCheckerOn, setIsSpellCheckerOn] = useState<boolean>(true);
 
-  useEffect(() => {
-    const refresh = async () => {
-      try {
-        setIsLoading(true);
-        const res = await axios.get(`/api/notes/getNote/${id}`, { headers });
-        console.log(res.data.note.content);
-        setNoteContent(res.data.note.content);
-      } catch (error: any) {
-        console.error(error);
-        const errorMessage = getErrorMessage(error);
-        toast.error(errorMessage);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    refresh();
-  }, []);
+  // If note is not found or note is undefined
+  if (noteContent === (undefined || null)) {
+    return (
+      <div className="mt-20 text-center">
+        <h3 className="text-3xl font-semibold">Error 404 : No note found</h3>
+      </div>
+    );
+  }
 
   return (
     <>
@@ -37,13 +24,18 @@ const NoteTextArea: React.FC<NoteProps> = ({ content, id }) => {
         content={noteContent}
         setIsLoading={setIsLoading}
         id={id}
+        setIsSpellCheckerOn={setIsSpellCheckerOn}
+        isSpellCheckerOn={isSpellCheckerOn}
       />
+      {/* Area where note is being written */}
       <textarea
         value={noteContent}
-        placeholder="Start writing from here."
+        placeholder={!isLoading ? "Start writing from here." : ""}
         onChange={(e) => setNoteContent(e.currentTarget.value)}
-        className="mt-3 h-[70svh] w-full px-2 md:px-1 bg-transparent outline-none resize-none dark-font-normal font-semibold SCROLL_BAR"
+        spellCheck={isSpellCheckerOn}
+        className="w-full h-[70svh] mt-3 px-2 md:px-1 font-semibold bg-transparent outline-none resize-none SCROLL_BAR"
       />
+
       {isLoading && <ScreenActivityLoader />}
     </>
   );

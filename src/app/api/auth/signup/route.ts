@@ -1,7 +1,10 @@
 import prisma from "@/app/db";
 import { generateCode } from "@/libs/GenerateCode";
-import { ThrowIncompleteError, ThrowServerError } from "@/libs/ResponseErrors";
-import { SendCodeEmail } from "@/libs/SendCodeEmail";
+import {
+  ThrowIncompleteError,
+  ThrowServerError,
+} from "@/libs/backend/ResponseErrors";
+import { SendCodeEmail } from "@/utilities/SendCodeEmail";
 import bcrypt from "bcryptjs";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -60,7 +63,7 @@ export const POST = async (req: NextRequest) => {
     }
 
     // Sending email with verification code
-    const sendingMail = await SendCodeEmail(
+    const sentEmail = await SendCodeEmail(
       code.userEmail,
       newUser.name,
       "Verification of account",

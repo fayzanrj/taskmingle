@@ -1,8 +1,8 @@
 "use client";
-import { getErrorMessage } from "@/libs/GetErrorMessage";
-import { previewUrl } from "@/libs/PreviewUrl";
+import useHeaders from "@/hooks/useHeaders";
+import { handleApiError } from "@/libs/handleApiError";
+import { previewUrl } from "@/utilities/PreviewUrl";
 import axios from "axios";
-import { useSession } from "next-auth/react";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 import GoBack from "../GoBack";
@@ -10,13 +10,20 @@ import AddWatchLaterButton from "./AddWatchLaterButton";
 import PreviewSection from "./PreviewSection";
 
 const WatchLaterForm = () => {
-  const { data: session } = useSession();
   // Variable states
   const [url, setUrl] = useState<string>("");
   const [title, setTitle] = useState<string>("");
   const [image, setImage] = useState<string>("");
   const [note, setNote] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  // Function to make all states an empty string
+  const clearStates = () => {
+    setUrl("");
+    setImage("");
+    setTitle("");
+    setNote("");
+  };
 
   // Handle change function
   const handleUrlChange = (e: React.FormEvent<HTMLInputElement>) => {
@@ -27,7 +34,7 @@ const WatchLaterForm = () => {
     setUrl(e.currentTarget.value);
   };
 
-  // Handle blur function
+  // Handle blur function i.e. previews url
   const handleBlur = async (e: React.FormEvent<HTMLInputElement>) => {
     try {
       const { title, img } = await previewUrl(e.currentTarget.value);
@@ -39,11 +46,7 @@ const WatchLaterForm = () => {
   };
 
   // Headers
-  const headers = {
-    "Content-Type": "application/json",
-    // @ts-ignore
-    accessToken: session?.user?.accessToken,
-  };
+  const headers = useHeaders();
 
   // Handle submit function
   const handleSubmit = async (e: React.FormEvent) => {
@@ -57,38 +60,36 @@ const WatchLaterForm = () => {
         { url, title, image, note },
         { headers }
       );
-
       toast.success(res.data.message);
+      clearStates();
     } catch (error: any) {
-      console.error(error);
-      const errorMessage = getErrorMessage(error);
-      toast.error(errorMessage);
+      handleApiError(error);
     } finally {
       setIsLoading(false);
     }
   };
 
   return (
-    <div className="relative py-10">
+    <div className="py-10 relative">
       {/* Go back button */}
       <GoBack />
 
       {/* Heading */}
       <div className="text-center">
-        <h2 className="font-bold text-3xl">Add watch later</h2>
+        <h2 className="text-3xl font-bold">Add watch later</h2>
       </div>
 
       <form
-        className="w-full flex flex-col items-center py-10"
+        className="w-full py-10 flex flex-col items-center"
         onSubmit={handleSubmit}
       >
         {/* Preview */}
         <PreviewSection title={title} url={url} image={image} />
 
-        <section className="w-4/5 sm:w-96  mt-10">
+        <section className="w-11/12 sm:w-96 mx-auto mt-5">
           {/* URL Input */}
-          <div className="w-full sm:w-96 mt-5">
-            <label htmlFor={"url"} className="text-[1rem] ml-1 font-semibold">
+          <div className="w-full sm:w-96">
+            <label htmlFor={"url"} className="ml-1 text-[1rem] font-semibold">
               Add a url
             </label>
             <br />
@@ -100,7 +101,7 @@ const WatchLaterForm = () => {
               onChange={handleUrlChange}
               disabled={isLoading}
               onBlur={handleBlur}
-              className="w-full rounded-lg p-2 my-1 dark:bg-[#1F1F1F] dark:border-0 border-2 border-gray-200 outline-none font-semibold"
+              className="w-full my-1 p-2 font-semibold rounded-lg border-2 dark:border-[#1F1F1F] dark:bg-[#1F1F1F] outline-none"
             />
           </div>
 
@@ -118,7 +119,7 @@ const WatchLaterForm = () => {
               value={note}
               onChange={(e) => setNote(e.currentTarget.value)}
               disabled={isLoading}
-              className="w-full rounded-lg p-2 my-1 dark:bg-[#1F1F1F] dark:border-0 border-2 border-gray-200 outline-none font-semibold"
+              className="w-full my-1 p-2 font-semibold rounded-lg border-2 dark:border-[#1F1F1F] dark:bg-[#1F1F1F] outline-none"
             />
           </div>
         </section>

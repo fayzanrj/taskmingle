@@ -1,12 +1,12 @@
 "use client";
 import { isValidEmail } from "@/libs/FormValidations";
-import { getErrorMessage } from "@/libs/GetErrorMessage";
+import { handleApiError } from "@/libs/handleApiError";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import AuthBtn from "./AuthBtn";
+import AuthSubmitButton from "./AuthSubmitButton";
 import Header from "./Header";
 import InputField from "./InputField";
 
@@ -15,7 +15,7 @@ interface ErrorProps {
   [key: string]: boolean;
 }
 
-const LogInForm = () => {
+const LogInForm: React.FC = () => {
   // State variables for form fields
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
@@ -52,10 +52,8 @@ const LogInForm = () => {
       } else {
         toast.error("Login failed. Please check your credentials.");
       }
-    } catch (error : any) {
-      console.error(error);
-      const errorMessage = getErrorMessage(error);
-      toast.error(errorMessage);
+    } catch (error: any) {
+      handleApiError(error);
     } finally {
       setIsLoading(false);
     }
@@ -68,11 +66,11 @@ const LogInForm = () => {
 
   return (
     <form
-      className="w-11/12 md:w-96 h-96  dark:bg-[#151515] bg-white shadow-lg rounded-md absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 px-7 py-8"
+      className="w-11/12 md:w-96 h-96 px-7 py-8 rounded-md dark:bg-[#151515] bg-white shadow-lg absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
       onSubmit={handleLogIn}
     >
-      {/* HEADING */}
-      <Header  />
+      {/* Header i.e. logo and theme toggle */}
+      <Header />
 
       {/* Email Input */}
       <InputField
@@ -99,13 +97,17 @@ const LogInForm = () => {
       />
 
       {/* Login Button */}
-      <AuthBtn disableBtn={disableBtn} isLoading={isLoading} btnText="LOG IN" />
+      <AuthSubmitButton
+        disableBtn={disableBtn}
+        isLoading={isLoading}
+        btnText="LOG IN"
+      />
 
       {/* Signup Link */}
-      <div className="text-center my-4">
+      <div className="my-4 text-center">
         <p className="text-sm font-semibold">
           Not a user?{" "}
-          <span className="underline text-lg">
+          <span className="text-lg underline">
             <Link href={"/signup"}>Sign up</Link>
           </span>
         </p>
@@ -114,5 +116,4 @@ const LogInForm = () => {
   );
 };
 
-// Exporting LogInForm component
 export default LogInForm;

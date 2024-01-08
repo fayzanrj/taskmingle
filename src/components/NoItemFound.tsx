@@ -1,9 +1,9 @@
 import React from "react";
 import { MdOutlineSearchOff } from "react-icons/md";
 
-const NoItemFound : React.FC<{ variant: string }> = ({ variant }) => {
+const NoItemFound = ({ variant } : { variant: string }) => {
   return (
-    <div className="w-fit  mx-auto px-3 text-center">
+    <div className="w-fit mx-auto px-3 text-center">
       <span>
         <MdOutlineSearchOff size={"4rem"} className="inline-block" />
       </span>

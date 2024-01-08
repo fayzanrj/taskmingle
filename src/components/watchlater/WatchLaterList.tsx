@@ -1,29 +1,26 @@
 "use client";
-import { getErrorMessage } from "@/libs/GetErrorMessage";
+import useHeaders from "@/hooks/useHeaders";
+import { handleApiError } from "@/libs/handleApiError";
 import { WatchLaterProps } from "@/props/WatchLaterProps";
 import axios from "axios";
 import Link from "next/link";
-import React, { useState } from "react";
-import toast from "react-hot-toast";
+import { useState } from "react";
 import ActivityLoader from "../ActivityLoader";
 import FetchError from "../FetchError";
 import NoItemFound from "../NoItemFound";
 import WatchLaterListItem from "./WatchLaterListItem";
 
-const WatchLaterList: React.FC<{
+const WatchLaterList = ({
+  watchLaters,
+}: {
   watchLaters: WatchLaterProps[];
-  accessToken: string;
-}> = ({ watchLaters, accessToken }) => {
+}) => {
   const [watchLaterList, setWatchLaterList] =
     useState<WatchLaterProps[]>(watchLaters);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   // HEADERS FOR API REQUEST
-  const headers: Record<string, string> = {
-    "Content-Type": "application/json",
-    // @ts-ignore
-    accessToken,
-  };
+  const headers = useHeaders();
 
   // Handle Refresh
   const handleRefresh = async () => {
@@ -34,9 +31,7 @@ const WatchLaterList: React.FC<{
       });
       setWatchLaterList(res.data.watchlaters);
     } catch (error: any) {
-      console.error(error.message);
-      const message = getErrorMessage(error);
-      toast.error(message);
+      handleApiError(error);
     } finally {
       setIsLoading(false);
     }
@@ -68,9 +63,13 @@ const WatchLaterList: React.FC<{
     <>
       <ButtonSection isLoading={isLoading} handleRefresh={handleRefresh} />
       {/* Watch Laters */}
-      <section className="w-full flex justify-center flex-wrap  gap-5 pb-10">
+      <section className="w-full pb-10 flex justify-center flex-wrap gap-5">
         {watchLaterList.map((watchlater: WatchLaterProps, index: number) => (
-          <WatchLaterListItem key={index} {...watchlater} setWatchLaterList={setWatchLaterList} />
+          <WatchLaterListItem
+            key={index}
+            {...watchlater}
+            setWatchLaterList={setWatchLaterList}
+          />
         ))}
       </section>
     </>
@@ -80,24 +79,31 @@ const WatchLaterList: React.FC<{
 export default WatchLaterList;
 
 // Button Section component
-const ButtonSection: React.FC<{
+const ButtonSection = ({
+  isLoading,
+  handleRefresh,
+}: {
   isLoading: boolean;
   handleRefresh: () => void;
-}> = ({ isLoading, handleRefresh }) => {
+}) => {
   return (
-    <section className=" h-10 my-2 w-full flex justify-end items-center gap-5">
+    <section className="w-full h-10 my-2 flex justify-end items-center gap-5">
       {/* Add watch later page link */}
       <Link href={"/dashboard/watchlater/addwatchlater"}>
-        <button className="py-1.5 px-3 bg-[#19fa9a] rounded-lg text-[#1F1F1F] font-semibold">
+        <button
+          aria-label="add-watchlater-button"
+          className="px-3 py-1.5 text-[#1F1F1F] font-bold rounded-lg bg-[#19fa9a]"
+        >
           Add watch later
         </button>
       </Link>
 
       {/* Refresh button */}
       <button
-        disabled={isLoading}
+        aria-label="refresh-watchlater-button"
         onClick={handleRefresh}
-        className="w-16 h-10 rounded-lg font-semibold"
+        disabled={isLoading}
+        className="w-16 h-10 font-semibold rounded-lg"
       >
         {isLoading ? <ActivityLoader /> : "Refresh"}
       </button>

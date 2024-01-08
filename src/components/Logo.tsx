@@ -6,7 +6,7 @@ const montserrat = Montserrat({ subsets: ["latin"] });
 const Logo: React.FC = () => {
   return (
     <div
-      className={`text-center text-2xl font-extrabold tracking-tighter dark:text-white ${montserrat.className}`}
+      className={`text-center text-2xl dark:text-white font-extrabold tracking-tighter ${montserrat.className}`}
     >
       <p>
         task<span className="logo">notify</span>

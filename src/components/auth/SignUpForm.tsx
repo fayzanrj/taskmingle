@@ -5,13 +5,13 @@ import {
   isValidName,
   isValidPassword,
 } from "@/libs/FormValidations";
-import { getErrorMessage } from "@/libs/GetErrorMessage";
+import { handleApiError } from "@/libs/handleApiError";
 import axios from "axios";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import VerifyEmailModal from "../VerifyEmailModal";
-import AuthBtn from "./AuthBtn";
+import AuthSubmitButton from "./AuthSubmitButton";
 import Header from "./Header";
 import InputField from "./InputField";
 
@@ -19,7 +19,7 @@ interface ErrorProps {
   [key: string]: boolean;
 }
 
-const SignUpForm = () => {
+const SignUpForm: React.FC = () => {
   // State variables
   const [name, setName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
@@ -48,12 +48,12 @@ const SignUpForm = () => {
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    // Validating all values
     if (password !== confirmPassword) {
       toast.error("Passwords do not match");
       return;
     }
 
-    // Validating all values
     if (
       !isValidName(name) ||
       !isValidEmail(email) ||
@@ -63,6 +63,7 @@ const SignUpForm = () => {
       return;
     }
 
+    // Data for request body
     const data = {
       name: CapitalizeName(name),
       email: email.toLowerCase(),
@@ -72,19 +73,17 @@ const SignUpForm = () => {
     try {
       setIsLoading(true);
       const response = await axios.post("api/auth/signup", data);
-      setUserId(response.data.userId); // Set the userId
+      setUserId(response.data.userId); // Setting user id for email verification modal
       setIsModalOpen(true);
-      // clearStates();
       toast.success(response.data.message);
     } catch (error: any) {
-      console.error(error);
-      const errorMessage = getErrorMessage(error);
-      toast.error(errorMessage);
+      handleApiError(error);
     } finally {
       setIsLoading(false);
     }
   };
 
+  // Use effect for toggling button according to input field errors
   useEffect(() => {
     const isButtonDisabled =
       error.fullNameError ||
@@ -105,10 +104,11 @@ const SignUpForm = () => {
         />
       )}
       <form
-        className="w-11/12 md:w-96 h-[33rem] dark:bg-[#151515] bg-white shadow-lg rounded-md absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 px-7 py-5"
+        className="w-11/12 md:w-96 h-[33rem] px-7 py-5 rounded-md bg-white dark:bg-[#151515] shadow-lg absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
         onSubmit={handleSignUp}
       >
-        <Header/>
+        {/* Header i.e. logo and theme toggle */}
+        <Header />
 
         {/* Name Input Field */}
         <InputField
@@ -160,17 +160,17 @@ const SignUpForm = () => {
         />
 
         {/* Sign up button */}
-        <AuthBtn
+        <AuthSubmitButton
           disableBtn={disableBtn}
           isLoading={isLoading}
           btnText="SIGN UP"
         />
 
         {/* Log in link */}
-        <div className="text-center my-4">
+        <div className="my-4 text-center">
           <p className="text-sm font-semibold">
             Already a user?{" "}
-            <span className="underline text-lg">
+            <span className="text-lg underline">
               <Link href={"/login"}>Log in</Link>
             </span>
           </p>

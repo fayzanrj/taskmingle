@@ -1,6 +1,7 @@
 import WatchLaterList from "@/components/watchlater/WatchLaterList";
+import { getHeaders } from "@/libs/GetHeaders";
 import { WatchLaterProps } from "@/props/WatchLaterProps";
-import { authOptions } from "@/utils/AuthOptions";
+import { authOptions } from "@/utilities/AuthOptions";
 import { Metadata, NextPage } from "next";
 import { getServerSession } from "next-auth";
 
@@ -9,14 +10,8 @@ export const metadata: Metadata = {
 };
 
 const WatchLater: NextPage = async () => {
-  const data = await getServerSession(authOptions);
-
   // HEADERS FOR API REQUEST
-  const headers: Record<string, string> = {
-    "Content-Type": "application/json",
-    // @ts-ignore
-    accessToken: data?.user?.accessToken,
-  };
+  const headers = await getHeaders();
 
   const response = await fetch(
     `${process.env.HOST}/api/watchlater/getwatchlaters`,
@@ -28,11 +23,7 @@ const WatchLater: NextPage = async () => {
   return (
     <div className="relative p-5">
       {/* Watch Later List */}
-      <WatchLaterList
-        watchLaters={watchLaters}
-        // @ts-ignore
-        accessToken={data?.user?.accessToken}
-      />
+      <WatchLaterList watchLaters={watchLaters} />
     </div>
   );
 };

@@ -1,10 +1,11 @@
-import Notifications from "@/components/dashboard/Notifications";
-import Sidebar from "@/components/dashboard/Sidebar";
+import Notifications from "@/components/dashboard/notifications/Notifications";
+import Sidebar from "@/components/dashboard/sidebar/Sidebar";
 import "@/styles/globals.css";
-import { authOptions } from "@/utils/AuthOptions";
+import { authOptions } from "@/utilities/AuthOptions";
 import { Metadata } from "next";
 import { getServerSession } from "next-auth";
 
+// Metadata
 export const metadata: Metadata = {
   title: {
     default: "Dashboard",
@@ -12,7 +13,7 @@ export const metadata: Metadata = {
   },
 };
 
-async function getGreetingMessage() {
+const getGreetingMessage = () => {
   const currentHour = new Date().getHours();
 
   // Determine greeting based on the hour of the day
@@ -23,7 +24,7 @@ async function getGreetingMessage() {
   } else {
     return "Good Evening";
   }
-}
+};
 
 export default async function RootLayout({
   children,
@@ -49,13 +50,10 @@ export default async function RootLayout({
   );
 }
 
-interface TopBarProps {
-  message: string;
-}
-
-const TopBar: React.FC<TopBarProps> = ({ message }) => {
+// Top Bar
+const TopBar = ({ message }: { message: string }) => {
   return (
-    <div className="w-full h-16 px-10 dark:bg-[#1F1F1F] dark:text-white bg-white text-black dark:border-b-0 border-b-2 border-gray-200 relative z-40">
+    <div className="w-full h-16 px-10 text-black dark:text-white border-b-2 dark:border-b-0 bg-white dark:bg-[#1F1F1F] relative z-40">
       {/* GREETING */}
       <p className="max-w-[90%] text-lg md:text-2xl font-semibold absolute top-1/2 transform -translate-y-1/2">
         {message}

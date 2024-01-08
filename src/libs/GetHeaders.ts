@@ -1,4 +1,4 @@
-import { authOptions } from "@/utils/AuthOptions";
+import { authOptions } from "@/utilities/AuthOptions";
 import { getServerSession } from "next-auth";
 
 export const getHeaders = async () => {

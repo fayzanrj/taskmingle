@@ -1,4 +1,6 @@
 "use client";
+import useHeaders from "@/hooks/useHeaders";
+import { handleApiError } from "@/libs/handleApiError";
 import { UserProps } from "@/props/UserProps";
 import axios from "axios";
 import Image from "next/image";
@@ -8,43 +10,22 @@ import { FiLock } from "react-icons/fi";
 import ProfileSkeleton from "../skeletons/ProfileSkeleton";
 import SendRemindersBtn from "./SendRemindersBtn";
 import VerifyEmailBtn from "./VerifyEmailBtn";
-import { getErrorMessage } from "@/libs/GetErrorMessage";
-import toast from "react-hot-toast";
 
-// Profile Card interface
-interface ProfileCardProps {
-  accessToken: string;
-}
-
-// UserInfoDiv component for displaying user information
-const UserInfoDiv: React.FC<{ label: string; value: string }> = ({
-  label,
-  value,
-}) => {
-  return (
-    <p className={`font-bold text-lg my-2`}>
-      {label} : <span className="font-semibold">{value}</span>
-    </p>
-  );
+const userEmptyObject = {
+  id: "",
+  name: "",
+  email: "",
+  profilePic: "",
+  isVerified: false,
 };
 
-// ProfileCard component
-const ProfileCard: React.FC<ProfileCardProps> = ({ accessToken }) => {
+const ProfileCard: React.FC = () => {
   // State variables
-  const [user, setUser] = useState<UserProps>({
-    id: "",
-    name: "",
-    email: "",
-    profilePic: "",
-    isVerified: false,
-  });
+  const [user, setUser] = useState<UserProps>(userEmptyObject);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   // Headers for API request
-  const headers = {
-    "Content-Type": "application/json",
-    accessToken,
-  };
+  const headers = useHeaders();
 
   // Function to fetch user details
   const fetchUser = async () => {
@@ -52,9 +33,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ accessToken }) => {
       const res = await axios.get("/api/user/getUser", { headers });
       setUser(res.data.user);
     } catch (error: any) {
-      console.error(error);
-      const errorMessage = getErrorMessage(error);
-      toast.error(errorMessage);
+      handleApiError(error);
     } finally {
       setIsLoading(false);
     }
@@ -71,7 +50,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ accessToken }) => {
   }
 
   return (
-    <div className="w-[90%] md:w-[30rem] mx-auto break-words p-4 rounded-lg">
+    <div className="w-[90%] md:w-[30rem] mx-auto p-4 rounded-lg">
       {/* Image */}
       <div className="w-20 h-20 mx-auto mb-4">
         <Image
@@ -85,7 +64,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ accessToken }) => {
       </div>
 
       {/* User info */}
-      <div className="w-full text-left mt-10">
+      <div className="w-full mt-10 text-left">
         <UserInfoDiv label="Name" value={user?.name || ""} />
         <UserInfoDiv label="Email" value={user?.email || ""} />
 
@@ -93,7 +72,6 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ accessToken }) => {
         {user?.isVerified === false && (
           <VerifyEmailBtn
             email={user?.email}
-            headers={headers}
             userId={user?.id}
             setUser={setUser}
           />
@@ -101,12 +79,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ accessToken }) => {
       </div>
 
       {/* Change password button */}
-      <Link href="/dashboard/profile/changepassword" className="mt-5">
-        <button className="px-4 py-2 bg-[#19fa91] text-black font-bold rounded-lg flex items-center">
-          <FiLock className="mr-1" />
-          Change Password
-        </button>
-      </Link>
+      <ChangePasswordButton />
 
       {/* Send emails toggle button */}
       <SendRemindersBtn sendReminders={false} />
@@ -115,3 +88,22 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ accessToken }) => {
 };
 
 export default ProfileCard;
+
+// UserInfoDiv component for displaying user information
+const UserInfoDiv = ({ label, value }: { label: string; value: string }) => {
+  return (
+    <p className={`my-2 text-lg font-bold`}>
+      {label} : <span className="font-semibold">{value}</span>
+    </p>
+  );
+};
+
+// Change Password Component button
+const ChangePasswordButton = () => (
+  <Link href="/dashboard/profile/changepassword" className="mt-5">
+    <button className="px-4 py-2 text-black font-bold rounded-lg bg-[#19fa91] flex items-center">
+      <FiLock className="mr-1" />
+      <p>Change Password</p>
+    </button>
+  </Link>
+);

@@ -2,6 +2,6 @@ export interface UserProps {
   id : string,
   name: string;
   email: string;
-  profilePic: string;
+  profilePic: string | null;
   isVerified: boolean | null;
 }

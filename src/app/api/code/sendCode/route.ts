@@ -1,13 +1,12 @@
 import prisma from "@/app/db";
+import { generateCode } from "@/libs/GenerateCode";
 import {
-  ThrowIncompleteError,
   ThrowServerError,
-  ThrowUnAuthorizedError,
-} from "@/libs/ResponseErrors";
-import { SendCodeEmail } from "@/libs/SendCodeEmail";
-import { verifyUser } from "@/libs/VerifyUser";
+  ThrowUnAuthorizedError
+} from "@/libs/backend/ResponseErrors";
+import { verifyUser } from "@/libs/backend/VerifyUser";
+import { SendCodeEmail } from "@/utilities/SendCodeEmail";
 import { NextRequest, NextResponse } from "next/server";
-import {generateCode} from "@/libs/GenerateCode"
 
 export const POST = async (req: NextRequest) => {
   try {
@@ -57,10 +56,7 @@ export const POST = async (req: NextRequest) => {
     );
 
     // Response
-    return NextResponse.json(
-      { message: "Code sent" },
-      { status: 200 }
-    );
+    return NextResponse.json({ message: "Code sent" }, { status: 200 });
   } catch (error: any) {
     console.error(error.message);
     return ThrowServerError();

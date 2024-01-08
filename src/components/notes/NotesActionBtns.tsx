@@ -1,55 +1,58 @@
+'use client'
+import useHeaders from "@/hooks/useHeaders";
+import { handleApiError } from "@/libs/handleApiError";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import ActivityLoader from "../ActivityLoader";
-import useHeaders from "@/hooks/useHeaders";
-import axios from "axios";
-import toast from "react-hot-toast";
-import { getErrorMessage } from "@/libs/GetErrorMessage";
-import { NoteProps } from "@/props/NoteProps";
-import { useRouter } from "next/navigation";
 
-const NotesActionBtns: React.FC<{
+// Notes action button props
+interface NotesActionBtnsProps {
   isRefreshing: boolean;
-  setAllNotes: React.Dispatch<React.SetStateAction<NoteProps[]>>;
-  handleRefresh : () => void
-}> = ({ isRefreshing, handleRefresh, setAllNotes }) => {
+  handleRefresh: () => void;
+}
+const NotesActionBtns: React.FC<NotesActionBtnsProps> = ({
+  isRefreshing,
+  handleRefresh,
+}) => {
+  // Variable states
   const [isCreatingNote, setIsCreatingNote] = useState<boolean>(false);
-  const headers = useHeaders();
+  // Router to change routes
   const nav = useRouter();
+  // Headers for Api call
+  const headers = useHeaders();
 
-  
-
-  // function to create note
+  // Function to create note
   const handleCreate = async () => {
     try {
       setIsCreatingNote(true);
       const res = await axios.post("/api/notes/createNote", {}, { headers });
       nav.push(`/dashboard/notes/${res.data.note.id}`);
     } catch (error: any) {
-      console.error(error);
-      const errorMessage = getErrorMessage(error);
-      toast.error(errorMessage);
+      handleApiError(error);
     } finally {
       setIsCreatingNote(false);
     }
   };
 
   return (
-    <section className=" h-10 my-2 w-full flex justify-end items-center gap-5">
-      {/* Add watch later page link */}
+    <section className="w-full h-10 my-2 flex justify-end items-center gap-5">
+      {/* Create new note button */}
       <button
-        onClick={handleCreate}
-        className="w-32 h-10 bg-[#19fa9a] text-black font-semibold rounded-lg float-right  relative"
         aria-label="add-note-button"
+        onClick={handleCreate}
+        disabled={isRefreshing}
+        className="w-32 h-10 text-black font-semibold rounded-lg bg-[#19fa9a]"
       >
         {isCreatingNote ? <ActivityLoader /> : "Create Note"}
       </button>
 
       {/* Refresh button */}
       <button
-        disabled={isRefreshing}
+        aria-label="refresh-watchlater-button"
         onClick={handleRefresh}
-        className="w-16 h-10 rounded-lg"
-        aria-label="refresh-notes-button"
+        disabled={isRefreshing}
+        className="w-16 h-10 font-semibold rounded-lg"
       >
         {isRefreshing ? <ActivityLoader /> : "Refresh"}
       </button>

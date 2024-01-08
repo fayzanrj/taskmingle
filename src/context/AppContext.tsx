@@ -6,7 +6,7 @@ export const AppContext = createContext<any | undefined>(undefined);
 export function AppState({ children }: { children: React.ReactNode }) {
   
   // Variable state
-  const [isOpen, setIsOpen] = useState<boolean>(true);
+  const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(true);
   const [isDarkMode, setIsDarkMode] = useState(false);
 
   useLayoutEffect(() => {
@@ -30,7 +30,7 @@ export function AppState({ children }: { children: React.ReactNode }) {
 
 
   return (
-    <AppContext.Provider value={{isOpen, setIsOpen, isDarkMode, setIsDarkMode}}>
+    <AppContext.Provider value={{isSidebarOpen, setIsSidebarOpen, isDarkMode, setIsDarkMode}}>
       {children}
     </AppContext.Provider>
   );

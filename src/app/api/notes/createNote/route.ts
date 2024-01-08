@@ -1,11 +1,9 @@
 import prisma from "@/app/db";
 import {
-  ThrowIncompleteError,
   ThrowServerError,
   ThrowUnAuthorizedError,
-} from "@/libs/ResponseErrors";
-import { verifyUser } from "@/libs/VerifyUser";
-import { pusherServer } from "@/pusher/pusher";
+} from "@/libs/backend/ResponseErrors";
+import { verifyUser } from "@/libs/backend/VerifyUser";
 import { NextRequest, NextResponse } from "next/server";
 
 export const POST = async (req: NextRequest) => {
@@ -28,8 +26,7 @@ export const POST = async (req: NextRequest) => {
       return ThrowServerError();
     }
 
-    // pusherServer.trigger(user.id, "addNote", note);
-    
+
     // Send response back
     return NextResponse.json(
       { message: "Note has been added", note },

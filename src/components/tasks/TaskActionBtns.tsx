@@ -1,42 +1,29 @@
 "use client";
+import useHeaders from "@/hooks/useHeaders";
+import { handleApiError } from "@/libs/handleApiError";
+import axios from "axios";
 import Link from "next/link";
-import React, { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 import toast from "react-hot-toast";
 import { MdDelete, MdEdit } from "react-icons/md";
 import ActivityLoader from "../ActivityLoader";
-import axios from "axios";
-import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
-import { getErrorMessage } from "@/libs/GetErrorMessage";
 
-// TO DO : WORK ON LOADING STATE
 
-// Task Action Props
-interface TaskActionBtnsProps {
-  href: string;
-  taskId: string;
-}
-
-const TaskActionBtns: React.FC<TaskActionBtnsProps> = ({ href, taskId }) => {
-  // Getting user data
-  const { data: session } = useSession();
+const TaskActionBtns = ({ href, taskId }: { href: string; taskId: string }) => {
   // Router for navigation
   const router = useRouter();
   // Activity state
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  // HEADERS FOR API REQUEST
-  const headers = {
-    "Content-Type": "application/json",
-    // @ts-ignore
-    accessToken: session?.user?.accessToken,
-  };
+  // Headers for api request
+  const headers = useHeaders();
 
   // Function to handle delete
   const handleDelete = async () => {
-    const confir = confirm("Are you sure?");
+    const confirmDelete = confirm("Are you sure?");
 
-    if (!confir) {
+    if (!confirmDelete) {
       return;
     }
 
@@ -50,21 +37,20 @@ const TaskActionBtns: React.FC<TaskActionBtnsProps> = ({ href, taskId }) => {
         duration: 4000,
       });
     } catch (error) {
-      console.error(error);
-      const errorMessage = getErrorMessage(error);
-      toast.error(errorMessage);
+      handleApiError(error);
     } finally {
       setIsLoading(false);
     }
   };
+
   return (
-    <div className="text-right my-4 relative">
+    <div className="my-4 text-right font-semibold relative">
       {/* Edit button */}
       <Link href={href}>
         <button
-          className="w-24 h-10 rounded-lg font-semibold absolute right-28"
-          aria-label="Edit Task"
+          aria-label="edit-task-link-button"
           disabled={isLoading}
+          className="w-24 h-10 rounded-lg absolute right-28"
         >
           Edit{" "}
           <span>
@@ -75,10 +61,10 @@ const TaskActionBtns: React.FC<TaskActionBtnsProps> = ({ href, taskId }) => {
 
       {/* Delete button */}
       <button
-        className="w-24 h-10 bg-red-600 rounded-lg font-semibold text-white absolute right-0"
+        aria-label="delete-task-button"
         disabled={isLoading}
-        aria-label="Delete Task"
         onClick={handleDelete}
+        className="w-24 h-10 text-white bg-red-600 rounded-lg absolute right-0"
       >
         {isLoading ? (
           <ActivityLoader />

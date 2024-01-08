@@ -13,7 +13,11 @@ export const getTime = (date: string, time: string): string => {
 
 // Function to get time for edit task date input field
 export const getDate = (date: string): string => {
-  return `${new Date(date).getFullYear()}-${
-    new Date(date).getMonth() + 1
-  }-${new Date(date).getDate()}`;
+  return date
+    ? `${new Date(date).getFullYear()}-${addZero(
+        new Date(date).getMonth() + 1
+      )}-${addZero(new Date(date).getDate())}`
+    : `${new Date().getFullYear()}-${addZero(
+        new Date().getMonth() + 1
+      )}-${addZero(new Date().getDate())}`;
 };

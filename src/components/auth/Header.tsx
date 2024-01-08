@@ -1,7 +1,7 @@
 import React from "react";
 import Logo from "../Logo";
 import Link from "next/link";
-import ThemeToggleNavbarBtn from "../landingPage/ThemeToggleNavbarBtn";
+import ThemeToggleNavbarBtn from "../landingPage/LandingThemeToggleBtn";
 
 const Header: React.FC = () => {
   return (
@@ -10,7 +10,7 @@ const Header: React.FC = () => {
       <Link href={"/"}>
         <Logo />
       </Link>
-      <div className="absolute top-1/2  transform -translate-y-1/2 right-0">
+      <div className="absolute top-1/2 transform -translate-y-1/2 right-0">
         <ThemeToggleNavbarBtn />
       </div>
     </header>

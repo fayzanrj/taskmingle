@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
 const useDeviceWidth = (): number => {
-  const isClient = typeof window === "object"; // Check if window is defined
+  const isClient = typeof window === "object"; // Checking if window is defined
 
   const [deviceWidth, setDeviceWidth] = useState<number>(
     isClient ? window.innerWidth : 0

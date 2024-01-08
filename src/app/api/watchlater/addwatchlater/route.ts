@@ -1,13 +1,11 @@
-import { verifyJwt } from "@/libs/Jwt";
+import prisma from "@/app/db";
 import {
   ThrowIncompleteError,
   ThrowServerError,
   ThrowUnAuthorizedError,
-} from "@/libs/ResponseErrors";
-import { TaskProps } from "@/props/TaskProps";
+} from "@/libs/backend/ResponseErrors";
+import { verifyUser } from "@/libs/backend/VerifyUser";
 import { NextRequest, NextResponse } from "next/server";
-import prisma from "@/app/db";
-import { verifyUser } from "@/libs/VerifyUser";
 
 export const POST = async (req: NextRequest) => {
   try {
@@ -22,7 +20,7 @@ export const POST = async (req: NextRequest) => {
     // Receive and check if data is present
     const data = await req.json();
 
-    if (!data.url || !data.title || !data.image) {
+    if (!data.url || !data.title || !data.image || !data.note){
       return ThrowIncompleteError();
     }
 

@@ -7,7 +7,7 @@ const FetchError = () => {
       <span>
         <Lia500Px size={"4rem"} className="inline-block" />
       </span>
-      <h3 style={{ wordSpacing: ".2rem" }} className="text-3xl font-semibold px-20">
+      <h3 style={{ wordSpacing: ".2rem" }} className="px-20 text-3xl font-semibold">
         Lets just say we are facing an error
       </h3>
     </div>

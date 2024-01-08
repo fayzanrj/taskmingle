@@ -1,7 +1,8 @@
 "use client";
-import { getErrorMessage } from "@/libs/GetErrorMessage";
+import useHeaders from "@/hooks/useHeaders";
+import { handleApiError } from "@/libs/handleApiError";
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { MdClose, MdDone } from "react-icons/md";
 import ActivityLoader from "../ActivityLoader";
@@ -9,21 +10,6 @@ import TaskStatusSkeleton from "../skeletons/TaskStatusSkeleton";
 
 // Possible task status values
 type TaskStatus = "Pending" | "Completed" | "Overdue" | null;
-
-// Mark Button props
-interface MarkButtonProps {
-  taskId: string;
-  date: string;
-  accessToken: string;
-}
-
-// Function to determine updated status based on date and taskStatus
-const getUpdatedStatus = (date: string, taskStatus: TaskStatus): TaskStatus => {
-  if (taskStatus !== "Completed") return "Completed";
-  const currentDate = new Date();
-  currentDate.setHours(0, 0, 0, 0);
-  return currentDate <= new Date(date) ? "Pending" : "Overdue";
-};
 
 // Function to get color based on taskStatus
 const getColor = (status: TaskStatus): string => {
@@ -37,20 +23,21 @@ const getColor = (status: TaskStatus): string => {
   }
 };
 
-const TaskStatus: React.FC<MarkButtonProps> = ({
-  taskId,
-  date,
-  accessToken,
-}) => {
-  // State variables
-  const [taskStatus, setTaskStatus] = useState<TaskStatus | null>(null);
+const getUpdatedStatus = (date: string, taskStatus: TaskStatus): TaskStatus => {
+  if (taskStatus !== "Completed") return "Completed";
+  const currentDate = new Date();
+  currentDate.setHours(0, 0, 0, 0);
+  return currentDate <= new Date(date) ? "Pending" : "Overdue";
+};
+
+const TaskStatus = ({ taskId, date }: { taskId: string; date: string }) => {
+  // Variable States
+  const [taskStatus, setTaskStatus] = useState<TaskStatus>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isFetchingStatus, setIsFetchingStatus] = useState<boolean>(true)
 
   // Headers for API request
-  const headers = {
-    "Content-Type": "application/json",
-    accessToken,
-  };
+  const headers = useHeaders();
 
   // Fetching task's latest status
   useEffect(() => {
@@ -62,9 +49,9 @@ const TaskStatus: React.FC<MarkButtonProps> = ({
         });
         setTaskStatus(res.data.status);
       } catch (error) {
-        console.error(error);
-        const errorMessage = getErrorMessage(error);
-        toast.error(errorMessage);
+        handleApiError(error);
+      } finally {
+        setIsFetchingStatus(false);
       }
     };
 
@@ -75,17 +62,15 @@ const TaskStatus: React.FC<MarkButtonProps> = ({
   // Function to handle click i.e. updating status
   const handleClick = async () => {
     try {
-      const updatedStatus = getUpdatedStatus(date, taskStatus);
       setIsLoading(true);
+      const updatedStatus = getUpdatedStatus(date, taskStatus);
       const data = { taskId, updatedStatus };
       const res = await axios.put("/api/tasks/markTask", data, { headers });
 
       setTaskStatus(updatedStatus);
       toast.success(res.data.message);
     } catch (error) {
-      console.error(error);
-      const errorMessage = getErrorMessage(error);
-      toast.error(errorMessage);
+      handleApiError(error);
     } finally {
       setIsLoading(false);
     }
@@ -95,8 +80,16 @@ const TaskStatus: React.FC<MarkButtonProps> = ({
   const color = getColor(taskStatus);
 
   // If tasks status is getting fetched
-  if (taskStatus === null) {
+  if (isFetchingStatus) {
     return <TaskStatusSkeleton />;
+  }
+
+  if (!taskStatus) {
+    return (
+      <div>
+        <p>Couldn't find task's status</p>
+      </div>
+    );
   }
 
   return (
@@ -107,11 +100,7 @@ const TaskStatus: React.FC<MarkButtonProps> = ({
       </p>
 
       {/* Button for updating the task's status */}
-      <button
-        onClick={handleClick}
-        className="relative w-56 h-10 text-right"
-        style={{ userSelect: "none" }}
-      >
+      <button onClick={handleClick} className="w-56 h-10 text-right relative">
         {isLoading ? (
           <ActivityLoader />
         ) : (
@@ -134,5 +123,4 @@ const TaskStatus: React.FC<MarkButtonProps> = ({
   );
 };
 
-// Export MarkAsBtn component
 export default TaskStatus;

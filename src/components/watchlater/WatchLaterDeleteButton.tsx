@@ -1,29 +1,31 @@
-import { getErrorMessage } from "@/libs/GetErrorMessage";
+import useHeaders from "@/hooks/useHeaders";
+import { handleApiError } from "@/libs/handleApiError";
 import { WatchLaterProps } from "@/props/WatchLaterProps";
 import axios from "axios";
-import { useSession } from "next-auth/react";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 import { MdDelete } from "react-icons/md";
 import ActivityLoader from "../ActivityLoader";
 
-const WatchLaterDeleteButton: React.FC<{
+// Watch later delete button interface
+interface WatchLaterDeleteButtonProps {
   id: string;
   setWatchLaterList: React.Dispatch<React.SetStateAction<WatchLaterProps[]>>;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
-}> = ({ id, setWatchLaterList, setIsOpen }) => {
-  // Getting user data
-  const { data: session } = useSession();
+}
+
+const WatchLaterDeleteButton: React.FC<WatchLaterDeleteButtonProps> = ({
+  id,
+  setWatchLaterList,
+  setIsOpen,
+}) => {
+  // Variable state
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   // Headers for API request
-  const headers = {
-    "Content-Type": "application/json",
-    // @ts-ignore
-    accessToken: session?.user?.accessToken,
-  };
+  const headers = useHeaders();
 
-  // Function to delete item
+  // Function to delete watch later item
   const handleDelete = async () => {
     try {
       setIsLoading(true);
@@ -31,24 +33,24 @@ const WatchLaterDeleteButton: React.FC<{
         headers,
       });
       setWatchLaterList((prevList) =>
-      prevList.filter((item) => item.id !== id)
+        prevList.filter((item) => item.id !== id)
       );
       setIsOpen(false);
       toast.success(res.data.message);
     } catch (error: any) {
-      console.error(error);
-      const message = getErrorMessage(error);
-      toast.error(message);
+      handleApiError(error);
     } finally {
       setIsLoading(false);
     }
   };
+
   return (
     <div className="w-[15%] h-28 absolute top-0 right-0">
       <button
-        className="w-full h-full rounded-lg dark:bg-[#1D1F21] bg-white border-[.1rem] border-stone-200 dark:border-0"
+        aria-label="delete-watchlater-button"
         onClick={handleDelete}
         disabled={isLoading}
+        className="w-full h-full rounded-lg border-[.1rem] dark:border-[#1D1F21] bg-white dark:bg-[#1D1F21]"
       >
         {isLoading ? (
           <ActivityLoader />

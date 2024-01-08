@@ -1,26 +1,22 @@
 import React, { useState } from "react";
 
-interface SendRemindersBtnProps {
-  sendReminders: boolean;
-}
-const SendRemindersBtn: React.FC<SendRemindersBtnProps> = ({
-  sendReminders,
-}) => {
+const SendRemindersBtn = ({ sendReminders }: { sendReminders: boolean }) => {
   // Variable state
   const [sendEmails, setSendEmails] = useState<boolean>(sendReminders);
-  
+
+  const toggleSendEmails = (): void => setSendEmails(!sendEmails);
   return (
-    <div className="flex items-center justify-between mt-4">
+    <div className="mt-4 flex items-center justify-between">
       {/* Text */}
       <p className="font-semibold">Send reminders through email</p>
       {/* Toggle button */}
       <div className="toggle-switch">
         <input
-          className="toggle-input"
           id="toggle"
           type="checkbox"
           checked={sendEmails}
-          onChange={() => setSendEmails(!sendEmails)}
+          onChange={toggleSendEmails}
+          className="toggle-input"
         />
         <label className="toggle-label" htmlFor="toggle"></label>
       </div>

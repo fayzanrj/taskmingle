@@ -1,11 +1,13 @@
-import { verifyJwt } from "@/libs/Jwt";
-import { ThrowIncompleteError, ThrowServerError, ThrowUnAuthorizedError } from "@/libs/ResponseErrors";
+import prisma from "@/app/db";
+import {
+  ThrowIncompleteError,
+  ThrowServerError,
+  ThrowUnAuthorizedError,
+} from "@/libs/backend/ResponseErrors";
+import { verifyUser } from "@/libs/backend/VerifyUser";
 import { TaskProps } from "@/props/TaskProps";
 import { NextRequest, NextResponse } from "next/server";
-import prisma from "@/app/db";
-import { verifyUser } from "@/libs/VerifyUser";
 
-// to do make unified function
 const checkData = (data: TaskProps): boolean => {
   const { date, reminderAt, startTime, status, tags, taskDesc, taskTitle } =
     data;
@@ -29,7 +31,6 @@ export const PUT = async (req: NextRequest) => {
     if (!user) {
       return ThrowUnAuthorizedError();
     }
-
 
     // Receiving and checking if all the data is present
     const data = await req.json();

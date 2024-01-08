@@ -3,8 +3,8 @@ import {
   ThrowNotFoundError,
   ThrowServerError,
   ThrowUnAuthorizedError,
-} from "@/libs/ResponseErrors";
-import { verifyUser } from "@/libs/VerifyUser";
+} from "@/libs/backend/ResponseErrors";
+import { verifyUser } from "@/libs/backend/VerifyUser";
 import { NextRequest, NextResponse } from "next/server";
 
 export const DELETE = async (

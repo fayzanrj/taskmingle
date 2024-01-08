@@ -1,7 +1,7 @@
 import { useSession } from "next-auth/react";
 
 const useHeaders = () => {
-  const { data: session } = useSession(); // Assuming useSession is a custom hook from your authentication package
+  const { data: session } = useSession(); 
 
   // Create headers object
   const headers = {

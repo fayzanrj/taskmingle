@@ -3,17 +3,12 @@ import {
   ThrowIncompleteError,
   ThrowServerError,
   ThrowUnAuthorizedError,
-} from "@/libs/ResponseErrors";
-import { verifyUser } from "@/libs/VerifyUser";
+} from "@/libs/backend/ResponseErrors";
+import { verifyUser } from "@/libs/backend/VerifyUser";
 import bcrypt from "bcryptjs";
 import { NextRequest, NextResponse } from "next/server";
 
-const checkData = (data: {
-  oldPassword: string;
-  newPassword: string;
-}): boolean => {
-  return !!(data.oldPassword && data.newPassword);
-};
+
 
 export const PUT = async (req: NextRequest) => {
   try {
@@ -27,9 +22,8 @@ export const PUT = async (req: NextRequest) => {
 
     // Receive and check if all the data is present
     const data = await req.json();
-    const isValid = checkData(data);
 
-    if (!isValid) {
+    if (!data.oldPassword || !data.newPassword) {
       return ThrowIncompleteError();
     }
 
