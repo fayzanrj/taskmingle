@@ -1,11 +1,8 @@
-import GoBack from "@/components/GoBack";
 import NoTaskFound from "@/components/tasks/NoTaskFound";
 import TaskForm from "@/components/tasks/addtask/TaskForm";
 import { getHeaders } from "@/libs/GetHeaders";
 import { TaskProps } from "@/props/TaskProps";
-import { authOptions } from "@/utilities/AuthOptions";
 import { Metadata } from "next";
-import { getServerSession } from "next-auth";
 import React from "react";
 
 interface Params {

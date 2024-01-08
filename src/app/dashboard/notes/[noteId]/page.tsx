@@ -1,4 +1,5 @@
 import GoBack from "@/components/GoBack";
+import RefreshPage from "@/components/RefreshPage";
 import NoteTextArea from "@/components/notes/NoteTextArea";
 import { getHeaders } from "@/libs/GetHeaders";
 import { NoteProps } from "@/props/NoteProps";
@@ -30,6 +31,7 @@ const NoteDetail = async ({ params }: { params: { noteId: string } }) => {
 
   return (
     <div className="relative">
+      <RefreshPage />
       {/* Go back Button */}
       <GoBack href="/dashboard/notes" />
 

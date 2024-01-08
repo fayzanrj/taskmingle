@@ -12,6 +12,7 @@ import React from "react";
 import prisma from "@/app/db";
 import { getSession } from "next-auth/react";
 import { Task } from "@prisma/client";
+import RefreshPage from "@/components/RefreshPage";
 
 const roboto = Roboto({ subsets: ["latin"], weight: "500" });
 
@@ -54,6 +55,7 @@ const TaskDetails = async ({ params }: { params: { taskId: string } }) => {
 
   return (
     <div className="w-full h-fit py-10 relative select-text">
+      <RefreshPage />
       {/* Button to go back */}
       <GoBack href="/dashboard/tasks" />
 
