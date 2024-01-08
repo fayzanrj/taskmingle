@@ -1,5 +1,4 @@
 import axios from "axios";
-import { getErrorMessage } from "../libs/GetErrorMessage";
 import toast from "react-hot-toast";
 
 export const previewUrl = async (
