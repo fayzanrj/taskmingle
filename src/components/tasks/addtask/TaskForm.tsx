@@ -1,5 +1,7 @@
 "use client";
-import { addZero, getDate, getTime } from "@/libs/GetFormattedData";
+import useHeaders from "@/hooks/useHeaders";
+import { getDate, getTime } from "@/libs/GetFormattedData";
+import { getTags } from "@/libs/GetTags";
 import { handleApiError } from "@/libs/handleApiError";
 import { TaskProps } from "@/props/TaskProps";
 import axios from "axios";
@@ -12,8 +14,6 @@ import AddTaskDateInput from "./AddTaskDateInput";
 import AddTaskTextArea from "./AddTaskTextArea";
 import AddTaskTextInput from "./AddTaskTextInput";
 import AddTaskTimeInput from "./AddTaskTimeInput";
-import useHeaders from "@/hooks/useHeaders";
-import { filterTags } from "@/libs/filterTags";
 
 // Task Form Interface
 interface TaskFormProps {
@@ -80,8 +80,8 @@ const TaskForm: React.FC<TaskFormProps> = ({
   };
 
   // Handle save function
-  const handleSubmit = async (e : React.FormEvent) => {
-    e.preventDefault()
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
     setIsLoading(true);
 
     // setting new task with user selected values
@@ -91,7 +91,7 @@ const TaskForm: React.FC<TaskFormProps> = ({
       startTime: startingTime,
       reminderAt: remindAt,
       date: new Date(selectedDate).toDateString(),
-      tags: filterTags(selectedTags),
+      tags: getTags(selectedTags),
       link: urlLink,
       status: "Pending",
     };
