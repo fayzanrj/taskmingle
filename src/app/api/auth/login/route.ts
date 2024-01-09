@@ -49,6 +49,7 @@ export const POST = async (req: NextRequest) => {
       email: user.email,
       profilePic: user.profilePic,
       isVerified: user.isVerified,
+      sendReminders : user.sendReminders
     };
 
     // signing access token
