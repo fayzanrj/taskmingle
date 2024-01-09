@@ -22,9 +22,9 @@ export function ReminderTemplate(props: CodeTemplateProps) {
         },
       }}
     >
-      <Head>
+      <head>
         <title>Code Verification Email</title>
-      </Head>
+      </head>
       <Container className="w-96 h-fit mx-auto p-2">
         {/* LOGO */}
         <div
