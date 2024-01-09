@@ -65,7 +65,7 @@ export const SendReminderEmail = async (
             </p>
       
             <p style="margin-top: 2rem; font-weight: bold; font-size: 1.1rem">
-              Task description <span style="font-weight: bold">${taskDesc}</span>
+              Task description : <span style="font-weight: bold">${taskDesc}</span>
             </p>
       
             <p style="margin-top: 5px; font-weight: bold; font-size: 1.1rem">
@@ -75,16 +75,17 @@ export const SendReminderEmail = async (
               }">${urlValue}</a> </span>
             </p>
       
-            <a href="${taskId}" >
+            <a href="${process.env.HOST}/dashboard/tasks/taskdetail/${taskId}" >
               <button
                 style="
-                  padding: 1rem 2rem;
+                  padding: .75rem 1.5rem;
                   font-size: 1rem;
                   border: none;
                   border-radius: 0.5rem;
-                  background-color: white;
+                  background-color: #19fa9a;
                   margin: 1rem 0 1rem 0;
                   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+                  color : black
                 "
               >
                 See task details
