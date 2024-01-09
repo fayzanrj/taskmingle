@@ -11,28 +11,6 @@ interface CodeTemplateProps {
   name: string;
 }
 export function CodeTemplate(props: CodeTemplateProps) {
-    const customStyles = `
-    .logo {
-      position: relative;
-      padding: 2px 13px 2px 10px;
-      margin-left: 10px;
-      color: black;
-      z-index: 999;
-    }
-
-    .logo::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      left: 0;
-      transform: skewX(-33deg);
-      background-color: #19fa9a;
-      border-radius: 0.5rem;
-      z-index: -1;
-    }
-  `;
   return (
     <Tailwind
       config={{
@@ -43,7 +21,6 @@ export function CodeTemplate(props: CodeTemplateProps) {
     >
       <Head>
         <title>Code Verification Email</title>
-        <style>{customStyles}</style>
       </Head>
       <Container className="w-96 h-fit mx-auto p-2">
         {/* LOGO */}

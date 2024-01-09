@@ -8,7 +8,9 @@ import { UserProps } from "@/props/UserProps";
 
 const SendRemindersBtn = ({ user }: { user: UserProps }) => {
   // Variable state
-  const [sendEmails, setSendEmails] = useState<boolean | null>(user.sendReminders);
+  const [sendEmails, setSendEmails] = useState<boolean | null>(
+    user.sendReminders
+  );
   const [isLoading, setIsLoading] = useState<boolean>(false);
   // Headers for Api request
   const headers = useHeaders();

@@ -1,10 +1,14 @@
 const nodemailer = require("nodemailer");
+import { render } from "@react-email/render";
+import { ReminderTemplate } from "./emailTemplates/ReminderTemplate";
 
-export const SendCodeEmail = async (
-  email: string,
+export const SendReminderEmail = async (
   name: string,
-  subject: string,
-  code: string
+  email: string,
+  taskTitle: string,
+  taskDesc: string,
+  taskId: string,
+  url: string | null
 ) => {
   try {
     const transporter = nodemailer.createTransport({
@@ -18,12 +22,23 @@ export const SendCodeEmail = async (
       },
     });
 
+    const reminderTemplate = render(
+      ReminderTemplate({
+        name: name,
+        taskTitle: taskTitle,
+        taskDesc: taskDesc,
+        taskId: taskId,
+        url: url === null || url === "" ? "N/A" : url,
+      })
+    );
+
     const emailSent = await transporter.sendMail({
       from: `"Task Notify" <${process.env.EMAIL}>`,
       to: email,
-      subject: subject,
-      html: `Hi ${name}, hope you are doing good. This is reminder that you scheduled for today`,
+      subject: "Task Reminder",
+      html: reminderTemplate,
     });
+    console.log(emailSent);
 
     return emailSent;
   } catch (error: any) {
