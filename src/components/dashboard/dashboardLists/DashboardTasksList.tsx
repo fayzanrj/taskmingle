@@ -8,6 +8,7 @@ import NoItemFound from "../../NoItemFound";
 import DashboardTasksListSkeleton from "../../skeletons/DashboardTasksListSkeleton";
 import RenderTags from "../../tasks/RenderTags";
 import DashboardList from "./DashboardList";
+import Link from "next/link";
 
 const DashboardTasksList: React.FC<{
   accessToken: string;
@@ -96,23 +97,26 @@ const DashboardTasksListItem: React.FC<TaskProps> = ({
   taskTitle,
   tags,
   taskDesc,
+  id,
 }) => {
   return (
-    <div className="min-w-[15rem] max-w-[15rem] h-44 p-3 rounded-lg border-[0.1rem] dark:border-[#1D1F21] bg-white dark:bg-[#1D1F21] overflow-hidden">
-      {/* Tags */}
-      <div className="mb-4 py-1 text-right overflow-hidden">
-        <RenderTags tags={tags.slice(0, 2) || []} />
+    <Link href={`/dashboard/tasks/taskdetail/${id}`}>
+      <div className="min-w-[15rem] max-w-[15rem] h-44 p-3 rounded-lg border-[0.1rem] dark:border-[#1D1F21] bg-white dark:bg-[#1D1F21] overflow-hidden">
+        {/* Tags */}
+        <div className="mb-4 py-1 text-right overflow-hidden">
+          <RenderTags tags={tags.slice(0, 2) || []} />
+        </div>
+
+        {/* Task title */}
+        <h2 className="w-full text-center text-2xl text-ellipsis font-semibold overflow-hidden whitespace-nowrap">
+          {taskTitle}
+        </h2>
+
+        {/* Task Description */}
+        <p className="mt-2 mb-1 px-5 py-2 text-sm text-left text-ellipsis break-words">
+          {taskDesc.slice(0, 50) + (taskDesc.length > 50 ? "....." : ".")}
+        </p>
       </div>
-
-      {/* Task title */}
-      <h2 className="w-full text-center text-2xl text-ellipsis font-semibold overflow-hidden whitespace-nowrap">
-        {taskTitle}
-      </h2>
-
-      {/* Task Description */}
-      <p className="mt-2 mb-1 px-5 py-2 text-sm text-left text-ellipsis break-words">
-        {taskDesc.slice(0, 50) + (taskDesc.length > 50 ? "....." : ".")}
-      </p>
-    </div>
+    </Link>
   );
 };

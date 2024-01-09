@@ -8,19 +8,19 @@ datasource db {
 }
 
 model User {
-  id            String       @id @default(auto()) @map("_id") @db.ObjectId
+  id            String         @id @default(auto()) @map("_id") @db.ObjectId
   name          String
-  email         String       @unique
+  email         String         @unique
   password      String
-  isVerified    Boolean?     @default(false)
-  sendReminders Boolean?     @default(false)
-  profilePic    String?      @default("https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg")
-  createdAt     DateTime?    @default(now())
-  updatedAt     DateTime     @updatedAt
-  tasks         Task[]       @relation("createdByUser")
-  codes         Code[]       @relation("createdByUser")
-  watchlater    WatchLater[] @relation("createdByUser")
-  notes         Note[]       @relation("createdByUser")
+  isVerified    Boolean?       @default(false)
+  sendReminders Boolean?       @default(false)
+  profilePic    String?        @default("https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg")
+  createdAt     DateTime?      @default(now())
+  updatedAt     DateTime       @updatedAt
+  tasks         Task[]         @relation("createdByUser")
+  codes         Code[]         @relation("createdByUser")
+  watchlater    WatchLater[]   @relation("createdByUser")
+  notes         Note[]         @relation("createdByUser")
 }
 
 model Task {

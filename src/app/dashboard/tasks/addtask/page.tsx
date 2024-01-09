@@ -1,3 +1,4 @@
+import Message from "@/components/tasks/addtask/Message";
 import TaskForm from "@/components/tasks/addtask/TaskForm";
 import { Metadata, NextPage } from "next";
 
@@ -6,7 +7,12 @@ export const metadata: Metadata = {
 };
 
 const AddTask: NextPage = () => {
-  return <TaskForm variant="ADD" />;
+  return (
+    <div className="relative">
+      <Message/>
+      <TaskForm variant="ADD" />;
+    </div>
+  );
 };
 
 export default AddTask;

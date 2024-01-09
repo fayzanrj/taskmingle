@@ -59,7 +59,7 @@ const TopBar = ({ message }: { message: string }) => {
         {message}
       </p>
       {/* NOTIFICATIONS */}
-      <Notifications />
+      {/* <Notifications /> */}
     </div>
   );
 };

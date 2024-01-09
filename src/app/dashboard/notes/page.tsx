@@ -12,8 +12,8 @@ const Notes: NextPage = async () => {
   const headers = await getHeaders();
 
   const response = await fetch(`${process.env.HOST}/api/notes/getAllNotes`, {
-    headers,
     cache: "no-cache",
+    headers
   });
   const res = await response.json();
   const notes: NoteProps[] = res.notes;
