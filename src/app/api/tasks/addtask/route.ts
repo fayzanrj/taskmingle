@@ -1,22 +1,24 @@
-import { verifyJwt } from "@/utilities/Jwt";
-import { ThrowIncompleteError, ThrowServerError, ThrowUnAuthorizedError } from "@/libs/backend/ResponseErrors";
+import prisma from "@/app/db";
+import {
+  ThrowIncompleteError,
+  ThrowServerError,
+  ThrowUnAuthorizedError,
+} from "@/libs/backend/ResponseErrors";
+import { verifyUser } from "@/libs/backend/VerifyUser";
 import { TaskProps } from "@/props/TaskProps";
 import { NextRequest, NextResponse } from "next/server";
-import prisma from "@/app/db";
-import { verifyUser } from "@/libs/backend/VerifyUser";
 
 const checkData = (data: TaskProps): boolean => {
-  const {
-    date,
-    reminderAt,
-    startTime,
-    status,
-    tags,
-    taskDesc,
-    taskTitle,
-  } = data;
+  const { date, reminderAt, startsAt, status, tags, taskDesc, taskTitle } =
+    data;
   return !!(
-    date || reminderAt || startTime || status || tags || taskDesc || taskTitle
+    date ||
+    reminderAt ||
+    startsAt ||
+    status ||
+    tags ||
+    taskDesc ||
+    taskTitle
   );
 };
 
@@ -30,7 +32,6 @@ export const POST = async (req: NextRequest) => {
       return ThrowUnAuthorizedError();
     }
 
-
     // Receive and check if all the data is present
     const data = await req.json();
     const isValid = checkData(data);
@@ -39,8 +40,16 @@ export const POST = async (req: NextRequest) => {
       return ThrowIncompleteError();
     }
 
+    const userDetails = await prisma.user.findUnique({
+      where: { id: user.id },
+    });
+
+    if (!userDetails) {
+      throw ThrowUnAuthorizedError();
+    }
     // Add creator ID to data
     data.createdById = user.id;
+    data.sendReminder = userDetails.sendReminders;
 
     // Create task in the database
     const task = await prisma.task.create({ data });

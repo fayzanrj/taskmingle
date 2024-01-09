@@ -27,7 +27,12 @@ export const POST = async (req: NextRequest) => {
     // updating isVerified in user's database
     const user = await prisma.user.update({
       where: { id: data.userId },
-      data: { isVerified: true },
+      data: { isVerified: true, sendReminders: true },
+    });
+
+    const tasks = await prisma.task.updateMany({
+      where: { createdById: data.userId },
+      data: { sendReminder: true },
     });
 
     // deleting code

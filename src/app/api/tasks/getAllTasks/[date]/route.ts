@@ -27,7 +27,7 @@ export const GET = async (
         date: params.date,
       },
       orderBy: {
-        startTime: "asc",
+        startsAt: "asc",
       },
     });
 

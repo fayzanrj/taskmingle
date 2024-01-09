@@ -1,5 +1,3 @@
-import { CodeTemplate } from "@/utilities/emailTemplates/CodeTemplate";
-import { render } from "@react-email/render";
 const nodemailer = require("nodemailer");
 
 export const SendCodeEmail = async (
@@ -20,13 +18,11 @@ export const SendCodeEmail = async (
       },
     });
 
-    const codeTemplateHtml = render(CodeTemplate({ code: code, name: name }));
-
     const emailSent = await transporter.sendMail({
       from: `"Task Notify" <${process.env.EMAIL}>`,
       to: email,
       subject: subject,
-      html: codeTemplateHtml,
+      html: `Hi ${name}, hope you are doing good. This is reminder that you scheduled for today`,
     });
 
     return emailSent;

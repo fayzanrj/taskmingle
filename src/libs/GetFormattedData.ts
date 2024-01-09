@@ -4,9 +4,9 @@ export const addZero = (item: number): string => {
 };
 
 // Function to get time for edit task input field
-export const getTime = (date: string, time: string): string => {
-  const hours = addZero(new Date(`${date} ${time}`).getHours());
-  const minutes = addZero(new Date(`${date} ${time}`).getMinutes());
+export const getTime = (time: Date): string => {
+  const hours = addZero(new Date(time).getHours());
+  const minutes = addZero(new Date(time).getMinutes());
 
   return `${hours}:${minutes}`;
 };

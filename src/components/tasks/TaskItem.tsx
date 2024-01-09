@@ -19,7 +19,7 @@ const getCurrentStatus = (date: string, taskStatus: TaskStatus) => {
 const TaskItem: React.FC<TaskProps> = ({
   taskTitle,
   taskDesc,
-  startTime,
+  startsAt,
   id,
   status,
   date,
@@ -47,7 +47,7 @@ const TaskItem: React.FC<TaskProps> = ({
 
             {/* Task Start Time */}
             <p className="text-right">
-              {new Date(`${date} ${startTime}`).toLocaleTimeString([], {
+              {startsAt && new Date(startsAt).toLocaleTimeString([], {
                 hour: "2-digit",
                 minute: "2-digit",
               })}

@@ -4,8 +4,8 @@ export interface TaskProps {
   taskDesc: string;
   tags: string[];
   date: string;
-  startTime: string;
-  reminderAt: string;
+  startsAt: Date;
+  reminderAt: Date;
   status: "Pending" | "Completed" | "Overdue";
   link?: string;
 }

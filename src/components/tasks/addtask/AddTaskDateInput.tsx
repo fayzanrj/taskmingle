@@ -42,7 +42,6 @@ const calculateMaxDate = () => {
   }
 
   const newDate = `${year}-${addZero(month + 1)}-${addZero(day)}`;
-  console.log(newDate);
   return newDate;
 };
 

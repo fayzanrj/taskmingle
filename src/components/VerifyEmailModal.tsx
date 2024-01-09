@@ -52,7 +52,12 @@ const VerifyEmailModal: React.FC<VerifyEmailModalProps> = ({
         router.push("/login");
       } else {
         // If modal is being used in profile
-        setUser && setUser((prev) => ({ ...prev, isVerified: true })); // Updating user state's isVerified
+        setUser &&
+          setUser((prev) => ({
+            ...prev,
+            isVerified: true,
+            sendReminders: true,
+          })); 
       }
       setState(false); // Closing Modal
     } catch (error: any) {

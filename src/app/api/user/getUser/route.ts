@@ -27,6 +27,7 @@ export const GET = async (req: NextRequest) => {
         email: true,
         profilePic: true,
         isVerified: true,
+        sendReminders : true,
       },
     });
 

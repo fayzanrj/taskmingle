@@ -14,6 +14,7 @@ import AddTaskDateInput from "./AddTaskDateInput";
 import AddTaskTextArea from "./AddTaskTextArea";
 import AddTaskTextInput from "./AddTaskTextInput";
 import AddTaskTimeInput from "./AddTaskTimeInput";
+import { getTaskScheduleInfo } from "@/libs/getTaskScheduleInfo";
 
 // Task Form Interface
 interface TaskFormProps {
@@ -22,8 +23,8 @@ interface TaskFormProps {
   taskDesc?: string;
   tags?: string[];
   date?: string;
-  startTime?: string;
-  reminderAt?: string;
+  startsAt?: Date;
+  reminderAt?: Date;
   status?: string;
   link?: string;
   variant: "EDIT" | "ADD";
@@ -36,7 +37,7 @@ const TaskForm: React.FC<TaskFormProps> = ({
   taskDesc,
   tags,
   reminderAt,
-  startTime,
+  startsAt,
   date,
   variant,
   link,
@@ -56,11 +57,11 @@ const TaskForm: React.FC<TaskFormProps> = ({
   );
   // Start time state
   const [startingTime, setStartingTime] = useState<string>(
-    date && startTime ? getTime(date, startTime) : ""
+    date && startsAt ? getTime(startsAt) : ""
   );
   // Remind time state
   const [remindAt, setRemindAt] = useState<string>(
-    date && reminderAt ? getTime(date, reminderAt) : ""
+    date && reminderAt ? getTime(reminderAt) : ""
   );
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -88,8 +89,8 @@ const TaskForm: React.FC<TaskFormProps> = ({
     const task: TaskProps = {
       taskTitle: title,
       taskDesc: desc,
-      startTime: startingTime,
-      reminderAt: remindAt,
+      startsAt: getTaskScheduleInfo(selectedDate, startingTime),
+      reminderAt: getTaskScheduleInfo(selectedDate, remindAt),
       date: new Date(selectedDate).toDateString(),
       tags: getTags(selectedTags),
       link: urlLink,

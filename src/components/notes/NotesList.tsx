@@ -10,9 +10,9 @@ import NotesSkeleton from "../skeletons/NotesSkeleton";
 import NotesActionBtns from "./NotesActionBtns";
 import NotesListItem from "./NotesListItem";
 
-const NotesList: React.FC = () => {
-  const [allNotes, setAllNotes] = useState<NoteProps[]>([]);
-  const [isRefreshing, setIsRefreshing] = useState<boolean>(true);
+const NotesList = ({ notes }: { notes: NoteProps[] }) => {
+  const [allNotes, setAllNotes] = useState<NoteProps[]>(notes);
+  const [isRefreshing, setIsRefreshing] = useState<boolean>(false);
   const headers = useHeaders();
 
   // Fuction to fetch latest notes
@@ -27,10 +27,6 @@ const NotesList: React.FC = () => {
       setIsRefreshing(false);
     }
   };
-
-  useEffect(() => {
-    handleRefresh();
-  }, []);
 
   // Props to pass to Notes action button in an object instead of writing evertime
   const NotesActionBtnsProps = {

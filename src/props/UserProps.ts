@@ -1,7 +1,8 @@
 export interface UserProps {
-  id : string,
+  id: string;
   name: string;
   email: string;
   profilePic: string | null;
   isVerified: boolean | null;
+  sendReminders: boolean;
 }

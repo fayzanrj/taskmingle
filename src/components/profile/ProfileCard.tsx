@@ -17,6 +17,7 @@ const userEmptyObject = {
   email: "",
   profilePic: "",
   isVerified: false,
+  sendReminders : false
 };
 
 const ProfileCard: React.FC = () => {
@@ -82,7 +83,7 @@ const ProfileCard: React.FC = () => {
       <ChangePasswordButton />
 
       {/* Send emails toggle button */}
-      <SendRemindersBtn sendReminders={false} />
+      <SendRemindersBtn user={user}  />
     </div>
   );
 };

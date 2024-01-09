@@ -93,14 +93,14 @@ const TaskDetails = async ({ params }: { params: { taskId: string } }) => {
 
         {/* Start time */}
         <FormattedDateTime
-          info={`${task?.date} ${task?.startTime}`}
+          info={task?.startsAt}
           variant="time"
           label="Start time"
         />
 
         {/* Reminder time */}
         <FormattedDateTime
-          info={`${task?.date} ${task?.reminderAt}`}
+          info={task?.reminderAt}
           variant="time"
           label="Reminder Time"
         />
@@ -129,7 +129,7 @@ export default TaskDetails;
 // Formatted date time component interface
 interface FormattedDateTimeProps {
   label: "Start time" | "Reminder Time" | "Date";
-  info: string;
+  info: any;
   variant: "time" | "date";
 }
 
