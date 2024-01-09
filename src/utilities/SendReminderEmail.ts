@@ -1,6 +1,5 @@
 const nodemailer = require("nodemailer");
 import { render } from "@react-email/render";
-import { ReminderTemplate } from "./emailTemplates/ReminderTemplate";
 
 export const SendReminderEmail = async (
   name: string,
@@ -22,21 +21,89 @@ export const SendReminderEmail = async (
       },
     });
 
-    const reminderTemplate = render(
-      ReminderTemplate({
-        name: name,
-        taskTitle: taskTitle,
-        taskDesc: taskDesc,
-        taskId: taskId,
-        url: url === null || url === "" ? "N/A" : url,
-      })
-    );
+    const urlValue = url === null || url === "" ? "N/A" : url;
 
     const emailSent = await transporter.sendMail({
       from: `"Task Notify" <${process.env.EMAIL}>`,
       to: email,
       subject: "Task Reminder",
-      html: reminderTemplate,
+      html: `<!DOCTYPE html>
+      <html lang="en">
+        <head>
+          <meta charset="UTF-8" />
+          <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+          <title>Document</title>
+        </head>
+        <body>
+          <div style="font-family: sans-serif">
+            <div style="font-weight: bold; font-weight: 500; font-size: 1.25rem">
+              <p>task<span style="color: #19fa9a">notify</span></p>
+            </div>
+      
+            <p
+              style="
+                margin-top: 5px;
+                margin-bottom: 2rem;
+                font-weight: 500;
+                font-size: 1.1rem;
+              "
+            >
+              Hi ${name}, hope you are doing great. You are recieving this email as a
+              reminder for your task that you added in your tasks list. Details of the
+              task are as below
+            </p>
+      
+            <p
+              style="
+                width: fit-content;
+                margin: 5px auto 5px auto;
+                font-size: 2rem;
+                font-weight: bold;
+              "
+            >
+              ${taskTitle}
+            </p>
+      
+            <p style="margin-top: 2rem; font-weight: bold; font-size: 1.1rem">
+              Task description <span style="font-weight: bold">${taskDesc}</span>
+            </p>
+      
+            <p style="margin-top: 5px; font-weight: bold; font-size: 1.1rem">
+              Attached link:
+              <span style="font-weight: 500"> <a href="${
+                urlValue === "N/A" ? "" : url
+              }">${urlValue}</a> </span>
+            </p>
+      
+            <a href="${taskId}" >
+              <button
+                style="
+                  padding: 1rem 2rem;
+                  font-size: 1rem;
+                  border: none;
+                  border-radius: 0.5rem;
+                  background-color: white;
+                  margin: 1rem 0 1rem 0;
+                  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+                "
+              >
+                See task details
+              </button>
+            </a>
+      
+            <p style="margin-top: 5px; font-weight: bold; font-size: 1.1rem">
+              Note:
+              <span style="font-weight: 500"
+                >If you did not schedule this task, kindl change your password ASAP.
+                If you face any issue feel free to reply us on this email</span
+              >
+            </p>
+            <p>Regards,</p>
+            <p>taskNotify</p>
+          </div>
+        </body>
+      </html>
+      `,
     });
     console.log(emailSent);
 
