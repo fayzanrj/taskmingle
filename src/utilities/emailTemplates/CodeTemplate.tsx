@@ -1,9 +1,6 @@
-import React from "react";
-import Logo from "../../components/Logo";
+import { Body, Container, Head, Html, Text } from "@react-email/components";
 import { Tailwind } from "@react-email/tailwind";
-import { Container, Text, Head, Body } from "@react-email/components";
 import { Montserrat } from "next/font/google";
-import { Html } from "next/document";
 
 const montserrat = Montserrat({ subsets: ["latin"] });
 
