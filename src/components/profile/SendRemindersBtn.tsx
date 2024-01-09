@@ -8,7 +8,7 @@ import { UserProps } from "@/props/UserProps";
 
 const SendRemindersBtn = ({ user }: { user: UserProps }) => {
   // Variable state
-  const [sendEmails, setSendEmails] = useState<boolean>(user.sendReminders);
+  const [sendEmails, setSendEmails] = useState<boolean | null>(user.sendReminders);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   // Headers for Api request
   const headers = useHeaders();
@@ -44,7 +44,7 @@ const SendRemindersBtn = ({ user }: { user: UserProps }) => {
         <input
           id="toggle"
           type="checkbox"
-          checked={sendEmails}
+          checked={sendEmails !== null ? sendEmails : false}
           onChange={toggleSendEmails}
           className="toggle-input"
           disabled={isLoading || !user.isVerified}

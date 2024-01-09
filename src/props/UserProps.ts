@@ -4,5 +4,5 @@ export interface UserProps {
   email: string;
   profilePic: string | null;
   isVerified: boolean | null;
-  sendReminders: boolean;
+  sendReminders: boolean | null;
 }
