@@ -34,7 +34,8 @@ export const GET = async (req: NextRequest) => {
           task.taskTitle,
           task.taskDesc,
           task.id,
-          task.link
+          task.link,
+          task.status
         );
       }
 

@@ -7,7 +7,8 @@ export const SendReminderEmail = async (
   taskTitle: string,
   taskDesc: string,
   taskId: string,
-  url: string | null
+  url: string | null,
+  status: string
 ) => {
   try {
     const transporter = nodemailer.createTransport({
@@ -65,7 +66,10 @@ export const SendReminderEmail = async (
             </p>
       
             <p style="margin-top: 2rem; font-weight: bold; font-size: 1.1rem">
-              Task description : <span style="font-weight: bold">${taskDesc}</span>
+              Task description : <span style="font-weight: 500">${taskDesc}</span>
+            </p>
+            <p style="margin-top: 2rem; font-weight: bold; font-size: 1.1rem">
+              Current Status : <span style="font-weight: 500">${status}</span>
             </p>
       
             <p style="margin-top: 5px; font-weight: bold; font-size: 1.1rem">
@@ -92,10 +96,10 @@ export const SendReminderEmail = async (
               </button>
             </a>
       
-            <p style="margin-top: 5px; font-weight: bold; font-size: 1.1rem">
+            <p style="margin-top: 10px; font-weight: bold; font-size: 0.8rem">
               Note:
-              <span style="font-weight: 500"
-                >If you did not schedule this task, kindl change your password ASAP.
+              <span style="font-weight: 500; font-size: 0.7rem "
+                >If you did not schedule this task, kindly change your password ASAP.
                 If you face any issue feel free to reply us on this email</span
               >
             </p>
