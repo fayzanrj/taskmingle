@@ -6,7 +6,7 @@ const roboto = Roboto({ subsets: ["latin"], weight: "500" });
 // Formatted date time component interface
 interface FormattedDateTimeProps {
   label: "Start time" | "Reminder Time" | "Date";
-  info: any;
+  info: string | Date;
   variant: "time" | "date";
 }
 
@@ -34,4 +34,4 @@ const FormattedDateTime: React.FC<FormattedDateTimeProps> = ({
   );
 };
 
-export default FormattedDateTime
+export default FormattedDateTime;

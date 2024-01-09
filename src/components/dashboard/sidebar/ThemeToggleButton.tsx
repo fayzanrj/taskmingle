@@ -1,7 +1,6 @@
 "use client";
 import { AppContext } from "@/context/AppContext";
 import { useContext } from "react";
-import toast from "react-hot-toast";
 import { FaMoon } from "react-icons/fa";
 import { IoSunny } from "react-icons/io5";
 

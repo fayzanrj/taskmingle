@@ -5,10 +5,12 @@ import FetchError from "../../FetchError";
 import NoItemFound from "../../NoItemFound";
 import DashboardList from "./DashboardList";
 
-const DashboardWatchList = ({
-  watchLater,
-}: {
+// Dasboard watch later list interface
+interface DashboardWatchListProps {
   watchLater: WatchLaterProps[] | undefined;
+}
+const DashboardWatchList: React.FC<DashboardWatchListProps> = ({
+  watchLater,
 }) => {
   // Variable States
   const [initialWatchLater, setInitialWatchLater] = useState<

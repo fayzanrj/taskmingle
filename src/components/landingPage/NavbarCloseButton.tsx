@@ -1,8 +1,16 @@
 import React from "react";
 
-const NavbarCloseButton = ({ toggleNavbar }: { toggleNavbar: () => void }) => {
+// Navbar close button interface
+interface NavbarCloseButtonProps {
+  toggleNavbar: () => void;
+}
+
+const NavbarCloseButton: React.FC<NavbarCloseButtonProps> = ({
+  toggleNavbar,
+}) => {
   return (
     <button
+      aria-label="close-navbar-button"
       className="text-black dark:text-white md:hidden absolute top-10 right-5"
       onClick={toggleNavbar}
     >

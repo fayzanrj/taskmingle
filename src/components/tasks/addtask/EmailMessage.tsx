@@ -3,7 +3,7 @@ import NavbarCloseButton from "@/components/landingPage/NavbarCloseButton";
 import React, { useLayoutEffect, useState } from "react";
 import { IoMdClose } from "react-icons/io";
 
-const Message = () => {
+const EmailMessage = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   useLayoutEffect(() => {
@@ -47,4 +47,4 @@ const Message = () => {
   );
 };
 
-export default Message;
+export default EmailMessage;

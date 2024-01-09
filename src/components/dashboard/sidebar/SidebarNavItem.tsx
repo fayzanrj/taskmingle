@@ -9,6 +9,7 @@ import React from "react";
 interface SidebarNavItemProps extends SidebarNavProps {
   toggleSidebar: () => void;
 }
+
 const SidebarNavItem: React.FC<SidebarNavItemProps> = ({
   text,
   href,

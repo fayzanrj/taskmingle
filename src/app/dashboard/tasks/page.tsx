@@ -11,11 +11,12 @@ export const metadata: Metadata = {
 
 const Tasks: NextPage = async () => {
   const data = await getServerSession(authOptions);
-
+  // @ts-ignore
+  const accessToken = data?.user?.accessToken;
+  
   return (
     <>
-      {/* @ts-ignore */}
-      <TaskPanel accessToken={data?.user?.accessToken} />
+      <TaskPanel accessToken={accessToken} />
       <AddTaskBtnRound />
     </>
   );

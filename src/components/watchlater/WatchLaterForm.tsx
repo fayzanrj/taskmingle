@@ -16,6 +16,7 @@ const WatchLaterForm = () => {
   const [image, setImage] = useState<string>("");
   const [note, setNote] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isPreviewing, setIsPreviewing] = useState<boolean>(false);
 
   // Function to make all states an empty string
   const clearStates = () => {
@@ -37,11 +38,14 @@ const WatchLaterForm = () => {
   // Handle blur function i.e. previews url
   const handleBlur = async (e: React.FormEvent<HTMLInputElement>) => {
     try {
+      setIsPreviewing(true);
       const { title, img } = await previewUrl(e.currentTarget.value);
       setTitle(title);
       setImage(img);
     } catch (error: any) {
       console.log(error);
+    } finally {
+      setIsPreviewing(false);
     }
   };
 
@@ -84,7 +88,7 @@ const WatchLaterForm = () => {
         onSubmit={handleSubmit}
       >
         {/* Preview */}
-        <PreviewSection title={title} url={url} image={image} />
+        <PreviewSection title={title} url={url} image={image} isPreviewing={isPreviewing} />
 
         <section className="w-11/12 sm:w-96 mx-auto mt-5">
           {/* URL Input */}

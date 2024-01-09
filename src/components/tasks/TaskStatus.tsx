@@ -30,11 +30,17 @@ const getUpdatedStatus = (date: string, taskStatus: TaskStatus): TaskStatus => {
   return currentDate <= new Date(date) ? "Pending" : "Overdue";
 };
 
-const TaskStatus = ({ taskId, date }: { taskId: string; date: string }) => {
+// Task status interface
+interface TaskStatusProps {
+  taskId: string;
+  date: string;
+}
+
+const TaskStatus: React.FC<TaskStatusProps> = ({ taskId, date }) => {
   // Variable States
   const [taskStatus, setTaskStatus] = useState<TaskStatus>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [isFetchingStatus, setIsFetchingStatus] = useState<boolean>(true)
+  const [isFetchingStatus, setIsFetchingStatus] = useState<boolean>(true);
 
   // Headers for API request
   const headers = useHeaders();

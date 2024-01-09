@@ -2,9 +2,7 @@ import FetchError from "@/components/FetchError";
 import NoItemFound from "@/components/NoItemFound";
 import { getHeaders } from "@/libs/GetHeaders";
 import { TaskProps } from "@/props/TaskProps";
-import { authOptions } from "@/utilities/AuthOptions";
 import { Metadata, NextPage } from "next";
-import { getServerSession } from "next-auth";
 
 export const metadata: Metadata = {
   title: "Completed Tasks",
@@ -33,50 +31,55 @@ const CompletedTasks: NextPage = async () => {
       </div>
     );
   }
-  return (
-      <TasksTable tasks={tasks} />
-  );
+  return <TasksTable tasks={tasks} />;
 };
+
 export default CompletedTasks;
 
-const TasksTable = ({tasks}:{tasks : TaskProps[]}) => (
-  <table className="min-w-full  border border-t-0 border-[#323232] text-center">
-      {/* Headers for table */}
-      <thead>
-        <tr>
-          {/* Date */}
-          <th className="w-1/4 py-2 px-4 text-xl font-bold border-b border-[#323232]">
-            Date
-          </th>
-          {/* Tilte */}
-          <th className="w-2/4 py-2 px-4 text-xl font-bold border-b border-[#323232]">
-            Task Title
-          </th>
-          {/* Status */}
-          <th className="w-1/4 py-2 px-4 text-xl font-bold border-b border-[#323232]">
-            Status
-          </th>
-        </tr>
-      </thead>
+// Task Table interface
+interface TaskTableProps {
+  tasks: TaskProps[];
+}
 
-      {/* Table data  */}
-      <tbody>
-        {tasks.map((task: TaskProps, index: number) => (
-          <tr key={index}>
-            {/* Task date */}
-            <td className="w-1/4 py-2 px-4 font-semibold border-b border-r border-[#323232]">
-              {task.date}
-            </td>
-            {/* Task Title */}
-            <td className="w-2/4 py-2 px-4 font-semibold border-b border-r border-[#323232]">
-              {task.taskTitle}
-            </td>
-            {/* Task Status */}
-            <td className="w-1/4 py-2 px-4 font-semibold border-b border-[#323232]">
-              {task.status}
-            </td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
-)
+// Task Table Component
+const TasksTable: React.FC<TaskTableProps> = ({ tasks }) => (
+  <table className="min-w-full  border border-t-0 border-[#323232] text-center">
+    {/* Headers for table */}
+    <thead>
+      <tr>
+        {/* Date */}
+        <th className="w-1/4 py-2 px-4 text-xl font-bold border-b border-[#323232]">
+          Date
+        </th>
+        {/* Tilte */}
+        <th className="w-2/4 py-2 px-4 text-xl font-bold border-b border-[#323232]">
+          Task Title
+        </th>
+        {/* Status */}
+        <th className="w-1/4 py-2 px-4 text-xl font-bold border-b border-[#323232]">
+          Status
+        </th>
+      </tr>
+    </thead>
+
+    {/* Table data  */}
+    <tbody>
+      {tasks.map((task: TaskProps, index: number) => (
+        <tr key={index}>
+          {/* Task date */}
+          <td className="w-1/4 py-2 px-4 font-semibold border-b border-r border-[#323232]">
+            {task.date}
+          </td>
+          {/* Task Title */}
+          <td className="w-2/4 py-2 px-4 font-semibold border-b border-r border-[#323232]">
+            {task.taskTitle}
+          </td>
+          {/* Task Status */}
+          <td className="w-1/4 py-2 px-4 font-semibold border-b border-[#323232]">
+            {task.status}
+          </td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+);

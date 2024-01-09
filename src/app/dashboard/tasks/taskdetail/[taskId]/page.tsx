@@ -8,15 +8,19 @@ import TaskStatus from "@/components/tasks/TaskStatus";
 import { getHeaders } from "@/libs/GetHeaders";
 import { updateTaskStatus } from "@/libs/UpdateTaskStatus";
 import { TaskProps } from "@/props/TaskProps";
-import { Metadata } from "next";
-import { getSession } from "next-auth/react";
+import { Metadata, NextPage } from "next";
 
 export const metadata: Metadata = {
   title: "Task Details",
 };
 
-const TaskDetails = async ({ params }: { params: { taskId: string } }) => {
-  const data = getSession();
+
+// Task details interface
+interface TaskDetailsProps {
+  params: { taskId: string };
+}
+
+const TaskDetails: NextPage<TaskDetailsProps> = async ({ params }) => {
   // HEADERS FOR API REQUEST
   const headers = await getHeaders();
 

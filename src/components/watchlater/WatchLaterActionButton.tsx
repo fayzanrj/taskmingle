@@ -67,6 +67,7 @@ const SectionToggleButton: React.FC<SectionToggleButtonProps> = ({
   isOpen,
 }) => (
   <button
+    aria-label="section-toggle-button"
     className="w-[16rem] h-10 rounded-lg bg-white dark:bg-[#1D1F21] shadow-lg drop-shadow-lg"
     onClick={handleClick}
   >

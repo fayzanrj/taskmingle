@@ -63,7 +63,7 @@ export const POST = async (req: NextRequest) => {
     }
 
     // Sending email with verification code
-    const sentEmail = await SendCodeEmail(
+    await SendCodeEmail(
       code.userEmail,
       newUser.name,
       "Verification of account",

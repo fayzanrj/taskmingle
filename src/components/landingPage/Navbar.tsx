@@ -51,12 +51,15 @@ const Navbar: React.FC = () => {
 };
 
 // Navbar Item
-const NavBarItem: React.FC<NavbarLinkProps> = ({ text, href, className }) => (
-  <li className="my-10 md:my-1 md:mx-5 text-lg block md:inline-block  font-semibold">
-    <Link href={href} className={className}>
-      {text}
-    </Link>
-  </li>
-);
+const NavBarItem: React.FC<NavbarLinkProps> = ({ text, href, className }) => {
+  console.log({text, className})
+  return (
+    <li className={`my-10 md:my-1 md:mx-5 text-lg block md:inline-block font-semibold`}>
+      <Link href={href} className={className}>
+        {text}
+      </Link>
+    </li>
+  );
+};
 
 export default Navbar;

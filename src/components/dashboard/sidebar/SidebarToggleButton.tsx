@@ -1,11 +1,13 @@
 import { IoIosArrowDropleft } from "react-icons/io";
 
-const SidebarToggleButton = ({
-  toggleSidebar,
-  isSidebarOpen,
-}: {
+interface SidebarToggleButtonProps {
   isSidebarOpen: boolean;
   toggleSidebar: () => void;
+}
+
+const SidebarToggleButton: React.FC<SidebarToggleButtonProps> = ({
+  toggleSidebar,
+  isSidebarOpen,
 }) => {
   return (
     <button

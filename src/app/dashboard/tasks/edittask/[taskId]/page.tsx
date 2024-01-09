@@ -2,18 +2,19 @@ import NoTaskFound from "@/components/tasks/NoTaskFound";
 import TaskForm from "@/components/tasks/addtask/TaskForm";
 import { getHeaders } from "@/libs/GetHeaders";
 import { TaskProps } from "@/props/TaskProps";
-import { Metadata } from "next";
+import { Metadata, NextPage } from "next";
 import React from "react";
-
-interface Params {
-  taskId: string;
-}
 
 export const metadata: Metadata = {
   title: "Edit task",
 };
 
-const EditTask: React.FC<{ params: Params }> = async ({ params }) => {
+// Task edit interface
+interface TaskEditProps {
+  params: { taskId: string };
+}
+
+const EditTask: NextPage<TaskEditProps> = async ({ params }) => {
   // If id provided is not of 24 chars
   if (params.taskId.length !== 24) {
     return <NoTaskFound />;

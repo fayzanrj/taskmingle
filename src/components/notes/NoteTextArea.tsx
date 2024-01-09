@@ -3,7 +3,13 @@ import { useState } from "react";
 import ScreenActivityLoader from "../ScreenActivityLoader";
 import NoteTextAreaActionBtns from "./NoteTextAreaActionBtns";
 
-const NoteTextArea = ({ id, content }: { id: string; content: string }) => {
+// Note textarea interface
+interface NoteTextAreaProps {
+  id: string;
+  content: string;
+}
+
+const NoteTextArea: React.FC<NoteTextAreaProps> = ({ id, content }) => {
   // Variable states
   const [noteContent, setNoteContent] = useState<string>(content);
   const [isLoading, setIsLoading] = useState<boolean>(false);

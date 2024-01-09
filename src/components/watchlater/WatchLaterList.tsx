@@ -10,11 +10,12 @@ import FetchError from "../FetchError";
 import NoItemFound from "../NoItemFound";
 import WatchLaterListItem from "./WatchLaterListItem";
 
-const WatchLaterList = ({
-  watchLaters,
-}: {
+// Watch later list interface
+interface WatchLaterListProps {
   watchLaters: WatchLaterProps[];
-}) => {
+}
+
+const WatchLaterList: React.FC<WatchLaterListProps> = ({ watchLaters }) => {
   const [watchLaterList, setWatchLaterList] =
     useState<WatchLaterProps[]>(watchLaters);
   const [isLoading, setIsLoading] = useState<boolean>(false);

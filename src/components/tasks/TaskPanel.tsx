@@ -4,10 +4,15 @@ import { fetchTasks } from "@/libs/FetchTasks";
 import { getInitialDate } from "@/libs/GetInitialDate";
 import { handleApiError } from "@/libs/handleApiError";
 import { TaskProps } from "@/props/TaskProps";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import TasksList from "./TasksList";
 
-const TaskPanel = ({ accessToken }: { accessToken: string }) => {
+// Task Panel interface
+interface TaskPanelProps {
+  accessToken: string;
+}
+
+const TaskPanel: React.FC<TaskPanelProps> = ({ accessToken }) => {
   // Variable states
   const [tasks, setTasks] = useState<TaskProps[] | undefined>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);

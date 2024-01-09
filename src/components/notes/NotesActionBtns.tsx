@@ -6,11 +6,12 @@ import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import ActivityLoader from "../ActivityLoader";
 
-// Notes action button props
+// Notes action button interface
 interface NotesActionBtnsProps {
   isRefreshing: boolean;
   handleRefresh: () => void;
 }
+
 const NotesActionBtns: React.FC<NotesActionBtnsProps> = ({
   isRefreshing,
   handleRefresh,

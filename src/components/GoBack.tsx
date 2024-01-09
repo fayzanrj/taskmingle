@@ -2,7 +2,12 @@
 import Link from "next/link";
 import { FaArrowLeftLong } from "react-icons/fa6";
 
-const GoBack = ({ href }: { href: string }) => {
+// Go back interface
+interface GoBackProps {
+  href: string;
+}
+
+const GoBack: React.FC<GoBackProps> = ({ href }) => {
   return (
     <>
       <Link

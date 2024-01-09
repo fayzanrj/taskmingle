@@ -18,6 +18,7 @@ export const POST = async (req: NextRequest) => {
       return ThrowUnAuthorizedError();
     }
 
+    // finding if code exists with this email id
     const codeExists = await prisma.code.findUnique({
       where: { userId: user.id },
     });

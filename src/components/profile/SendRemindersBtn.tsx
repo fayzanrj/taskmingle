@@ -6,7 +6,12 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { UserProps } from "@/props/UserProps";
 
-const SendRemindersBtn = ({ user }: { user: UserProps }) => {
+// Send reminder button interface
+interface SendRemindersBtnProps {
+  user: UserProps;
+}
+
+const SendRemindersBtn: React.FC<SendRemindersBtnProps> = ({ user }) => {
   // Variable state
   const [sendEmails, setSendEmails] = useState<boolean | null>(
     user.sendReminders

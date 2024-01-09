@@ -1,8 +1,14 @@
 import React from "react";
 
-const HamBurgerButton = ({ toggleNavbar }: { toggleNavbar: () => void }) => {
+// Ham burger button interface
+interface HamBurgerButtonProps {
+  toggleNavbar: () => void;
+}
+
+const HamBurgerButton: React.FC<HamBurgerButtonProps> = ({ toggleNavbar }) => {
   return (
     <button
+      aria-label="open-navbar-button"
       className="text-black dark:text-white md:hidden outline-none"
       onClick={toggleNavbar}
     >

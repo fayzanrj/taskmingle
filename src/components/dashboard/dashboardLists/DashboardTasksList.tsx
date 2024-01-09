@@ -10,9 +10,12 @@ import RenderTags from "../../tasks/RenderTags";
 import DashboardList from "./DashboardList";
 import Link from "next/link";
 
-const DashboardTasksList: React.FC<{
+// Dasboard tasks list interface
+interface DashboardTasksListProps {
   accessToken: string;
-}> = ({ accessToken }) => {
+}
+
+const DashboardTasksList: React.FC<DashboardTasksListProps> = ({ accessToken }) => {
   // Variable states
   const [initialTasks, setInitialTasks] = useState<TaskProps[] | undefined>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);

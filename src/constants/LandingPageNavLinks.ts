@@ -1,13 +1,13 @@
 import { NavbarLinkProps } from "@/props/NavbarLinksProps";
 
 export const NAVBAR_LINKS: NavbarLinkProps[] = [
-  { text: "Repository", href: "#" },
-  { text: "Twitter", href: "#" },
+  { text: "Repository", href: "https://github.com/fayzanrj/tasknotify" },
+  { text: "Twitter", href: "https://twitter.com/fayzanrj" },
   { text: "Login", href: "/login" },
   {
     text: "Sign Up",
     href: "/signup",
     className:
-      "py-4 px-9 text-black font-semibold rounded-lg bg-gradient-to-br from-[#19fa9a] to-[#22C1C3]",
+      "px-5 py-2 text-black font-semibold rounded-lg bg-[#19fa9a]",
   },
 ];

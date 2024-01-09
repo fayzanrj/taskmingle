@@ -1,6 +1,11 @@
 import React from "react";
 
-const RenderTags = ({ tags }: { tags: string[] }) => {
+// Render tags interface
+interface RenderTagsProps {
+  tags: string[];
+}
+
+const RenderTags: React.FC<RenderTagsProps> = ({ tags }) => {
   return tags.map((tag, index) => (
     <p
       key={index}

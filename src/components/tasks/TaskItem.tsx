@@ -15,7 +15,7 @@ const getCurrentStatus = (date: string, taskStatus: TaskStatus) => {
     return "Overdue";
   }
 };
-// Task Item Props
+
 const TaskItem: React.FC<TaskProps> = ({
   taskTitle,
   taskDesc,

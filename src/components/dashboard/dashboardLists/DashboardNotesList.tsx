@@ -6,9 +6,12 @@ import NoItemFound from "../../NoItemFound";
 import NotesListItem from "../../notes/NotesListItem";
 import DashboardList from "./DashboardList";
 
-const DashboardNotesList: React.FC<{
+// Dasboard notes list interface
+interface DashboardNotesListProps {
   notes: NoteProps[];
-}> = ({ notes }) => {
+}
+
+const DashboardNotesList: React.FC<DashboardNotesListProps> = ({ notes }) => {
   // Variable States
   const [initialNotes, setInitialNotes] = useState<NoteProps[]>(notes);
   const [scrollPosition, setScrollPosition] = useState(0);

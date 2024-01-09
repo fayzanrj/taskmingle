@@ -1,7 +1,12 @@
 import React from "react";
 import { MdOutlineSearchOff } from "react-icons/md";
 
-const NoItemFound = ({ variant } : { variant: string }) => {
+// No item found interface
+interface NoItemFoundProps {
+  variant: string;
+}
+
+const NoItemFound: React.FC<NoItemFoundProps> = ({ variant }) => {
   return (
     <div className="w-fit mx-auto px-3 text-center">
       <span>

@@ -3,14 +3,15 @@ import FetchError from "../FetchError";
 import NoItemFound from "../NoItemFound";
 import TaskItemSkeleton from "../skeletons/TaskItemSkeleton";
 import TaskItem from "./TaskItem";
+import React from "react";
 
-const TasksList = ({
-  tasks,
-  isLoading,
-}: {
+// Tasks List interface
+interface TasksListProps {
   tasks: TaskProps[] | undefined;
   isLoading: boolean;
-}) => {
+}
+
+const TasksList: React.FC<TasksListProps> = ({ tasks, isLoading }) => {
   // If tasks are loading
   if (isLoading) {
     return <TaskItemSkeleton />;

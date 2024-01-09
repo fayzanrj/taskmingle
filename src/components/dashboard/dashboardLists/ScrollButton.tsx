@@ -13,6 +13,7 @@ const ScrollButton: React.FC<ScrollButtonProps> = ({
 }) => (
   <button
     aria-label={`scroll-btn-${direction}`}
+    aria-disabled={disabled}
     onClick={onClick}
     disabled={disabled}
     className="w-fit h-40 disabled:text-stone-800 rounded-lg z-20"

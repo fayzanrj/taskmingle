@@ -10,7 +10,8 @@ const LandingThemeToggleBtn = () => {
 
   return (
     <button
-      className="w-8 h-8 relative"
+      aria-label="change-theme-button"
+      className="w-8 h-8 md:my-2 relative"
       onClick={() => setIsDarkMode(!isDarkMode)}
       type="button"
     >

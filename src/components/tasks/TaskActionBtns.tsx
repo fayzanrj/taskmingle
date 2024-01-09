@@ -9,8 +9,13 @@ import toast from "react-hot-toast";
 import { MdDelete, MdEdit } from "react-icons/md";
 import ActivityLoader from "../ActivityLoader";
 
+// Task action btns props
+interface TaskActionBtnsProps {
+  href: string;
+  taskId: string;
+}
 
-const TaskActionBtns = ({ href, taskId }: { href: string; taskId: string }) => {
+const TaskActionBtns: React.FC<TaskActionBtnsProps> = ({ href, taskId }) => {
   // Router for navigation
   const router = useRouter();
   // Activity state

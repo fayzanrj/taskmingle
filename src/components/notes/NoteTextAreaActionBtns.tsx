@@ -72,15 +72,15 @@ const NoteTextAreaActionBtns: React.FC<NoteTextAreaActionBtnsProps> = ({
   return (
     <div className="w-full h-8 relative">
       {/* Copy button */}
-      <button className="h-8" onClick={handleCopy} aria-label="Copy-button">
+      <button aria-label="Copy-button" className="h-8" onClick={handleCopy}>
         <MdContentCopy className="inline" size="1.4rem" />
       </button>
 
       {/* Delete button */}
       <button
+        aria-label="delete-button"
         className="mx-4"
         onClick={handleDelete}
-        aria-label="delete-button"
       >
         <MdDelete className="inline" size="1.6rem" color="red" />
       </button>
@@ -92,15 +92,17 @@ const NoteTextAreaActionBtns: React.FC<NoteTextAreaActionBtnsProps> = ({
       >
         <LuSpellCheck2
           size="1.5rem"
-          className={`inline ${isSpellCheckerOn ? "text-black dark:text-white" : "text-gray-500"}`}
+          className={`inline ${
+            isSpellCheckerOn ? "text-black dark:text-white" : "text-gray-500"
+          }`}
         />
       </button>
 
       {/* Save button */}
       <button
+        aria-label="save-button"
         onClick={handleSave}
         className=" w-20 h-8 ml-2 text-black font-semibold rounded-lg bg-[#19fa9a] absolute right-1"
-        aria-label="save-button"
       >
         Save
       </button>

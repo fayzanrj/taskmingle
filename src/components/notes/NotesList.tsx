@@ -10,7 +10,12 @@ import NotesSkeleton from "../skeletons/NotesSkeleton";
 import NotesActionBtns from "./NotesActionBtns";
 import NotesListItem from "./NotesListItem";
 
-const NotesList = ({ notes }: { notes: NoteProps[] }) => {
+// Notes list interface
+interface NotesListProps {
+  notes: NoteProps[];
+}
+
+const NotesList: React.FC<NotesListProps> = ({ notes }) => {
   const [allNotes, setAllNotes] = useState<NoteProps[]>(notes);
   const [isRefreshing, setIsRefreshing] = useState<boolean>(false);
   const headers = useHeaders();
