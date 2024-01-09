@@ -24,7 +24,7 @@ export const SendCodeEmail = async (
       from: `"Task Notify" <${process.env.EMAIL}>`,
       to: email,
       subject: subject,
-      html: ` <div style="font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif">
+      html: ` <div style="font-family:sans-serif">
       <div
         style="font-weight: bold; font-weight: 500; letter-spacing: 0.1rem; font-size: 1.25rem"
       >
