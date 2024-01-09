@@ -20,8 +20,6 @@ export const SendCodeEmail = async (
       },
     });
 
-    const codeTemplateHtml = render(CodeTemplate({ code: code, name: name }));
-
     const emailSent = await transporter.sendMail({
       from: `"Task Notify" <${process.env.EMAIL}>`,
       to: email,
