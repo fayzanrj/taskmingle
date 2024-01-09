@@ -1,4 +1,6 @@
 import GoBack from "@/components/GoBack";
+import RefreshPage from "@/components/RefreshPage";
+import FormattedDateTime from "@/components/tasks/FormattedDateTime";
 import NoTaskFound from "@/components/tasks/NoTaskFound";
 import RenderTags from "@/components/tasks/RenderTags";
 import TaskActionBtns from "@/components/tasks/TaskActionBtns";
@@ -7,14 +9,7 @@ import { getHeaders } from "@/libs/GetHeaders";
 import { updateTaskStatus } from "@/libs/UpdateTaskStatus";
 import { TaskProps } from "@/props/TaskProps";
 import { Metadata } from "next";
-import { Roboto } from "next/font/google";
-import React from "react";
-import prisma from "@/app/db";
 import { getSession } from "next-auth/react";
-import { Task } from "@prisma/client";
-import RefreshPage from "@/components/RefreshPage";
-
-const roboto = Roboto({ subsets: ["latin"], weight: "500" });
 
 export const metadata: Metadata = {
   title: "Task Details",
@@ -31,20 +26,13 @@ const TaskDetails = async ({ params }: { params: { taskId: string } }) => {
   }
 
   // Api request
-  // const response = await fetch(
-  //   `${process.env.HOST}/api/tasks/getTask/${params.taskId}`,
-  //   { cache: "no-store", headers: headers }
-  // );
-  // const res = await response.json();
-  // const task: TaskProps = res.task;
+  const response = await fetch(
+    `${process.env.HOST}/api/tasks/getTask/${params.taskId}`,
+    { cache: "no-store", headers: headers }
+  );
+  const res = await response.json();
+  const task: TaskProps = res.task;
 
-  const task = await prisma.task.findUnique({
-    where: {
-      id: params.taskId,
-      //@ts-ignore
-      createdById: data?.user?.id,
-    },
-  });
   // If task couldnt be found
   if (!task) {
     return <NoTaskFound />;
@@ -125,34 +113,3 @@ const TaskDetails = async ({ params }: { params: { taskId: string } }) => {
 };
 
 export default TaskDetails;
-
-// Formatted date time component interface
-interface FormattedDateTimeProps {
-  label: "Start time" | "Reminder Time" | "Date";
-  info: any;
-  variant: "time" | "date";
-}
-
-// Formatted date time component
-const FormattedDateTime: React.FC<FormattedDateTimeProps> = ({
-  label,
-  info,
-  variant,
-}) => {
-  const formattedInfo =
-    variant === "time"
-      ? new Date(info).toLocaleTimeString([], {
-          hour: "2-digit",
-          minute: "2-digit",
-        })
-      : new Date(info).toLocaleDateString();
-
-  return (
-    <div className="my-2">
-      <p className="font-bold">
-        {label} :{" "}
-        <span className={`${roboto.className} ml-2 `}>{formattedInfo}</span>
-      </p>
-    </div>
-  );
-};

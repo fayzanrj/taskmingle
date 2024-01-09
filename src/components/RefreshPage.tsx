@@ -6,7 +6,6 @@ import { useEffect } from "react";
 const RefreshPage = () => {
   const router = useRouter();
   useEffect(() => {
-    console.log('refreshing')
     router.refresh();
   }, []);
   return null;
