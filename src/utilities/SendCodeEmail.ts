@@ -25,42 +25,41 @@ export const SendCodeEmail = async (
       to: email,
       subject: subject,
       html: `
-      <div style="font-family: 'Times New Roman', Times, serif;">
-      <div
-        style="font-weight: bold; letter-spacing: 0.1rem; font-size: 1.25rem"
-      >
-        <p>task<span style="color: #19fa9a">notify</span></p>
-      </div>
-
-      <p style="margin-top: 5px; font-weight: bold; font-size: 1.5rem">
-        Hi ${name}, hope you are doing great. Here is your verification code.
-      </p>
-
-      <p
-        style="
-          letter-spacing: 0.5rem;
-          width: fit-content;
-          margin: 5px auto 5px auto;
-          font-size: 3.75rem;
-          font-weight: bold;
-        "
-      >
-        ${code}
-      </p>
-
-      <p style="margin-top: 5px; font-weight: bold; font-size: 1.5rem">
-        Please keep in mind, without verifying your account you will not be able
-        to get email notifications of your scheduled tasks.
-      </p>
-
-      <p style="margin-top: 5px; font-weight: bold; font-size: 1.25rem">
-        Note:
-        <span style="font-weight: bold">
-          If you have not requested this code, reply us back on this email ASAP.
-        </span>
-      </p>
-    </div>
-    `,
+      <div style="font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif">
+        <div
+          style="font-weight: bold; letter-spacing: 0.1rem; font-size: 1.25rem"
+        >
+          <p>task<span style="color: #19fa9a">notify</span></p>
+        </div>
+  
+        <p style="margin-top: 5px; font-weight: bold; font-size: 1.1rem">
+          Hi ${name}, hope you are doing great. Here is your verification code.
+        </p>
+  
+        <p
+          style="
+            letter-spacing: 0.5rem;
+            width: fit-content;
+            margin: 5px auto 5px auto;
+            font-size: 3.75rem;
+            font-weight: bold;
+          "
+        >
+          ${code}
+        </p>
+  
+        <p style="margin-top: 5px; font-weight: bold; font-size: 1.1rem">
+          Please keep in mind, without verifying your account you will not be able
+          to get email notifications of your scheduled tasks.
+        </p>
+  
+        <p style="margin-top: 5px; font-weight: bold; font-size: 1.1rem">
+          Note:
+          <span style="font-weight: bold">
+            If you have not requested this code, reply us back on this email ASAP.
+          </span>
+        </p>
+      </div>`,
     });
 
     return emailSent;
