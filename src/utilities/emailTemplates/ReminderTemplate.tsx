@@ -62,7 +62,7 @@ export function ReminderTemplate(props: CodeTemplateProps) {
             <Text>For more details you can click on this button&#46;</Text>
             <Button
               href={`${process.env.HOST}/dashboard/tasks/${props.taskId}`}
-              className="w-[90%] h-10 mx-auto rounded-lg bg-white shadow-lg drop-shadow-lg"
+              className="w-[90%] h-10 mx-auto rounded-lg  bg-white shadow-lg drop-shadow-lg"
             >
               See task details
             </Button>
