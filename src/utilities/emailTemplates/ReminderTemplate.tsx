@@ -30,7 +30,7 @@ export function ReminderTemplate(props: CodeTemplateProps) {
       }}
     >
       <Html>
-        <Head />
+        <head/>
         <Body>
           <Container className="w-96 h-fit mx-auto p-2">
             {/* LOGO */}
