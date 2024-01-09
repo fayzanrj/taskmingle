@@ -9,12 +9,12 @@ import { TaskProps } from "@/props/TaskProps";
 import { NextRequest, NextResponse } from "next/server";
 
 const checkData = (data: TaskProps): boolean => {
-  const { date, reminderAt, startTime, status, tags, taskDesc, taskTitle } =
+  const { date, reminderAt, startsAt, status, tags, taskDesc, taskTitle } =
     data;
   return !!(
     date ||
     reminderAt ||
-    startTime ||
+    startsAt ||
     status ||
     tags ||
     taskDesc ||
@@ -47,7 +47,7 @@ export const PUT = async (req: NextRequest) => {
         taskTitle: data.taskTitle,
         taskDesc: data.taskDesc,
         status: data.status,
-        startTime: data.startTime,
+        startsAt: data.startsAt,
         reminderAt: data.reminderAt,
         date: data.date,
         tags: data.tags,
