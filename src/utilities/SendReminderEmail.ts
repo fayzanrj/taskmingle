@@ -1,5 +1,4 @@
 const nodemailer = require("nodemailer");
-import { render } from "@react-email/render";
 
 export const SendReminderEmail = async (
   name: string,
